@@ -1,10 +1,12 @@
-"""BlueprintEntity class"""
+"""IRTransEntity class"""
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN, NAME, VERSION, ATTRIBUTION
 
 
-class IntegrationBlueprintEntity(CoordinatorEntity):
+class IRTransEntity(CoordinatorEntity):
+    """IRTrans Entity"""
+
     def __init__(self, coordinator, config_entry):
         super().__init__(coordinator)
         self.config_entry = config_entry

@@ -2,8 +2,8 @@
     "config": {
         "step": {
             "user": {
-                "title": "Blueprint",
-                "description": "Si vous avez besoin d'aide pour la configuration, regardez ici: https://github.com/custom-components/integration_blueprint",
+                "title": "IRTrans",
+                "description": "Si vous avez besoin d'aide pour la configuration, regardez ici: https://github.com/custom-components/irtrans",
                 "data": {
                     "username": "Identifiant",
                     "password": "Mot de Passe"
