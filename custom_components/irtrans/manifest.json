@@ -1,12 +1,20 @@
 {
   "domain": "irtrans",
   "name": "IRTrans",
+  "integration_type": "device",
   "documentation": "https://github.com/custom-components/irtrans",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/custom-components/irtrans/issues",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "hw_version": "???",
+  "model": "IRTrans LAN",
   "config_flow": true,
   "codeowners": [
+    "@schwarzenbergf",
     "@ludeeus"
+  ],
+  "dependencies": [],
+  "requirements": [
+    "trio"
   ]
 }

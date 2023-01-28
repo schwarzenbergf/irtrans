@@ -3,9 +3,10 @@
 NAME = "IRTrans"
 DOMAIN = "irtrans"
 DOMAIN_DATA = f"{DOMAIN}_data"
-VERSION = "0.0.1"
-ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
+VERSION = "0.1.0"
+ATTRIBUTION = ""
 ISSUE_URL = "https://github.com/custom-components/irtrans/issues"
+DEBUG = True
 
 # Icons
 ICON = "mdi:remote"
@@ -14,13 +15,12 @@ ICON = "mdi:remote"
 
 # Platforms
 SENSOR = "sensor"
-PLATFORMS = [SENSOR]  # [BINARY_SENSOR, SENSOR, SWITCH]
-
+PLATFORMS = [SENSOR]
 
 # Configuration and options
 CONF_ENABLED = "enabled"
-CONF_USERNAME = "user"
-CONF_PASSWORD = "pass"
+CONF_HOST = "nnn.nnn.nnn.nnn"
+CONF_PORT = "21000"  # default IRTrans port
 
 # Defaults
 DEFAULT_NAME = DOMAIN

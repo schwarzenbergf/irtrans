@@ -3,29 +3,18 @@
         "step": {
             "user": {
                 "title": "IRTrans",
-                "description": "If you need help with the configuration have a look here: https://github.com/custom-components/irtrans",
+                "description": "Enter HOST IP (e.g. 192.168.178.111) and PORT (default is 21000)",
                 "data": {
-                    "username": "Username",
-                    "password": "Password"
+                    "host": "Host Address",
+                    "port": "PORT"
                 }
             }
         },
         "error": {
-            "auth": "Username/Password is wrong."
+            "host": "Host/Port is wrong."
         },
         "abort": {
             "single_instance_allowed": "Only a single instance is allowed."
-        }
-    },
-    "options": {
-        "step": {
-            "user": {
-                "data": {
-                    "binary_sensor": "Binary sensor enabled",
-                    "sensor": "Sensor enabled",
-                    "switch": "Switch enabled"
-                }
-            }
         }
     }
 }
