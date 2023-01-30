@@ -6,7 +6,7 @@ DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.1.0"
 ATTRIBUTION = ""
 ISSUE_URL = "https://github.com/custom-components/irtrans/issues"
-DEBUG = True
+DEBUG = False
 
 # Icons
 ICON = "mdi:remote"

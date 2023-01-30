@@ -7,7 +7,7 @@ from homeassistant.helpers import entity_platform
 
 from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR, SERVICES_YAML, DEBUG
 from .entity import IRTransEntity
-from .api import IRTransApi, mycfg
+from .api import IRTransCon
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -27,7 +27,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     if DEBUG:
         _LOGGER.debug(
             "IRTRANS Sensor platform setup: %s",
-            " ".join(mycfg["devices"]),
+            " ".join(IRTransCon.mycfg["devices"]),
         )
         _LOGGER.debug("Creating services.yaml ...")
 
@@ -35,7 +35,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
         "custom_components/" + DEFAULT_NAME + "/services.yaml", "wt", encoding="utf-8"
     )
 
-    for remote in mycfg["devices"]:
+    for remote in IRTransCon.mycfg["devices"]:
         if remote == "hw_version":
             break
 
@@ -43,7 +43,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
         s_yaml = SERVICES_YAML.replace("&remote&", remote)
         c_yaml = "            - "
         cmd_yaml = ""
-        commands = mycfg["devices"][remote]
+        commands = IRTransCon.mycfg["devices"][remote]
         for cmd in commands:
             cmd_yaml = c_yaml + '"' + cmd + '"\n' + cmd_yaml
         s_yaml = s_yaml.replace("&commands&", cmd_yaml)
@@ -65,10 +65,10 @@ async def async_setup_entry(hass, entry, async_add_devices):
 class IRTransSensor(IRTransEntity, SensorEntity):
     """irtrans Sensor class."""
 
-    @classmethod
-    async def send_irtrans_ir_cmd(cls, remote: str, ir_cmd: str) -> None:
+    # @classmethod
+    async def send_irtrans_ir_cmd(self, remote: str, ir_cmd: str) -> None:
         """Send IR Command to IRTrans (Service Call)"""
-        result = await IRTransApi.api_irtrans("SEND", remote, ir_cmd)
+        result = await IRTransCon.api_irtrans("SEND", remote, ir_cmd)
         if DEBUG:
             _LOGGER.debug(
                 "IRTRANS IR COMMAND: %s -> %s : %s",

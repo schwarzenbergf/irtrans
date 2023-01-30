@@ -3,7 +3,7 @@ import logging
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN, NAME, ATTRIBUTION
-from .api import mycfg
+from .api import IRTransCon
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -18,8 +18,7 @@ class IRTransEntity(CoordinatorEntity):
 
     async def async_update(self):
         """Retrieve latest state."""
-        # await IRTransApi.start_listen2ir(IRTransApi.hass)
-        self._state = mycfg["irtrans"]  # await async_fetch_state()
+        self._state = IRTransCon.mycfg["irtrans"]  # await async_fetch_state()
 
     @property
     def should_poll(self) -> bool:
@@ -32,13 +31,14 @@ class IRTransEntity(CoordinatorEntity):
 
     @property
     def device_info(self):
-        global mycfg  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
         return {
             "identifiers": {(DOMAIN, self.unique_id)},
             "name": NAME,
             "model": "IRTrans Ethernet IRDB (LAN firmware)",
             "manufacturer": "IRTrans GmbH",
-            "hw_version": mycfg["version"][2] + " " + mycfg["version"][3],
+            "hw_version": IRTransCon.mycfg["version"][2]
+            + " "
+            + IRTransCon.mycfg["version"][3],
         }
 
     @property

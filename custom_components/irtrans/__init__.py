@@ -14,7 +14,7 @@ from homeassistant.exceptions import ConfigEntryNotReady
 
 # from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-from .api import IRTransApi, init_and_listen, trans_port
+from .api import IRTransCon, init_and_listen
 from .const import DOMAIN, PLATFORMS, STARTUP_MESSAGE, DEBUG
 
 SCAN_INTERVAL = timedelta(seconds=300)
@@ -40,6 +40,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         _LOGGER.debug(
             "->async_setup_entry:Config Entry data (async_setup_entry) %s :", entry.data
         )
+    # api = IRTransCon(hass, entry.data)
+    # await api.get_initial()
+
+    # coordinator = IRTransDataUpdateCoordinator(hass, api)
+    # await coordinator.sio_connect()
 
     coordinator = IRTransDataUpdateCoordinator(hass)
     await coordinator.async_refresh()
@@ -79,6 +84,7 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
             _LOGGER.debug("IRTransDataUpdateCoordinator")
         self.platforms = []
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
+        # self.api = api
         self.entry = hass.config_entries.async_entries(DOMAIN)[0]
         self.host = self.entry.data.get("host")
         self.port = self.entry.data.get("port")
@@ -89,10 +95,9 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self):
         """Update data via library."""
-        global trans_port  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
         try:
             # Start listening to IR Remote commands
-            if trans_port is None:
+            if IRTransCon.trans_port is None:
                 if DEBUG:
                     _LOGGER.debug(
                         "Listener is not running, starting now (DataUpdateCoordinator) ..."
@@ -101,7 +106,7 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
                 await asyncio.sleep(1)
             if DEBUG:
                 _LOGGER.debug("async_update_data before irtrans")
-            resp = await IRTransApi.api_irtrans("GET", "", "")
+            resp = await IRTransCon.api_irtrans("GET", "", "")
             if DEBUG:
                 _LOGGER.debug("async_update_data after irtrans: %s", resp)
             if len(resp) == 0:

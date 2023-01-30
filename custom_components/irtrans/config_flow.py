@@ -14,7 +14,7 @@ from homeassistant.helpers.selector import (  # pylint: disable=ungrouped-import
     TextSelectorType,
 )
 
-from .api import init_and_listen, mycfg
+from .api import init_and_listen, IRTransCon
 from .const import CONF_HOST, CONF_PORT, NAME, DOMAIN, DEBUG
 
 
@@ -34,7 +34,6 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(self, user_input: Optional[Dict[str, Any]] = None):
         """Handle a flow initialized by the user."""
-        # global trans_port  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
         self._errors = {}
         if DEBUG:
             _LOGGER.debug("Config Flow User Input: %s", user_input)
@@ -50,10 +49,6 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             valid = await self._test_host(user_input["host"], user_input["port"])
             if valid:
                 return self.async_create_entry(title=NAME, data=user_input)
-                # self.entry = self.hass.config_entries.async_entries(DOMAIN)[0]
-                # if DEBUG:
-                #     _LOGGER.debug("async_step_user - cfg entry: %s", self.entry.data)
-                # return result
 
             self._errors["host"] = "Connect Error"
             return await self._show_config_form()
@@ -86,17 +81,19 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def _test_host(self, host: str, port: str):  # pylint: disable=unused-argument
         """Return true if host/port are valid."""
-        global mycfg  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
         try:
             if DEBUG:
                 _LOGGER.debug("User Input: %s : %s", host, port)
             await asyncio.sleep(1)
             if DEBUG:
-                _LOGGER.debug("IRTrans Version: %s :", mycfg["version"])
-            mycfg["hw_version"] = mycfg["version"][2] + " " + mycfg["version"][3]
-            return bool(mycfg["version"][1] == "VERSION")
+                _LOGGER.debug("IRTrans Version: %s :", IRTransCon.mycfg["version"])
+            IRTransCon.mycfg["hw_version"] = (
+                IRTransCon.mycfg["version"][2] + " " + IRTransCon.mycfg["version"][3]
+            )
+            return bool(IRTransCon.mycfg["version"][1] == "VERSION")
         except Exception as exception:  # pylint: disable=broad-except
-            _LOGGER.error("Cannot connect to - %s : %s", host + ":" + port, exception)
+            if DEBUG:
+                _LOGGER.error("Cannot connect to - %s : %s", host + ":" + port, exception)
             return False
 
 
