@@ -14,8 +14,7 @@ from homeassistant.helpers.selector import (  # pylint: disable=ungrouped-import
     TextSelectorType,
 )
 
-
-from .api import IRTransApi
+from .api import init_and_listen, mycfg
 from .const import CONF_HOST, CONF_PORT, NAME, DOMAIN, DEBUG
 
 
@@ -25,16 +24,17 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for IRTrans."""
 
-    VERSION = 1
+    # VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
 
     def __init__(self):
         """Initialize."""
         self._errors = {}
-        self.irapi = None
+        self.entry = None
 
     async def async_step_user(self, user_input: Optional[Dict[str, Any]] = None):
         """Handle a flow initialized by the user."""
+        # global trans_port  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
         self._errors = {}
         if DEBUG:
             _LOGGER.debug("Config Flow User Input: %s", user_input)
@@ -43,18 +43,18 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         #     return self.async_abort(reason="single_instance_allowed")
 
         if user_input is not None:
-            IRTransApi.host = user_input["host"]
-            IRTransApi.port = user_input["port"]
 
-            self.irapi = IRTransApi()
-
-            # await self.irapi.listen(user_input["host"], user_input["port"])
             # start tcp listener
-            await self.irapi.init_and_listen(user_input["host"], user_input["port"])
+            await init_and_listen(user_input["host"], user_input["port"])
 
             valid = await self._test_host(user_input["host"], user_input["port"])
             if valid:
                 return self.async_create_entry(title=NAME, data=user_input)
+                # self.entry = self.hass.config_entries.async_entries(DOMAIN)[0]
+                # if DEBUG:
+                #     _LOGGER.debug("async_step_user - cfg entry: %s", self.entry.data)
+                # return result
+
             self._errors["host"] = "Connect Error"
             return await self._show_config_form()
 
@@ -86,19 +86,15 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def _test_host(self, host: str, port: str):  # pylint: disable=unused-argument
         """Return true if host/port are valid."""
+        global mycfg  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
         try:
             if DEBUG:
-                _LOGGER.debug("Test User Input: %s : %s", host, port)
-            # await self.irapi.writer.write(b"Aver\n")
-            # await self.irapi.writer.drain()
+                _LOGGER.debug("User Input: %s : %s", host, port)
             await asyncio.sleep(1)
-            # await self.irapi.irtrans_open_connection()
-            IRTransApi.myresp["hw_version"] = (
-                IRTransApi.version[2] + " " + IRTransApi.version[3]
-            )
             if DEBUG:
-                _LOGGER.debug("IRTrans Version: %s :", IRTransApi.version)
-            return bool(IRTransApi.version[1] == "VERSION")
+                _LOGGER.debug("IRTrans Version: %s :", mycfg["version"])
+            mycfg["hw_version"] = mycfg["version"][2] + " " + mycfg["version"][3]
+            return bool(mycfg["version"][1] == "VERSION")
         except Exception as exception:  # pylint: disable=broad-except
             _LOGGER.error("Cannot connect to - %s : %s", host + ":" + port, exception)
             return False

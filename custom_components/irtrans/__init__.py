@@ -14,7 +14,7 @@ from homeassistant.exceptions import ConfigEntryNotReady
 
 # from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-from .api import IRTransApi
+from .api import IRTransApi, init_and_listen, trans_port
 from .const import DOMAIN, PLATFORMS, STARTUP_MESSAGE, DEBUG
 
 SCAN_INTERVAL = timedelta(seconds=300)
@@ -32,10 +32,6 @@ async def async_setup(
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up this integration using UI."""
 
-    # IRTransApi.hass = hass
-    api = IRTransApi
-    api.hass = hass
-
     if hass.data.get(DOMAIN) is None:
         hass.data.setdefault(DOMAIN, {})
         _LOGGER.info(STARTUP_MESSAGE)
@@ -44,12 +40,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         _LOGGER.debug(
             "->async_setup_entry:Config Entry data (async_setup_entry) %s :", entry.data
         )
-    if entry.data.get("host"):
-        host = entry.data["host"]
-        api.host = host
-    if entry.data.get("port"):
-        port = entry.data["port"]
-        api.port = port
 
     coordinator = IRTransDataUpdateCoordinator(hass)
     await coordinator.async_refresh()
@@ -60,6 +50,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     hass.data[DOMAIN][entry.entry_id] = coordinator
     # api.coordinator = coordinator
 
+    # if entry.data.get("host"):
+    #     MyVars.host = entry.data["host"]
+    # if entry.data.get("port"):
+    #     MyVars.port = entry.data["port"]
+
     for platform in PLATFORMS:
         if entry.options.get(platform, True):
             coordinator.platforms.append(platform)
@@ -68,8 +63,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
             )
 
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
-
-    api.hass = hass
 
     if DEBUG:
         _LOGGER.debug("async_setup_entry->")
@@ -86,17 +79,25 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
             _LOGGER.debug("IRTransDataUpdateCoordinator")
         self.platforms = []
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
+        self.entry = hass.config_entries.async_entries(DOMAIN)[0]
+        self.host = self.entry.data.get("host")
+        self.port = self.entry.data.get("port")
+        if DEBUG:
+            _LOGGER.debug(
+                "hass cfg entry: %s %s:%s", self.entry.data, self.host, self.port
+            )
 
     async def _async_update_data(self):
         """Update data via library."""
+        global trans_port  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
         try:
             # Start listening to IR Remote commands
-            if IRTransApi.transport is None:
-                _LOGGER.debug(
-                    "Listener is not running, starting now (DataUpdateCoordinator) ..."
-                )
-                api = IRTransApi()
-                await api.init_and_listen(IRTransApi.host, IRTransApi.port)
+            if trans_port is None:
+                if DEBUG:
+                    _LOGGER.debug(
+                        "Listener is not running, starting now (DataUpdateCoordinator) ..."
+                    )
+                await init_and_listen(self.host, self.port)
                 await asyncio.sleep(1)
             if DEBUG:
                 _LOGGER.debug("async_update_data before irtrans")
@@ -118,8 +119,6 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     coordinator = hass.data[DOMAIN][entry.entry_id]
     if DEBUG:
         _LOGGER.debug("async_unload_entry")
-    # if IRTransApi.task is not None:
-    #     IRTransApi.task.cancel()
     unloaded = all(
         await asyncio.gather(
             *[

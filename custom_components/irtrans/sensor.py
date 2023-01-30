@@ -7,7 +7,7 @@ from homeassistant.helpers import entity_platform
 
 from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR, SERVICES_YAML, DEBUG
 from .entity import IRTransEntity
-from .api import IRTransApi
+from .api import IRTransApi, mycfg
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -27,7 +27,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     if DEBUG:
         _LOGGER.debug(
             "IRTRANS Sensor platform setup: %s",
-            " ".join(IRTransApi.myresp["devices"]),
+            " ".join(mycfg["devices"]),
         )
         _LOGGER.debug("Creating services.yaml ...")
 
@@ -35,7 +35,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
         "custom_components/" + DEFAULT_NAME + "/services.yaml", "wt", encoding="utf-8"
     )
 
-    for remote in IRTransApi.myresp["devices"]:
+    for remote in mycfg["devices"]:
         if remote == "hw_version":
             break
 
@@ -43,7 +43,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
         s_yaml = SERVICES_YAML.replace("&remote&", remote)
         c_yaml = "            - "
         cmd_yaml = ""
-        commands = IRTransApi.myresp["devices"][remote]
+        commands = mycfg["devices"][remote]
         for cmd in commands:
             cmd_yaml = c_yaml + '"' + cmd + '"\n' + cmd_yaml
         s_yaml = s_yaml.replace("&commands&", cmd_yaml)

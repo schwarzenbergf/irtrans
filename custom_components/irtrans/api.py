@@ -2,18 +2,34 @@
 import logging
 import asyncio
 
-from homeassistant.core import HomeAssistant
+# from homeassistant import config_entries as cfg
+# from homeassistant.core import HomeAssistant
 
-# from homeassistant.helpers.event import async_call_later
-# from homeassistant.config_entries import ConfigEntry as entry
-# from typing import Optional  # pylint: disable=unused-argument disable=unused-import
 # import async_timeout
 
-from .const import DEBUG
+from .const import DEBUG, GETVER
 
 TIMEOUT = 10
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
+# entries = hoass.config_entries.async_entries(DOMAIN)
+# _LOGGER.debug("Config Entries for %s: %s:", DOMAIN, entries)
+
+
+# pylint: disable = invalid-name
+mycfg = {
+    "irtrans": "not connected",
+    "devices": {},
+    "version": "????",
+    "hw_version": "unkwown",
+}
+# IRTrans command to get firmware version
+
+trans_port = None
+# protocol = None
+recv_data = None
+recv_ircmd = None
+# pylint: enable = invalid-name
 
 
 class IRTransCon(asyncio.Protocol):
@@ -31,94 +47,71 @@ class IRTransCon(asyncio.Protocol):
     async def write_data(cls, transport, data):
         """Write Data to socket"""
         transport.write(data.encode())
+        while transport.get_write_buffer_size() > 0:
+            continue
         _LOGGER.debug("Data sent %s:", data)
 
-    @classmethod
-    def data_received(cls, data):
+    # @classmethod
+    def data_received(self, data):
+        global mycfg  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
+        global recv_ircmd  # pylint: disable = global-statement, invalid-name
+        global recv_data  # pylint: disable = global-statement, invalid-name
         data = data.decode()
         _LOGGER.debug("Data received %s:", data)
         data = data.split()
         if data[1] == "RCV_COM":  # IR Remote command received
-            IRTransApi.process_ir_cmd(data)
+            _LOGGER.debug("IR Remote command received %s:", data)
+            recv_ircmd = data
         if data[1] == "VERSION":  # Response to Aver
-            IRTransApi.process_version(data)
+            _LOGGER.debug("Response to Aver %s:", data)
+            mycfg["version"] = data
         if data[1] == "REMOTELIST":  # Response to Agetremotes
-            IRTransApi.process_getremotes(data)
+            _LOGGER.debug("Response to Agetremotes %s:", data)
+            recv_data = data
         if data[1] == "COMMANDLIST":  # Response to Agetcommands
-            IRTransApi.process_getcommands(data)
+            _LOGGER.debug("Response to Agetcommands %s:", data)
+            recv_data = data
         if "RESULT" in data[1]:  # Response to IR send
-            IRTransApi.process_send_resp(data)
+            _LOGGER.debug("Response to IR send %s:", data)
+            recv_data = data
 
     def connection_lost(self, exc):
-        _LOGGER.debug("The server closed the connection")
+        _LOGGER.debug("The server closed the connection %s", exc)
         self.on_con_lost.set_result(True)
+
+
+async def init_and_listen(host, port):
+    """Initialize connection to IRTrans and start listening"""
+    global trans_port  # pylint: disable = global-statement, invalid-name
+    # Get a reference to the event loop as we plan to use
+    # low-level APIs.
+    loop = asyncio.get_running_loop()
+    on_con_lost = loop.create_future()
+    _LOGGER.debug("Conneting to %s:%s", host, port)
+    # pylint: disable = unused-variable
+    (trans_port, protocol,) = await loop.create_connection(
+        lambda: IRTransCon(GETVER, on_con_lost), host, int(port)
+    )
+    _LOGGER.debug("Listening on %s:%s", host, port)
+    return
+    # pylint: enable = unused-variable
 
 
 class IRTransApi:
     """API Client Class for IRTrans"""
 
-    myresp = {"irtrans": "not connected", "devices": {}, "hw_version": "unkwown"}
-    version: str = "xxx"
-    host = None
-    port = None
-    transport = None
-    protocol = None
-    recv_data = None
-    recv_ircmd = None
-    # streamreader = None
-    # streamwriter = None
-    coordinator = None
-    hass: HomeAssistant = None
-
     def __init__(self):
         """Initialize."""
-        self.getver = "Aver\n"  # IRTrans command to get firmware version
         self._available = False
-
-    async def init_and_listen(self, host, port):
-        """Initialize connection to IRTrans and start listening"""
-        # Get a reference to the event loop as we plan to use
-        # low-level APIs.
-        loop = asyncio.get_running_loop()
-        on_con_lost = loop.create_future()
-        IRTransApi.transport, IRTransApi.protocol = await loop.create_connection(
-            lambda: IRTransCon(self.getver, on_con_lost), host, int(port)
-        )
-        _LOGGER.debug("Listening on %s:%s", host, port)
-
-    @classmethod
-    def process_ir_cmd(cls, data: list):
-        """IR Command received"""
-        _LOGGER.debug("IR Remote command received %s:", data)
-        cls.recv_ircmd = data
-
-    @classmethod
-    def process_version(cls, data: list):
-        """Response to Aver received"""
-        _LOGGER.debug("Response to Aver %s:", data)
-        cls.version = data
-
-    @classmethod
-    def process_getremotes(cls, data: list):
-        """Response to Agetremotes received"""
-        _LOGGER.debug("Response to Agetremotes %s:", data)
-        cls.recv_data = data
-
-    @classmethod
-    def process_getcommands(cls, data: list):
-        """Response to Agetcommands received"""
-        _LOGGER.debug("Response to Agetcommands %s:", data)
-        cls.recv_data = data
-
-    @classmethod
-    def process_send_resp(cls, data: list):
-        """Response to IR send received"""
-        _LOGGER.debug("Response to IR send %s:", data)
-        cls.recv_data = data
 
     # @classmethod
     async def irtrans_snd_rcv_async(self, cmd, res, offset) -> list:
         """Send irTrans command and get result"""
+        global mycfg  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
+        global trans_port  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
+        global recv_data  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
+        global recv_ircmd  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
+
         if DEBUG:
             _LOGGER.debug(
                 "Send irTrans command cmd: %s res: %s offset: %i",
@@ -127,18 +120,14 @@ class IRTransApi:
                 offset,
             )
         msg = cmd + str(offset) + "\n"
-        await IRTransCon.write_data(IRTransApi.transport, msg)
-        # self.writer.write(msg)
-        # await self.writer.drain()
-        # data = await self.reader.readline()
+        await IRTransCon.write_data(trans_port, msg)
         await asyncio.sleep(0.3)
-        data = IRTransApi.recv_data
+        data = recv_data
         if len(data) > 0:
-            # data = data.split()
-            if data[1] == res:
-                self.myresp["irtrans"] = "connected"
-                return data[2].split(",")
-            self.myresp["irtrans"] = "Unknown answer from IRTrans: " + data
+            if data[1] == res:  # pylint: disable=unsubscriptable-object
+                mycfg["irtrans"] = "connected"
+                return data[2].split(",")  # pylint: disable=unsubscriptable-object
+            mycfg["irtrans"] = "Unknown answer from IRTrans: " + data
             if DEBUG:
                 _LOGGER.debug(
                     "Unknown answer from IRTrans (irtrans_snd_rcv): %s",
@@ -151,16 +140,20 @@ class IRTransApi:
     # @classmethod
     async def irtrans_snd_ir_command_async(self, remote: str, command: str) -> dict:
         """Send IR command for specified remote to IRTrans"""
+        global mycfg  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
+        global trans_port  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
+        global recv_data  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
+        global recv_ircmd  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
 
         rsp = {"ircmd": "success"}
         msg = "Asnd " + remote + "," + command + "\n"
         if DEBUG:
             _LOGGER.debug("Command to send to IRTrans: %s", msg)
-        await IRTransCon.write_data(IRTransApi.transport, msg)
+        await IRTransCon.write_data(trans_port, msg)
         await asyncio.sleep(0.3)
-        data = IRTransApi.recv_data
+        data = recv_data
         if len(data) > 0:
-            if data[2] == "OK":
+            if data[2] == "OK":  # pylint: disable=unsubscriptable-object
                 rsp["ircmd"] = "Success sending IR command: " + remote + "->" + command
             else:
                 rsp["ircmd"] = (
@@ -188,6 +181,7 @@ class IRTransApi:
     @classmethod
     async def api_irtrans(cls, mode: str, remote: str, command: str) -> dict:
         """IRTrans API handler"""
+        global mycfg  # pylint: disable = global-statement, invalid-name, global-variable-not-assigned
         if DEBUG:
             _LOGGER.debug(
                 "IRTRANS IR COMMAND(api_irtrans): %s : %s -> %s",
@@ -196,24 +190,6 @@ class IRTransApi:
                 command,
             )
         try:
-            # if cls.task is not None:
-            #     if DEBUG:
-            #         _LOGGER.debug(
-            #             "Restarting IRTrans socket(api_irtrans) - cancel task"
-            #         )
-            #     cls.task.cancel()
-            #     cls.task = None
-            #     cls.streamwriter.close()
-            #     await cls.streamwriter.wait_closed()
-            #     if DEBUG:
-            #         _LOGGER.debug(
-            #             "Restarting IRTrans socket(api_irtrans) - writer closed"
-            #         )
-            #     await cls.irtrans_open_connection()
-            #     if DEBUG:
-            #         _LOGGER.debug(
-            #             "Restarting IRTrans socket(api_irtrans) - opened Connection"
-            #         )
             if mode == "GET":
                 # # get first (max.) 3 REMOTES (offset = 0) from irTrans
                 devices = {}
@@ -251,15 +227,12 @@ class IRTransApi:
                         commands.extend(resp[3:])
                     devices[device] = commands
 
-                hw_ver = IRTransApi.version
-                devices["hw_version"] = hw_ver[2] + " " + hw_ver[3]
+                devices["hw_version"] = mycfg["version"][2] + " " + mycfg["version"][3]
 
-                cls.myresp["devices"] = devices
+                mycfg["devices"] = devices
             if mode == "SEND":
-                cls.myresp = await cls.irtrans_snd_ir_command_async(
-                    cls, remote, command
-                )
-            return cls.myresp
+                mycfg = await cls.irtrans_snd_ir_command_async(cls, remote, command)
+            return mycfg
 
         except Exception as exception:  # pylint: disable=broad-except
             _LOGGER.error(

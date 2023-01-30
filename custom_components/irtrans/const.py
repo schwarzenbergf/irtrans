@@ -21,6 +21,7 @@ PLATFORMS = [SENSOR]
 CONF_ENABLED = "enabled"
 CONF_HOST = "nnn.nnn.nnn.nnn"
 CONF_PORT = "21000"  # default IRTrans port
+GETVER = "Aver\n"  # Get firmware version from IRTrans
 
 # Defaults
 DEFAULT_NAME = DOMAIN
