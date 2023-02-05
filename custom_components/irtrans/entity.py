@@ -15,6 +15,7 @@ class IRTransEntity(CoordinatorEntity):
         super().__init__(coordinator)
         self.config_entry = config_entry
         self._state = None
+        self.host = self.coordinator.api.data["host"]
 
     async def async_update(self):
         """Retrieve latest state."""
@@ -36,9 +37,8 @@ class IRTransEntity(CoordinatorEntity):
             "name": NAME,
             "model": "IRTrans Ethernet IRDB (LAN firmware)",
             "manufacturer": "IRTrans GmbH",
-            "hw_version": IRTransCon.mycfg["version"][2]
-            + " "
-            + IRTransCon.mycfg["version"][3],
+            "sw_version": IRTransCon.mycfg["firmware"],
+            "configuration_url": "http://" + self.host,
         }
 
     @property

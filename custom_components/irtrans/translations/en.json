@@ -16,5 +16,18 @@
         "abort": {
             "single_instance_allowed": "Only a single instance is allowed."
         }
+    },
+    "device_automation": {
+        "event_data": {
+            "remote": "Remote Device",
+            "button": "Button"
+        },
+        "trigger_type": {
+            "remote_pressed": "Button pressed",
+            "remote": "Remote Unit",
+            "button": "Button on Remote"
+        },
+        "remote": "Remote Unit",
+        "button": "Button on Remote"
     }
 }

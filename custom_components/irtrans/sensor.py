@@ -2,16 +2,18 @@
 import logging
 
 from homeassistant.components.sensor import SensorEntity
-from homeassistant import config_entries
 from homeassistant.helpers import entity_platform
+
+# from homeassistant.helpers import device_registry as dr
 
 from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR, SERVICES_YAML, DEBUG
 from .entity import IRTransEntity
-from .api import IRTransCon
+from .api import IRTransAPI, IRTransCon
+
+# from .device_trigger import async_get_triggers, async_attach_trigger
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
-irtrans_entry: config_entries.ConfigEntry = None
 PARALLEL_UPDATES = 0
 
 
@@ -20,7 +22,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
 
     coordinator = hass.data[DOMAIN][entry.entry_id]
 
-    async_add_devices([IRTransSensor(coordinator, entry)])
+    async_add_devices([IRTransSensor(hass, coordinator, entry)])
 
     platform = entity_platform.async_get_current_platform()
 
@@ -29,6 +31,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
             "IRTRANS Sensor platform setup: %s",
             " ".join(IRTransCon.mycfg["devices"]),
         )
+
         _LOGGER.debug("Creating services.yaml ...")
 
     yaml_file = open(
@@ -36,7 +39,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     )
 
     for remote in IRTransCon.mycfg["devices"]:
-        if remote == "hw_version":
+        if remote == "firmware":
             break
 
         # create services.yaml for this service
@@ -65,10 +68,18 @@ async def async_setup_entry(hass, entry, async_add_devices):
 class IRTransSensor(IRTransEntity, SensorEntity):
     """irtrans Sensor class."""
 
+    def __init__(self, hass, coordinator, entry):
+        """Initialize the sensor."""
+        super().__init__(coordinator, entry)
+
+        # self.coordinator = coordinator
+        # self.entry = entry
+        self.api = IRTransAPI(hass, entry, coordinator)
+
     # @classmethod
     async def send_irtrans_ir_cmd(self, remote: str, ir_cmd: str) -> None:
         """Send IR Command to IRTrans (Service Call)"""
-        result = await IRTransCon.api_irtrans("SEND", remote, ir_cmd)
+        result = await self.api.send_ir_remote_cmd(remote, ir_cmd)
         if DEBUG:
             _LOGGER.debug(
                 "IRTRANS IR COMMAND: %s -> %s : %s",

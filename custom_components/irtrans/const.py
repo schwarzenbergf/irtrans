@@ -6,7 +6,7 @@ DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.1.0"
 ATTRIBUTION = ""
 ISSUE_URL = "https://github.com/custom-components/irtrans/issues"
-DEBUG = False
+DEBUG = True
 
 # Icons
 ICON = "mdi:remote"
@@ -22,6 +22,7 @@ CONF_ENABLED = "enabled"
 CONF_HOST = "nnn.nnn.nnn.nnn"
 CONF_PORT = "21000"  # default IRTrans port
 GETVER = "Aver\n"  # Get firmware version from IRTrans
+TIMEOUT = 10
 
 # Defaults
 DEFAULT_NAME = DOMAIN

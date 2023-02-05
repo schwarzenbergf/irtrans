@@ -7,15 +7,34 @@ https://github.com/custom-components/irtrans
 import asyncio
 from datetime import timedelta
 import logging
+import async_timeout
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import Config, HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 
-# from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-from .api import IRTransCon, init_and_listen
-from .const import DOMAIN, PLATFORMS, STARTUP_MESSAGE, DEBUG
+from homeassistant.helpers.template import device_id, device_entities
+
+# from homeassistant.helpers import entity_registry
+# from homeassistant.helpers.trigger import TriggerInfo, TriggerData
+
+from homeassistant.const import (
+    CONF_ENTITY_ID,
+    CONF_TYPE,
+)
+from .api import IRTransAPI, IRTransCon
+from .const import (
+    DOMAIN,
+    PLATFORMS,
+    STARTUP_MESSAGE,
+    DEBUG,
+    GETVER,
+    TIMEOUT,
+    NAME,
+    SENSOR,
+)
+from .device_trigger import async_get_triggers, async_attach_trigger
 
 SCAN_INTERVAL = timedelta(seconds=300)
 
@@ -40,21 +59,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         _LOGGER.debug(
             "->async_setup_entry:Config Entry data (async_setup_entry) %s :", entry.data
         )
-    # api = IRTransCon(hass, entry.data)
-    # await api.get_initial()
 
-    # coordinator = IRTransDataUpdateCoordinator(hass, api)
-    # await coordinator.sio_connect()
-
-    coordinator = IRTransDataUpdateCoordinator(hass)
+    coordinator = IRTransDataUpdateCoordinator(hass, entry)
     await coordinator.async_refresh()
 
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
-    # api.coordinator = coordinator
-
     # if entry.data.get("host"):
     #     MyVars.host = entry.data["host"]
     # if entry.data.get("port"):
@@ -69,8 +81,26 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
 
+    # config_entry = hass.config_entries.async_entries(DOMAIN)[0]
+    my_device_id = device_id(hass, NAME)
+    entities = device_entities(hass, my_device_id)
+    triggers = await async_get_triggers(hass, my_device_id)
+
     if DEBUG:
-        _LOGGER.debug("async_setup_entry->")
+        _LOGGER.debug(
+            "async_setup_entry--> %s / %s / %s",
+            my_device_id,
+            triggers,
+            entities[0],
+        )
+    # Tr_Info: TriggerInfo = (DOMAIN, "irtrans_event", True, None, None)
+
+    # await async_attach_trigger(
+    #     hass,
+    #     {CONF_ENTITY_ID: "sensor.irtrans_sensor", CONF_TYPE: "remote_pressed"},
+    #     "call-service",
+    #     Tr_Info,
+    # )
 
     return True
 
@@ -78,40 +108,57 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
 
-    def __init__(self, hass: HomeAssistant) -> None:
+    def __init__(self, hass: HomeAssistant, entry) -> None:
         """Initialize."""
         if DEBUG:
             _LOGGER.debug("IRTransDataUpdateCoordinator")
         self.platforms = []
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
-        # self.api = api
-        self.entry = hass.config_entries.async_entries(DOMAIN)[0]
-        self.host = self.entry.data.get("host")
-        self.port = self.entry.data.get("port")
+        self.api = IRTransAPI(hass, entry, self)
+        self.api_conn = IRTransCon
+        self.entry = entry
+
         if DEBUG:
             _LOGGER.debug(
-                "hass cfg entry: %s %s:%s", self.entry.data, self.host, self.port
+                "hass cfg entry(IRTransDataUpdateCoordinator): %s:%s",
+                self.api.data["host"],
+                self.api.data["port"],
             )
 
     async def _async_update_data(self):
         """Update data via library."""
         try:
-            # Start listening to IR Remote commands
-            if IRTransCon.trans_port is None:
-                if DEBUG:
-                    _LOGGER.debug(
-                        "Listener is not running, starting now (DataUpdateCoordinator) ..."
+            async with async_timeout.timeout(TIMEOUT):
+                # Start listening to IR Remote commands
+                if self.api_conn.trans_port is None:
+                    if DEBUG:
+                        _LOGGER.debug(
+                            "Listener is not running, starting now (DataUpdateCoordinator) ..."
+                        )
+                    transport = (  # pylint: disable = unused-variable
+                        await self.api.init_and_listen(
+                            self.api.data["host"], self.api.data["port"]
+                        )
                     )
-                await init_and_listen(self.host, self.port)
+                    await asyncio.sleep(1)
+                    if DEBUG:
+                        _LOGGER.debug("async_update_data before irtrans")
+                    resp = await self.api.api_irtrans()
+                    if DEBUG:
+                        _LOGGER.debug("async_update_data after irtrans: %s", resp)
+                    if len(resp) == 0:
+                        raise UpdateFailed() from Exception("Connection Timeout")
+
+                    return resp
+                # Listener is already running, just get Version to see if still connected
+                self.api_conn.trans_port.write(GETVER.encode())
+                if DEBUG:
+                    _LOGGER.debug("Get Version msg sent (_async_update_data)")
                 await asyncio.sleep(1)
-            if DEBUG:
-                _LOGGER.debug("async_update_data before irtrans")
-            resp = await IRTransCon.api_irtrans("GET", "", "")
-            if DEBUG:
-                _LOGGER.debug("async_update_data after irtrans: %s", resp)
-            if len(resp) == 0:
-                raise UpdateFailed() from Exception("Connection Timeout")
-            return resp
+                return self.api_conn.mycfg
+        except asyncio.TimeoutError as tout:
+            _LOGGER.error("Timeout while refresh IRTrans connection (%s)", tout)
+            raise UpdateFailed() from tout
         except Exception as exception:
             _LOGGER.error(
                 "Something really wrong happened (_async_update_data)! - %s", exception
@@ -124,6 +171,8 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     coordinator = hass.data[DOMAIN][entry.entry_id]
     if DEBUG:
         _LOGGER.debug("async_unload_entry")
+    IRTransCon.trans_port.close()
+    IRTransCon.trans_port = None
     unloaded = all(
         await asyncio.gather(
             *[

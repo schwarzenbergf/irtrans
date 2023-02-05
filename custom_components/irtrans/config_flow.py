@@ -2,6 +2,7 @@
 import logging
 import asyncio
 from typing import Any, Dict, Optional
+import async_timeout
 from homeassistant import config_entries
 
 # from homeassistant.core import callback
@@ -14,9 +15,7 @@ from homeassistant.helpers.selector import (  # pylint: disable=ungrouped-import
     TextSelectorType,
 )
 
-from .api import init_and_listen, IRTransCon
-from .const import CONF_HOST, CONF_PORT, NAME, DOMAIN, DEBUG
-
+from .const import CONF_HOST, CONF_PORT, NAME, DOMAIN, DEBUG, GETVER, TIMEOUT
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -24,7 +23,6 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for IRTrans."""
 
-    # VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
 
     def __init__(self):
@@ -43,10 +41,8 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
 
-            # start tcp listener
-            await init_and_listen(user_input["host"], user_input["port"])
-
-            valid = await self._test_host(user_input["host"], user_input["port"])
+            # valid = await self._test_host(user_input["host"], user_input["port"])
+            valid = await self.check_irtrans(user_input["host"], user_input["port"])
             if valid:
                 return self.async_create_entry(title=NAME, data=user_input)
 
@@ -79,21 +75,43 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             errors=self._errors,
         )
 
-    async def _test_host(self, host: str, port: str):  # pylint: disable=unused-argument
-        """Return true if host/port are valid."""
+    async def check_irtrans(self, host, port):
+        """Check availability of IRTrans device"""
         try:
-            if DEBUG:
-                _LOGGER.debug("User Input: %s : %s", host, port)
-            await asyncio.sleep(1)
-            if DEBUG:
-                _LOGGER.debug("IRTrans Version: %s :", IRTransCon.mycfg["version"])
-            IRTransCon.mycfg["hw_version"] = (
-                IRTransCon.mycfg["version"][2] + " " + IRTransCon.mycfg["version"][3]
+            async with async_timeout.timeout(TIMEOUT):
+                if DEBUG:
+                    _LOGGER.debug("User Input: %s : %s", host, port)
+
+                reader, writer = await asyncio.open_connection(host, port)
+                msg = "ASCI"
+                writer.write(msg.encode())
+                msg = GETVER + "\n"
+                writer.write(msg.encode())
+                await writer.drain()
+                data = await reader.read(100)
+                writer.close()
+                data = data.decode()
+                if DEBUG:
+                    _LOGGER.debug(
+                        "async-step-user->IRTRans Firmware Version %s: ", data
+                    )
+                await writer.wait_closed()
+                data = data.split()
+                if DEBUG:
+                    _LOGGER.debug("IRTrans Version: %s :", data)
+                if data[1] == "VERSION":
+                    return True
+                return False
+        except asyncio.TimeoutError as tout:
+            _LOGGER.error(
+                "Timeout while waiting for IRTrans connection - %s : %s (%s)",
+                host,
+                port,
+                tout,
             )
-            return bool(IRTransCon.mycfg["version"][1] == "VERSION")
+            return False
         except Exception as exception:  # pylint: disable=broad-except
-            if DEBUG:
-                _LOGGER.error("Cannot connect to - %s : %s", host + ":" + port, exception)
+            _LOGGER.error("Cannot connect to - %s : %s", host + ":" + port, exception)
             return False
 
 
