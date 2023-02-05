@@ -7,7 +7,6 @@
 
 [![hacs][hacsbadge]][hacs]
 ![Project Maintenance][maintenance-shield]
-[![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
 [![Discord][discord-shield]][discord]
 [![Community Forum][forum-shield]][forum]
@@ -18,7 +17,8 @@ _Component to integrate with [irtrans][integration_irtrans]._
 
 Platform | Description
 -- | --
-`sensor` | Show info from blueprint API.
+`sensor` | Show info from IRTrans LAN DB device
+`event`  | Event Triggers from Remotes 
 
 ![custom_components][irtrans].[irtrans].[logo@2x.png]
 
@@ -37,7 +37,6 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [integration_irtrans]: https://github.com/custom-components/integration_irtrans
 [buymecoffee]: https://www.buymeacoffee.com/ludeeus
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
-[commits-shield]: https://img.shields.io/github/commit-activity/y/custom-components/blueprint.svg?style=for-the-badge
 [commits]: https://github.com/custom-components/integration_irtrans/commits/master
 [hacs]: https://github.com/custom-components/hacs
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
@@ -46,7 +45,5 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [exampleimg]: logo@2x.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
-[license-shield]: https://img.shields.io/github/license/custom-components/blueprint.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-Joakim%20Sørensen%20%40ludeeus-blue.svg?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/custom-components/blueprint.svg?style=for-the-badge
 [releases]: https://github.com/custom-components/integration_irtrans/releases
