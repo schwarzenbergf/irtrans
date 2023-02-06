@@ -2,7 +2,7 @@
     "config": {
         "step": {
             "user": {
-                "title": "IRTrans",
+                "title": "Host&Port",
                 "description": "Enter HOST IP (e.g. 192.168.178.111) and PORT (default is 21000)",
                 "data": {
                     "host": "Host Address",
@@ -18,16 +18,10 @@
         }
     },
     "device_automation": {
-        "event_data": {
-            "remote": "Remote Device",
-            "button": "Button"
-        },
         "trigger_type": {
             "remote_pressed": "Button pressed",
             "remote": "Remote Unit",
             "button": "Button on Remote"
         },
-        "remote": "Remote Unit",
-        "button": "Button on Remote"
     }
 }
