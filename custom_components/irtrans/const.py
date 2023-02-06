@@ -42,7 +42,7 @@ SERVICES_YAML = """send_irtrans_ir_command_&remote&:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
   target:
-    entity_id: sensor.irtrans_sensor
+    device_id: &device_id&
   fields:
     remote:
       name: Remote
