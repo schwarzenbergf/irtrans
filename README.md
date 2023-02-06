@@ -1,6 +1,6 @@
 [![hacs][hacsbadge]][hacs]
 [![Community Forum][forum-shield]][forum]
-[![License][license-shield]](LICENSE.md)
+[![License][license-shield]](LICENSE)
 
 ![Project Maintenance][maintenance-shield]
 
