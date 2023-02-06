@@ -3,8 +3,6 @@
 [![hacs][hacsbadge]][hacs]
 [![Community Forum][forum-shield]][forum]
 
-![Project Maintenance]
-
 # irtrans
 
 _Component to integrate with [irtrans](http://www.irtrans.de/de/shop/lan.php)._
@@ -31,16 +29,12 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 
 ***
 
-[integration_irtrans]: https://github.com/custom-components/integration_irtrans
-[buymecoffee]: https://www.buymeacoffee.com/ludeeus
-[buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
-[commits]: https://github.com/custom-components/integration_irtrans/commits/master
+[irtrans]: https://github.com/custom-components/irtrans
+[commits]: https://github.com/custom-components/irtrans/commits/master
 [hacs]: https://github.com/custom-components/hacs
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
-[discord]: https://discord.gg/Qa5fW2R
-[discord-shield]: https://img.shields.io/discord/330944238910963714.svg?style=for-the-badge
-[exampleimg]: logo@2x.png
+[irtransimg]: ![irtrans](/custom_components/irtrans/irtrans/logo.png)
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
-[maintenance-shield]: https://img.shields.io/badge/maintainer-Joakim%20Sørensen%20%40ludeeus-blue.svg?style=for-the-badge
-[releases]: https://github.com/custom-components/integration_irtrans/releases
+[maintenance-shield]: https://img.shields.io/badge/maintainer-
+[releases]: https://github.com/custom-components/irtrans/releases
