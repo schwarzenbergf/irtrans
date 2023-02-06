@@ -1,11 +1,10 @@
 send_irtrans_ir_command_denon:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
-  target:
-    entity_id: "sensor.irtrans_sensor"
   fields:
     remote:
       name: Remote
+      description: Denon
       required: true
       selector:
         select:
@@ -39,6 +38,7 @@ send_irtrans_ir_command_dvbt2:
   fields:
     remote:
       name: Remote
+      description: DVBT2
       required: true
       selector:
         select:
@@ -84,6 +84,7 @@ send_irtrans_ir_command_htpc:
   fields:
     remote:
       name: Remote
+      description: LGSMARTTV
       required: true
       selector:
         select:
@@ -110,6 +111,7 @@ send_irtrans_ir_command_lg75uh780v:
   fields:
     remote:
       name: Remote
+      description: lg75uh780v
       required: true
       selector:
         select:
@@ -150,6 +152,7 @@ send_irtrans_ir_command_lgsmarttv:
     entity_id: "sensor.irtrans_sensor"
   fields:
     remote:
+      description: lgsmarttv
       name: Remote
       required: true
       selector:
@@ -212,6 +215,7 @@ send_irtrans_ir_command_teufel:
   fields:
     remote:
       name: Remote
+      description: Teufel
       required: true
       selector:
         select:
