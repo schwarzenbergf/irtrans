@@ -7,7 +7,7 @@
 
 # irtrans
 
-_Component to integrate with [irtrans][integration_irtrans]._
+_Component to integrate with [[irtrans][integration_irtrans]](http://www.irtrans.de/de/shop/lan.php)._
 
 **This component will set up the following platforms.**
 
