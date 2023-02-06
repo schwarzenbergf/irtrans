@@ -16,7 +16,7 @@ Platform | Description
 `sensor` | Show info from IRTrans LAN DB device
 `event`  | Event Triggers from Remotes 
 
-![irtrans](/custom_components/irtrans/irtrans/logo@2x.png)
+![irtrans](/custom_components/irtrans/irtrans/logo.png)
 
 ## Installation
 
