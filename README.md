@@ -13,8 +13,8 @@ _Component to integrate with [irtrans](http://www.irtrans.de/de/shop/lan.php)._
 
 Platform | Description
 -- | --
-`sensor` | Show info from IRTrans LAN DB device
-`event`  | Event Triggers from Remotes 
+`irtrans` | SENSOR- Show info from IRTrans LAN device
+`event`  | Event Triggers from (learned) Remotes 
 
 ![irtrans](/custom_components/irtrans/irtrans/logo.png)
 
