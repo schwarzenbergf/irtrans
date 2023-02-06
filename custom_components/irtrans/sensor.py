@@ -3,11 +3,12 @@ import logging
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers import entity_platform
-from homeassistant.helpers.template import device_id, device_entities
+
+# from homeassistant.helpers.template import device_id, device_entities
 
 # from homeassistant.helpers import device_registry as dr
 
-from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR, SERVICES_YAML, DEBUG, NAME
+from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR, SERVICES_YAML, DEBUG
 from .entity import IRTransEntity
 from .api import IRTransAPI, IRTransCon
 
@@ -39,8 +40,8 @@ async def async_setup_entry(hass, entry, async_add_devices):
         "custom_components/" + DEFAULT_NAME + "/services.yaml", "wt", encoding="utf-8"
     )
 
-    my_device_id = device_id(hass, NAME)
-    entities = device_entities(hass, my_device_id)
+    # my_device_id = device_id(hass, NAME)
+    # entities = device_entities(hass, my_device_id)
 
     for remote in IRTransCon.mycfg["devices"]:
         if remote == "firmware":
@@ -48,7 +49,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
 
         # create services.yaml for this service
         s_yaml = SERVICES_YAML.replace("&remote&", remote)
-        s_yaml = s_yaml.replace("&device_id", my_device_id)
+        # s_yaml = s_yaml.replace("&device_id", my_device_id)
         c_yaml = "            - "
         cmd_yaml = ""
         commands = IRTransCon.mycfg["devices"][remote]

@@ -2,7 +2,6 @@ send_irtrans_ir_command_denon:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
   target:
-    device_id: 67fd3fd937c1ab8c009844fb61c173d0&
   fields:
     remote:
       name: Remote
@@ -36,7 +35,6 @@ send_irtrans_ir_command_dvbt2:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
   target:
-    device_id: 67fd3fd937c1ab8c009844fb61c173d0&
   fields:
     remote:
       name: Remote
@@ -82,7 +80,6 @@ send_irtrans_ir_command_htpc:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
   target:
-    device_id: 67fd3fd937c1ab8c009844fb61c173d0&
   fields:
     remote:
       name: Remote
@@ -109,7 +106,6 @@ send_irtrans_ir_command_lg75uh780v:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
   target:
-    device_id: 67fd3fd937c1ab8c009844fb61c173d0&
   fields:
     remote:
       name: Remote
@@ -151,7 +147,6 @@ send_irtrans_ir_command_lgsmarttv:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
   target:
-    device_id: 67fd3fd937c1ab8c009844fb61c173d0&
   fields:
     remote:
       name: Remote
@@ -213,7 +208,6 @@ send_irtrans_ir_command_teufel:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
   target:
-    device_id: 67fd3fd937c1ab8c009844fb61c173d0&
   fields:
     remote:
       name: Remote
@@ -237,4 +231,3 @@ send_irtrans_ir_command_teufel:
             - "80hz"
             - "140hz"
             - "50hz"
-
