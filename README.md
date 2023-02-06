@@ -1,8 +1,10 @@
-
-# irtrans
-
 [![hacs][hacsbadge]][hacs]
 [![Community Forum][forum-shield]][forum]
+[![License][license-shield]](LICENSE.md)
+
+![Project Maintenance][maintenance-shield]
+
+# irtrans
 
 _Component to integrate with [irtrans][integration_irtrans]._
 
@@ -13,7 +15,7 @@ Platform | Description
 `sensor` | Show info from IRTrans LAN DB device
 `event`  | Event Triggers from Remotes 
 
-![custom_components][irtrans].[irtrans].[logo@2x.png]
+[![custom_components][irtrans].[irtrans]].(logo@2x.png)
 
 ## Installation
 
