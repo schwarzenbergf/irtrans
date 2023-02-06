@@ -1,0 +1,233 @@
+send_irtrans_ir_command_denon:
+  name: Send IRTrans IR Command
+  description: Send for lgsmarttv Remote an IR command
+  target:
+    entity_id: sensor.irtrans_sensor
+  fields:
+    remote:
+      name: Remote
+      required: true
+      selector:
+        select:
+          options:
+            - denon
+    ir_cmd:
+      name: IR Command
+      description: the IR Command to send to IRTrans using Remote
+      required: true
+      example: "vol+"
+      selector:
+        select:
+          options:
+            - "mute"
+            - "vol-"
+            - "vol+"
+            - "sat"
+            - "dtu"
+            - "net"
+            - "ipod"
+            - "tv"
+            - "dvd"
+            - "off"
+            - "on"
+
+send_irtrans_ir_command_dvbt2:
+  name: Send IRTrans IR Command
+  description: Send for lgsmarttv Remote an IR command
+  target:
+    entity_id: sensor.irtrans_sensor
+  fields:
+    remote:
+      name: Remote
+      required: true
+      selector:
+        select:
+          options:
+            - dvbt2
+    ir_cmd:
+      name: IR Command
+      description: the IR Command to send to IRTrans using Remote
+      required: true
+      example: "vol+"
+      selector:
+        select:
+          options:
+            - "blue"
+            - "yellow"
+            - "green"
+            - "red"
+            - "tools"
+            - "info"
+            - "exit"
+            - "return"
+            - "enter"
+            - "right"
+            - "left"
+            - "down"
+            - "up"
+            - "epg"
+            - "menu"
+            - "chlist"
+            - "mute"
+            - "ch-"
+            - "ch+"
+            - "vol-"
+            - "vol+"
+            - "onofftv"
+            - "onoff"
+
+send_irtrans_ir_command_htpc:
+  name: Send IRTrans IR Command
+  description: Send for lgsmarttv Remote an IR command
+  target:
+    entity_id: sensor.irtrans_sensor
+  fields:
+    remote:
+      name: Remote
+      required: true
+      selector:
+        select:
+          options:
+            - htpc
+    ir_cmd:
+      name: IR Command
+      description: the IR Command to send to IRTrans using Remote
+      required: true
+      example: "vol+"
+      selector:
+        select:
+          options:
+            - "kerzen"
+            - "denonoff"
+            - "denonon"
+            - "power"
+
+send_irtrans_ir_command_lg75uh780v:
+  name: Send IRTrans IR Command
+  description: Send for lgsmarttv Remote an IR command
+  target:
+    entity_id: sensor.irtrans_sensor
+  fields:
+    remote:
+      name: Remote
+      required: true
+      selector:
+        select:
+          options:
+            - lg75uh780v
+    ir_cmd:
+      name: IR Command
+      description: the IR Command to send to IRTrans using Remote
+      required: true
+      example: "vol+"
+      selector:
+        select:
+          options:
+            - "settings"
+            - "input"
+            - "mute"
+            - "ch-"
+            - "ch+"
+            - "vol-"
+            - "vol+"
+            - "0"
+            - "9"
+            - "8"
+            - "7"
+            - "6"
+            - "5"
+            - "4"
+            - "3"
+            - "2"
+            - "1"
+            - "home"
+            - "onoff"
+
+send_irtrans_ir_command_lgsmarttv:
+  name: Send IRTrans IR Command
+  description: Send for lgsmarttv Remote an IR command
+  target:
+    entity_id: sensor.irtrans_sensor
+  fields:
+    remote:
+      name: Remote
+      required: true
+      selector:
+        select:
+          options:
+            - lgsmarttv
+    ir_cmd:
+      name: IR Command
+      description: the IR Command to send to IRTrans using Remote
+      required: true
+      example: "vol+"
+      selector:
+        select:
+          options:
+            - "onoff"
+            - "settings"
+            - "input"
+            - "mute"
+            - "ch-"
+            - "ch+"
+            - "vol-"
+            - "vol+"
+            - "0"
+            - "9"
+            - "8"
+            - "7"
+            - "6"
+            - "5"
+            - "4"
+            - "3"
+            - "2"
+            - "1"
+            - "back@"
+            - "back"
+            - "home"
+            - "green"
+            - "yellow"
+            - "blue"
+            - "red"
+            - "menut"
+            - "ff"
+            - "rewind"
+            - "pause"
+            - "stop"
+            - "play"
+            - "simplink"
+            - "menu"
+            - "hdmi3"
+            - "hdmi2"
+            - "hdmi1"
+            - "tv"
+            - "off"
+            - "on"
+
+send_irtrans_ir_command_teufel:
+  name: Send IRTrans IR Command
+  description: Send for lgsmarttv Remote an IR command
+  target:
+    entity_id: sensor.irtrans_sensor
+  fields:
+    remote:
+      name: Remote
+      required: true
+      selector:
+        select:
+          options:
+            - teufel
+    ir_cmd:
+      name: IR Command
+      description: the IR Command to send to IRTrans using Remote
+      required: true
+      example: "vol+"
+      selector:
+        select:
+          options:
+            - "vol-"
+            - "vol+"
+            - "110hz"
+            - "80hz"
+            - "140hz"
+            - "50hz"
