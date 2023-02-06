@@ -3,7 +3,7 @@
 [![hacs][hacsbadge]][hacs]
 [![Community Forum][forum-shield]][forum]
 
-![Project Maintenance][maintenance-shield]
+![Project Maintenance]
 
 # irtrans
 
