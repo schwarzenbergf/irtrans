@@ -46,6 +46,7 @@ SERVICES_YAML = """send_irtrans_ir_command_&remote&:
   fields:
     remote:
       name: Remote
+      description: &remote&
       required: true
       selector:
         select:
@@ -53,7 +54,7 @@ SERVICES_YAML = """send_irtrans_ir_command_&remote&:
             - &remote&
     ir_cmd:
       name: IR Command
-      description: the IR Command to send to IRTrans using Remote
+      description: IR Command to send to &remote&
       required: true
       example: "vol+"
       selector:

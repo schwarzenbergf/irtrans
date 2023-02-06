@@ -1,10 +1,12 @@
 send_irtrans_ir_command_denon:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
+  target:
+    entity_id: sensor.irtrans_sensor
   fields:
     remote:
       name: Remote
-      description: Denon
+      description: denon
       required: true
       selector:
         select:
@@ -12,7 +14,7 @@ send_irtrans_ir_command_denon:
             - denon
     ir_cmd:
       name: IR Command
-      description: the IR Command to send to IRTrans using Remote
+      description: IR Command to send to denon
       required: true
       example: "vol+"
       selector:
@@ -33,10 +35,12 @@ send_irtrans_ir_command_denon:
 send_irtrans_ir_command_dvbt2:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
+  target:
+    entity_id: sensor.irtrans_sensor
   fields:
     remote:
       name: Remote
-      description: DVBT2
+      description: dvbt2
       required: true
       selector:
         select:
@@ -44,7 +48,7 @@ send_irtrans_ir_command_dvbt2:
             - dvbt2
     ir_cmd:
       name: IR Command
-      description: the IR Command to send to IRTrans using Remote
+      description: IR Command to send to dvbt2
       required: true
       example: "vol+"
       selector:
@@ -77,10 +81,12 @@ send_irtrans_ir_command_dvbt2:
 send_irtrans_ir_command_htpc:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
+  target:
+    entity_id: sensor.irtrans_sensor
   fields:
     remote:
       name: Remote
-      description: LGSMARTTV
+      description: htpc
       required: true
       selector:
         select:
@@ -88,7 +94,7 @@ send_irtrans_ir_command_htpc:
             - htpc
     ir_cmd:
       name: IR Command
-      description: the IR Command to send to IRTrans using Remote
+      description: IR Command to send to htpc
       required: true
       example: "vol+"
       selector:
@@ -102,6 +108,8 @@ send_irtrans_ir_command_htpc:
 send_irtrans_ir_command_lg75uh780v:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
+  target:
+    entity_id: sensor.irtrans_sensor
   fields:
     remote:
       name: Remote
@@ -113,7 +121,7 @@ send_irtrans_ir_command_lg75uh780v:
             - lg75uh780v
     ir_cmd:
       name: IR Command
-      description: the IR Command to send to IRTrans using Remote
+      description: IR Command to send to lg75uh780v
       required: true
       example: "vol+"
       selector:
@@ -142,10 +150,12 @@ send_irtrans_ir_command_lg75uh780v:
 send_irtrans_ir_command_lgsmarttv:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
+  target:
+    entity_id: sensor.irtrans_sensor
   fields:
     remote:
-      description: lgsmarttv
       name: Remote
+      description: lgsmarttv
       required: true
       selector:
         select:
@@ -153,7 +163,7 @@ send_irtrans_ir_command_lgsmarttv:
             - lgsmarttv
     ir_cmd:
       name: IR Command
-      description: the IR Command to send to IRTrans using Remote
+      description: IR Command to send to lgsmarttv
       required: true
       example: "vol+"
       selector:
@@ -202,10 +212,12 @@ send_irtrans_ir_command_lgsmarttv:
 send_irtrans_ir_command_teufel:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
+  target:
+    entity_id: sensor.irtrans_sensor
   fields:
     remote:
       name: Remote
-      description: Teufel
+      description: teufel
       required: true
       selector:
         select:
@@ -213,7 +225,7 @@ send_irtrans_ir_command_teufel:
             - teufel
     ir_cmd:
       name: IR Command
-      description: the IR Command to send to IRTrans using Remote
+      description: IR Command to send to teufel
       required: true
       example: "vol+"
       selector:
@@ -225,3 +237,4 @@ send_irtrans_ir_command_teufel:
             - "80hz"
             - "140hz"
             - "50hz"
+
