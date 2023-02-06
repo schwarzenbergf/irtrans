@@ -13,8 +13,9 @@ _Component to integrate with [irtrans](http://www.irtrans.de/de/shop/lan.php)._
 
 Platform | Description
 -- | --
-`irtrans` | SENSOR- Show info from IRTrans LAN device
-`event`  | Event Triggers from (learned) Remotes 
+`irtrans` | Sensor - Show content from IRTrans LAN device
+`event`  | Event Triggers from (learned) Remotes
+`service` | Service call for each Remote
 
 ![irtrans](/custom_components/irtrans/irtrans/logo.png)
 
