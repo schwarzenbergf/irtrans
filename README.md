@@ -1,4 +1,4 @@
-[License](/LICENSE)
+[![License][license-shield]](LICENSE)
 
 [![hacs][hacsbadge]][hacs]
 [![Community Forum][forum-shield]][forum]
