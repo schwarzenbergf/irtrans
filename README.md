@@ -3,7 +3,7 @@
 [![hacs][hacsbadge]][hacs]
 [![Community Forum][forum-shield]][forum]
 
-# irtrans
+# irtrans - In development / not ready yet
 
 _Component to integrate with [irtrans](http://www.irtrans.de/de/shop/lan.php)._
 
