@@ -28,7 +28,7 @@ Platform | Description
 If you want to contribute to this please read the [Contribution guidelines](CONTRIBUTING.md)
 
 ***
-
+[license]: https://img.shields.io/github/license/schwarzenbergf/irtrans
 [irtrans]: https://github.com/custom-components/irtrans
 [commits]: https://github.com/custom-components/irtrans/commits/master
 [hacs]: https://github.com/custom-components/hacs
