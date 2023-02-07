@@ -24,7 +24,7 @@ where *remote_name* is the name of a (learned) IR Remote.
 
 This service can be used to fire IR commands. Here is an example how it looks in `Development Tools`:
 
-/custom_components/irtrans/images/devtools_example.png
+![Developer Tools]/custom_components/irtrans/images/devtools_example.png
 
 **This component will set up the following platforms.**
 
