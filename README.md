@@ -31,17 +31,37 @@ This service can be used to fire IR commands. Here is an example how it looks in
 `Automations` can be also used to fire IR commands. Here is an example for an `Automation Action`:
 
 ```yaml
-        description: "Fire IR command for `vol+`of Remote *lgsmarttv*"
+        description: "Fire IR command for vol+ of Remote lgsmarttv"
         mode: single
         trigger: []
         condition: []
         action:
-          - service: irtrans.send_irtrans_ir_command_*lgsmarttv*
+          - service: irtrans.send_irtrans_ir_command_lgsmarttv
             data:
-              remote: *lgsmarttv*
-              ir_cmd: *vol+*
+              remote: lgsmarttv
+              ir_cmd: vol+
             target:
               entity_id: sensor.irtrans_sensor
+```
+
+**Listening for IR commands**
+
+The integration provides event support for IR commands which has been received by the IRTrans device.
+Only IR commands which are known (learned) by the IRTrans device will trigger an event.
+Here is an example for an `Automation` triggers on an IRTRans event:
+
+```yaml
+        description: "Trigger on button vol+ from Remote lgsmarttv"
+        mode: single
+        trigger:
+          - platform: event
+            event_type: irtrans_event
+            event_data:
+              type: remote_pressed
+              remote: lgsmarttv
+              button: vol+
+        condition: []
+        action: []
 ```
 
 **This component will set up the following platforms.**
