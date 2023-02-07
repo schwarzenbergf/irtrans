@@ -7,6 +7,16 @@
 
 _Component to integrate with [irtrans](http://www.irtrans.de/de/shop/lan.php)._
 
+**This component will set up the following platforms.**
+
+Platform | Description
+-- | --
+`irtrans` | Sensor - Show content from IRTrans LAN device
+`event`  | Event Triggers from (learned) Remotes
+`service` | Service call for each Remote
+
+![irtrans](/custom_components/irtrans/images/logo.png)
+
 ## Intro
 This integration adds support for [IRTrans Ethernet devices](http://www.irtrans.de/de/shop/lan.php) to Home Assistant. For now it has been testet with (and supports) only *IRTrans LAN DB (with database) devices*. The communication with the IRTrans device follows [these API rules](https://www.irtrans.de/download/Docs/IRTrans%20TCP%20ASCII%20Interface_EN.pdf).
 
@@ -28,7 +38,7 @@ This service can be used to fire IR commands. Here is an example how it looks in
 
 ![Developer Tools](/custom_components/irtrans/images/devtools_example.png)
 
-`Automations` can be also used to fire IR commands. Here is an example for an `Automation Action`:
+`Automations` can also be used to fire IR commands. Here is an example for an `Automation Action`:
 
 ```yaml
         description: "Fire IR command for vol+ of Remote lgsmarttv"
@@ -48,7 +58,7 @@ This service can be used to fire IR commands. Here is an example how it looks in
 
 The integration provides event support for IR commands which has been received by the IRTrans device.
 Only IR commands which are known (learned) by the IRTrans device will trigger an event.
-Here is an example for an `Automation` triggers on an IRTRans event:
+Here is an example for an `Automation` trigger on an IRTRans event:
 
 ```yaml
         description: "Trigger on button vol+ from Remote lgsmarttv"
@@ -63,16 +73,6 @@ Here is an example for an `Automation` triggers on an IRTRans event:
         condition: []
         action: []
 ```
-
-**This component will set up the following platforms.**
-
-Platform | Description
--- | --
-`irtrans` | Sensor - Show content from IRTrans LAN device
-`event`  | Event Triggers from (learned) Remotes
-`service` | Service call for each Remote
-
-![irtrans](/custom_components/irtrans/images/logo.png)
 
 ## Installation
 
