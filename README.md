@@ -85,11 +85,11 @@ Here is an example for an `Automation` trigger on an iRTrans event:
 
 ### Configuration is done in the UI
 
-After installing iRTrans with HACS (and the required restart of HA), adding iRTrans to HA and configuring is done via
+After installing iRTrans (and the required restart of HA), add iRTrans to HA via
 
 `Settings` --> `Devices & Services`.
 
-Just use `Add Integration` button and search for iRTrans. Fill in `Host address` & `Port` (default 21000) of the IRTRans device.
+Just use `Add Integration` button and search for iRTrans. Fill in `Host address` & `Port` (default 21000) of the IRTRans device and you are done.
 
 ![Config](/custom_components/irtrans/images/config_ui.png)
 
