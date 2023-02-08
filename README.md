@@ -107,4 +107,4 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [irtransimg]: ![irtrans](/custom_components/irtrans/irtrans/logo.png)
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2023
+[maintenance-shield]: https://img.shields.io/badge/maintainer-%40schwarzenbergf-blue.svg?style=for-the-badge
