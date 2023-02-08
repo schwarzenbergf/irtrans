@@ -37,7 +37,7 @@ Platform | Description
 [forum]: https://community.home-assistant.io/
 [license]: https://github.com/custom-components/irtrans/blob/main/LICENSE
 [license-shield]: https://img.shields.io/github/license/custom-components/irtrans.svg?style=for-the-badge
-[maintenance-shield]: https://img.shields.io/badge/maintainer-Joakim%20Sørensen%20%40ludeeus-blue.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-Frank%20Schwarzenberg%20%40schwarzenbergf-blue.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/release/custom-components/irtrans.svg?style=for-the-badge
 [releases]: https://github.com/custom-components/irtrans/releases
 [user_profile]: https://github.com/schwarzenbergf
