@@ -2,7 +2,7 @@
 [![Community Forum][forum-shield]][forum]
 [![License][license-shield]](LICENSE)
 ![GitHub release (beta)][beta-shield]
-[![Project Maintenance][maintenance-shield]][user_profile]
+[![Project Maintenance][maintenance-shield]]
 
 ![irtrans](/custom_components/irtrans/images/logo.png)
 
