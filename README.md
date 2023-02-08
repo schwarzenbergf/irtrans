@@ -87,7 +87,7 @@ After installing iRTrans (and the required restart of HA), add iRTrans to HA via
 
 `Settings` --> `Devices & Services`.
 
-Just use `Add Integration` button and search for iRTrans. Fill in `Host address` & `Port` (default 21000) of the iRTrans device and you are done.
+Just use `Add Integration` button and search for iRTrans. Fill in `Host Address` & `Port` (default 21000) of the iRTrans device and you are done.
 
 ![Config](/custom_components/irtrans/images/config_ui.png)
 
