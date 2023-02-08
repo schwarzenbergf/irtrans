@@ -17,7 +17,7 @@ Platform | Description
 `service` | Service call for each Remote to send IR commands
 
 ## How it works
-This integration adds support for [iRTrans Ethernet devices](http://www.irtrans.de/de/shop/lan.php) to Home Assistant. For now it has been testet with (and supports) only *iRTrans LAN DB (with database) devices*. The communication with the iRTrans device follows [these API rules](https://www.irtrans.de/download/Docs/iRTrans%20TCP%20ASCII%20Interface_EN.pdf).
+This integration adds support for [iRTrans Ethernet devices](http://www.irtrans.de/de/shop/lan.php) to Home Assistant. For now it has been testet with *iRTrans LAN DB (with database) devices* only. The communication with the iRTrans device follows [these API rules](https://www.irtrans.de/download/Docs/iRTrans%20TCP%20ASCII%20Interface_EN.pdf).
 
 The basic procedure works as follows:
 
