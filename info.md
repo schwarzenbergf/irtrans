@@ -2,9 +2,6 @@
 [![License][license-shield]][license]
 [![hacs][hacsbadge]][hacs]
 [![Project Maintenance][maintenance-shield]][user_profile]
-[![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
-
-[![Discord][discord-shield]][discord]
 [![Community Forum][forum-shield]][forum]
 
 _Component to integrate with [irtrans][irtrans]._
@@ -37,7 +34,7 @@ Platform | Description
 [forum]: https://community.home-assistant.io/
 [license]: https://github.com/custom-components/irtrans/blob/main/LICENSE
 [license-shield]: https://img.shields.io/github/license/custom-components/irtrans.svg?style=for-the-badge
-[maintenance-shield]: https://img.shields.io/badge/maintainer-Frank%20Schwarzenberg%20%40schwarzenbergf-blue.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-%40schwarzenbergf-blue.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/release/custom-components/irtrans.svg?style=for-the-badge
 [releases]: https://github.com/custom-components/irtrans/releases
 [user_profile]: https://github.com/schwarzenbergf
