@@ -82,7 +82,7 @@ Here is an example for an `Automation` trigger on an IRTrans event:
 ### Install manually
 
 1. Install this platform by creating a `custom_components` folder in the same folder as your configuration.yaml, if it doesn't already exist.
-2. Create another folder `irtrans` in the `custom_components` folder. Copy all files from [irtrans](/custom_components/irtrans) into the `irtrans` folder. Do not copy files from master branch, download latest release (.zip) from [here](https://github.com/schwarzenbergf/irtrans/releases) and copy the content to the a/m irtrans folder.
+2. Create another folder `irtrans` in the `custom_components` folder. Copy all files from [irtrans](/custom_components/irtrans) into the `irtrans` folder. Do not copy files from master branch, download latest release (.zip) from [here](https://github.com/schwarzenbergf/irtrans/releases) and copy the content of `custom_components/irtrans/` to the a/m irtrans folder.
 
 ### Configuration is done in the UI
 
