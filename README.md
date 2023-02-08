@@ -66,7 +66,6 @@ trigger:
   - platform: event
     event_type: irtrans_event
     event_data:
-      type: remote_pressed
       remote: lgsmarttv
       button: vol+
 condition: []
@@ -74,9 +73,9 @@ action: []
 ```
 
 ## Installation
-### Install with HACS
+### Install with HACS (recommended)
 
-[HACS](https://community.home-assistant.io/t/custom-component-hacs) should be used to install this integration. Just search for iRTrans and install it directly from HACS. HACS will keep track of updates and you can easily upgrade iRTrans to latest version.
+[HACS](https://community.home-assistant.io/t/custom-component-hacs) can be used to install this integration. Just search for iRTrans and install it directly from HACS. HACS will keep track of updates and you can easily upgrade iRTrans to latest version.
 
 ### Install manually
 
