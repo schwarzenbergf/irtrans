@@ -36,5 +36,5 @@ Platform | Description
 [license-shield]: https://img.shields.io/github/license/schwarzenbergf/irtrans?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-%40schwarzenbergf-blue.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/custom-components/irtrans.svg?style=for-the-badge
-[releases]: https://github.com/custom-components/schwarzenbergf/irtrans/releases
+[releases]: https://github.com/schwarzenbergf/irtrans/releases
 [user_profile]: https://github.com/schwarzenbergf
