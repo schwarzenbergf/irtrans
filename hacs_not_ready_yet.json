@@ -2,4 +2,7 @@
     "name": "IRTrans",
     "hacs": "1.6.0",
     "homeassistant": "0.118.0"
+    "hide_default_branch": true,
+    "zip_release": true,
+    "filename": "irtrans.zip",  
 }
