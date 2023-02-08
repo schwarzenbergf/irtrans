@@ -6,7 +6,7 @@
 ![irtrans](/custom_components/irtrans/images/logo.png)
 
 # iRTrans - this is a BETA release
-_Component to integrate with [irtrans](http://www.irtrans.de/de/shop/lan.php)._
+_Component to integrate with [irtrans](http://www.irtrans.de/en/shop/lan.php)._
 
 **This component will set up the following platforms.**
 
@@ -17,22 +17,21 @@ Platform | Description
 `service` | Service call for each Remote to send IR commands
 
 ## How it works
-This integration adds support for [iRTrans Ethernet devices](http://www.irtrans.de/de/shop/lan.php) to Home Assistant. For now it has been testet with *iRTrans LAN DB (with database) devices* only. The communication with the iRTrans device follows [these API rules](https://www.irtrans.de/download/Docs/iRTrans%20TCP%20ASCII%20Interface_EN.pdf).
+This integration adds support for [iRTrans Ethernet devices](http://www.irtrans.de/en/shop/lan.php) to Home Assistant. For now it has been testet with *iRTrans LAN DB (with database) devices* only. The communication with the iRTrans device follows [these API rules](https://www.irtrans.de/download/Docs/iRTrans%20TCP%20ASCII%20Interface_EN.pdf).
 
 The basic procedure works as follows:
 
-After successfully connected to an iRTrans device the configuration is read. In the first step all the (learned) IR Remotes are fetched. In the second step for each Remote all available commands are read. Remotes and associated commands (buttons) are then stored as attributes of the Sensor entity, which will be created as representation of the iRTrans device.
+After successfully connected to an iRTrans device the configuration is read from the device. In the first step all the IR Remotes are fetched. In the second step for each Remote all available commands are read. Remotes and associated commands (buttons) are then stored as attributes of the Sensor entity, which will be created as representation of the iRTrans device.
 
 ![irtrans_sensor](/custom_components/irtrans/images/irtrans_sensor.png)
 
 **Sending IR commands**
 
-For each Remote a so called `entity service` will be created with the following naming convention:
+For each Remote a so called `entity_service` will be created with the following naming convention:
 
 send_irtrans_ir_command_*remote_name*
 
 where *remote_name* is the name of a (learned) IR Remote.
-
 This service can be used to fire IR commands. Here is an example how it looks in `Developer Tools`:
 
 ![Developer Tools](/custom_components/irtrans/images/devtools_example.png)
@@ -57,7 +56,7 @@ action:
 
 The integration provides event support for IR commands which has been received by the iRTrans device.
 Only IR commands which are known (learned) by the iRTrans device will trigger an event.
-Here is an example for an `Automation` trigger on an iRTrans event:
+Here is an example for an `Automation Trigger` on an iRTrans event:
 
 ```yaml
 description: "Trigger on button vol+ from Remote lgsmarttv"
@@ -79,7 +78,7 @@ action: []
 
 ### Install manually
 
-1. Install this platform by creating a `custom_components` folder in the same folder as your configuration.yaml, if it doesn't already exist.
+1. Install this integration by creating a `custom_components` folder in the same folder as your configuration.yaml, if it doesn't already exist.
 2. Create another folder `irtrans` in the `custom_components` folder. Copy all files from [irtrans](/custom_components/irtrans) into the `irtrans` folder. Do not copy files from master branch, download latest release (.zip) from [here](https://github.com/schwarzenbergf/irtrans/releases) and copy the content of `custom_components/irtrans/` to the a/m irtrans folder.
 
 ### Configuration is done in the UI
