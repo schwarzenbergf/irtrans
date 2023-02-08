@@ -17,6 +17,8 @@ Platform | Description
 `event`  | Event Triggers from (learned) Remotes
 `service` | Service call for each Remote to send IR commands
 
+***
+
 ## Requirements
 iRTrans appliances are devices which are able to send and receive (and to learn) IR (infrared) signals.
 For more details see [here](http://www.irtrans.de/en/shop/lan.php).
