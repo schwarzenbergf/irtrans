@@ -2,6 +2,8 @@
 [![Community Forum][forum-shield]][forum]
 [![License][license-shield]](LICENSE)
 
+![irtrans](/custom_components/irtrans/images/logo.png)
+
 # irtrans - In development / not ready yet
 
 _Component to integrate with [irtrans](http://www.irtrans.de/de/shop/lan.php)._
@@ -13,8 +15,6 @@ Platform | Description
 `irtrans` | Sensor - Show content from IRTrans LAN device
 `event`  | Event Triggers from (learned) Remotes
 `service` | Service call for each Remote to send IR commands
-
-![irtrans](/custom_components/irtrans/images/logo.png)
 
 ## How it works
 This integration adds support for [IRTrans Ethernet devices](http://www.irtrans.de/de/shop/lan.php) to Home Assistant. For now it has been testet with (and supports) only *IRTrans LAN DB (with database) devices*. The communication with the IRTrans device follows [these API rules](https://www.irtrans.de/download/Docs/IRTrans%20TCP%20ASCII%20Interface_EN.pdf).
@@ -53,11 +53,11 @@ This service can be used to fire IR commands. Here is an example how it looks in
               entity_id: sensor.irtrans_sensor
 ```
 
-**Listening for IR commands**
+**Listening to IR commands**
 
 The integration provides event support for IR commands which has been received by the IRTrans device.
 Only IR commands which are known (learned) by the IRTrans device will trigger an event.
-Here is an example for an `Automation` trigger on an IRTRans event:
+Here is an example for an `Automation` trigger on an IRTrans event:
 
 ```yaml
         description: "Trigger on button vol+ from Remote lgsmarttv"
@@ -77,6 +77,11 @@ Here is an example for an `Automation` trigger on an IRTRans event:
 ### Install with HACS
 
 [HACS](https://community.home-assistant.io/t/custom-component-hacs) must be used to install this integartion. Just search for IRTrans and install it direct from HACS. HACS will keep track of updates and you can easily upgrade IRTrans to latest version. See Setup for how to add it in HA.
+
+## Install manually
+
+1. Install this platform by creating a `custom_components` folder in the same folder as your configuration.yaml, if it doesn't already exist.
+2. Create another folder `irtrans` in the `custom_components` folder. Copy all files from [irtrans](/custom_components/irtrans) into the `irtrans` folder. Do not copy files from master branch, download latest release (.zip) from [here](https://github.com/schwarzenbergf/irtrans/releases).
 
 ## Configuration is done in the UI
 
