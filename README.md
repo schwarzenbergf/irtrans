@@ -40,17 +40,17 @@ This service can be used to fire IR commands. Here is an example how it looks in
 `Automations` can also be used to fire IR commands. Here is an example for an `Automation Action`:
 
 ```yaml
-        description: "Fire IR command for vol+ of Remote lgsmarttv"
-        mode: single
-        trigger: []
-        condition: []
-        action:
-          - service: irtrans.send_irtrans_ir_command_lgsmarttv
-            data:
-              remote: lgsmarttv
-              ir_cmd: vol+
-            target:
-              entity_id: sensor.irtrans_sensor
+description: "Fire IR command for vol+ of Remote lgsmarttv"
+mode: single
+trigger: []
+condition: []
+action:
+  - service: irtrans.send_irtrans_ir_command_lgsmarttv
+    data:
+      remote: lgsmarttv
+      ir_cmd: vol+
+    target:
+      entity_id: sensor.irtrans_sensor
 ```
 
 **Listening to IR commands**
@@ -60,17 +60,17 @@ Only IR commands which are known (learned) by the iRTrans device will trigger an
 Here is an example for an `Automation` trigger on an iRTrans event:
 
 ```yaml
-        description: "Trigger on button vol+ from Remote lgsmarttv"
-        mode: single
-        trigger:
-          - platform: event
-            event_type: irtrans_event
-            event_data:
-              type: remote_pressed
-              remote: lgsmarttv
-              button: vol+
-        condition: []
-        action: []
+description: "Trigger on button vol+ from Remote lgsmarttv"
+mode: single
+trigger:
+  - platform: event
+    event_type: irtrans_event
+    event_data:
+      type: remote_pressed
+      remote: lgsmarttv
+      button: vol+
+condition: []
+action: []
 ```
 
 ## Installation
@@ -89,7 +89,7 @@ After installing iRTrans (and the required restart of HA), add iRTrans to HA via
 
 `Settings` --> `Devices & Services`.
 
-Just use `Add Integration` button and search for iRTrans. Fill in `Host address` & `Port` (default 21000) of the IRTRans device and you are done.
+Just use `Add Integration` button and search for iRTrans. Fill in `Host address` & `Port` (default 21000) of the iRTrans device and you are done.
 
 ![Config](/custom_components/irtrans/images/config_ui.png)
 
