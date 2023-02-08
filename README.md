@@ -5,8 +5,7 @@
 
 ![irtrans](/custom_components/irtrans/images/logo.png)
 
-# irtrans - In development / not ready yet
-
+# irtrans - this is a BETA release
 _Component to integrate with [irtrans](http://www.irtrans.de/de/shop/lan.php)._
 
 **This component will set up the following platforms.**
