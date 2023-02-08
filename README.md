@@ -21,11 +21,11 @@ This integration adds support for [iRTrans Ethernet devices](http://www.irtrans.
 
 The basic procedure works as follows:
 
-After successfully connected to a iRTrans device the configuration is read. In the first step all the (learned) IR Remotes are fetched. In the second step for each Remote all available commands are read. Remotes and associated commands (buttons) are then stored as attributes of the Sensor entity, which will be created as representation of the iRTrans device.
+After successfully connected to an iRTrans device the configuration is read. In the first step all the (learned) IR Remotes are fetched. In the second step for each Remote all available commands are read. Remotes and associated commands (buttons) are then stored as attributes of the Sensor entity, which will be created as representation of the iRTrans device.
 
 ![irtrans_sensor](/custom_components/irtrans/images/irtrans_sensor.png)
 
-**Sendig IR commands**
+**Sending IR commands**
 
 For each Remote a so called `entity service` will be created with the following naming convention:
 
