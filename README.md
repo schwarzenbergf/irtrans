@@ -80,12 +80,11 @@ Here is an example for an `Automation` trigger on an IRTRans event:
 
 ## Configuration is done in the UI
 
-After installing IRTrans with HACS (and the required reboot of HA), adding to HA and configuring is done via `Settings` --> `Devices & Services`.
+After installing IRTrans with HACS (and the required reboot of HA), adding IRTrans to HA and configuring is done via `Settings` --> `Devices & Services`.
 Just use `Add Integration` button and search for IRTrans. Two parameters are required: `host` & `port` of the IRTRans device. The default port is **21000** and is prefilled.
 
 ![Config](/custom_components/irtrans/images/config_ui.png)
 
-If the parameters are correct and the device is connected
 <!---->
 
 ## Contributions are welcome!
@@ -102,4 +101,3 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2023
-[releases]: https://github.com/custom-components/irtrans/releases
