@@ -5,23 +5,23 @@
 
 ![irtrans](/custom_components/irtrans/images/logo.png)
 
-# irtrans - this is a BETA release
+# iRTrans - this is a BETA release
 _Component to integrate with [irtrans](http://www.irtrans.de/de/shop/lan.php)._
 
 **This component will set up the following platforms.**
 
 Platform | Description
 -- | --
-`irtrans` | Sensor - Show content from IRTrans LAN device
+`irtrans` | Sensor - Show content from iRTans LAN device
 `event`  | Event Triggers from (learned) Remotes
 `service` | Service call for each Remote to send IR commands
 
 ## How it works
-This integration adds support for [IRTrans Ethernet devices](http://www.irtrans.de/de/shop/lan.php) to Home Assistant. For now it has been testet with (and supports) only *IRTrans LAN DB (with database) devices*. The communication with the IRTrans device follows [these API rules](https://www.irtrans.de/download/Docs/IRTrans%20TCP%20ASCII%20Interface_EN.pdf).
+This integration adds support for [iRTans Ethernet devices](http://www.irtrans.de/de/shop/lan.php) to Home Assistant. For now it has been testet with (and supports) only *iRTans LAN DB (with database) devices*. The communication with the iRTans device follows [these API rules](https://www.irtrans.de/download/Docs/iRTans%20TCP%20ASCII%20Interface_EN.pdf).
 
 The basic procedure works as follows:
 
-After successfully connected to a IRTrans device the configuration is read. In the first step all the (learned) IR Remotes are fetched. In the second step for each Remote all available commands are read. Remotes and associated commands (buttons) are then stored as attributes of the Sensor entity, which will be created as representation of the IRTrans device.
+After successfully connected to a iRTans device the configuration is read. In the first step all the (learned) IR Remotes are fetched. In the second step for each Remote all available commands are read. Remotes and associated commands (buttons) are then stored as attributes of the Sensor entity, which will be created as representation of the iRTans device.
 
 ![irtrans_sensor](/custom_components/irtrans/images/irtrans_sensor.png)
 
@@ -55,9 +55,9 @@ This service can be used to fire IR commands. Here is an example how it looks in
 
 **Listening to IR commands**
 
-The integration provides event support for IR commands which has been received by the IRTrans device.
-Only IR commands which are known (learned) by the IRTrans device will trigger an event.
-Here is an example for an `Automation` trigger on an IRTrans event:
+The integration provides event support for IR commands which has been received by the iRTans device.
+Only IR commands which are known (learned) by the iRTans device will trigger an event.
+Here is an example for an `Automation` trigger on an iRTans event:
 
 ```yaml
         description: "Trigger on button vol+ from Remote lgsmarttv"
@@ -76,7 +76,7 @@ Here is an example for an `Automation` trigger on an IRTrans event:
 ## Installation
 ### Install with HACS
 
-[HACS](https://community.home-assistant.io/t/custom-component-hacs) should be used to install this integration. Just search for IRTrans and install it directly from HACS. HACS will keep track of updates and you can easily upgrade IRTrans to latest version.
+[HACS](https://community.home-assistant.io/t/custom-component-hacs) should be used to install this integration. Just search for iRTans and install it directly from HACS. HACS will keep track of updates and you can easily upgrade iRTans to latest version.
 
 ### Install manually
 
@@ -85,11 +85,11 @@ Here is an example for an `Automation` trigger on an IRTrans event:
 
 ### Configuration is done in the UI
 
-After installing IRTrans with HACS (and the required restart of HA), adding IRTrans to HA and configuring is done via
+After installing iRTans with HACS (and the required restart of HA), adding iRTans to HA and configuring is done via
 
 `Settings` --> `Devices & Services`.
 
-Just use `Add Integration` button and search for IRTrans. Fill in `Host address` & `Port` (default 21000) of the IRTRans device.
+Just use `Add Integration` button and search for iRTans. Fill in `Host address` & `Port` (default 21000) of the IRTRans device.
 
 ![Config](/custom_components/irtrans/images/config_ui.png)
 
