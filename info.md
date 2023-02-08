@@ -19,14 +19,10 @@ Platform | Description
 `sensor` | Show info from API.
 `switch` | Switch something `True` or `False`.
 
-![example][exampleimg]
+![iRTrans][/custom_components/irtrans/images/icon.png]
 
 {% if not installed %}
 ## Installation
-
-1. Click install.
-1. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "IRTrans".
-
 {% endif %}
 
 
@@ -37,15 +33,8 @@ Platform | Description
 ***
 
 [irtrans]: https://github.com/custom-components/irtrans
-[buymecoffee]: https://www.buymeacoffee.com/ludeeus
-[buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
-[commits-shield]: https://img.shields.io/github/commit-activity/y/custom-components/irtrans.svg?style=for-the-badge
-[commits]: https://github.com/custom-components/irtrans/commits/master
 [hacs]: https://hacs.xyz
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
-[discord]: https://discord.gg/Qa5fW2R
-[discord-shield]: https://img.shields.io/discord/330944238910963714.svg?style=for-the-badge
-[exampleimg]: example.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 [license]: https://github.com/custom-components/irtrans/blob/main/LICENSE
