@@ -1,6 +1,7 @@
 [![hacs][hacsbadge]][hacs]
 [![Community Forum][forum-shield]][forum]
 [![License][license-shield]](LICENSE)
+![GitHub release (beta)][beta-shield]
 
 ![irtrans](/custom_components/irtrans/images/logo.png)
 
@@ -76,28 +77,32 @@ Here is an example for an `Automation` trigger on an IRTrans event:
 ## Installation
 ### Install with HACS
 
-[HACS](https://community.home-assistant.io/t/custom-component-hacs) must be used to install this integartion. Just search for IRTrans and install it direct from HACS. HACS will keep track of updates and you can easily upgrade IRTrans to latest version. See Setup for how to add it in HA.
+[HACS](https://community.home-assistant.io/t/custom-component-hacs) should be used to install this integration. Just search for IRTrans and install it directly from HACS. HACS will keep track of updates and you can easily upgrade IRTrans to latest version.
 
-## Install manually
+### Install manually
 
 1. Install this platform by creating a `custom_components` folder in the same folder as your configuration.yaml, if it doesn't already exist.
-2. Create another folder `irtrans` in the `custom_components` folder. Copy all files from [irtrans](/custom_components/irtrans) into the `irtrans` folder. Do not copy files from master branch, download latest release (.zip) from [here](https://github.com/schwarzenbergf/irtrans/releases).
+2. Create another folder `irtrans` in the `custom_components` folder. Copy all files from [irtrans](/custom_components/irtrans) into the `irtrans` folder. Do not copy files from master branch, download latest release (.zip) from [here](https://github.com/schwarzenbergf/irtrans/releases) and copy the content to the a/m irtrans folder.
 
-## Configuration is done in the UI
+### Configuration is done in the UI
 
-After installing IRTrans with HACS (and the required reboot of HA), adding IRTrans to HA and configuring is done via `Settings` --> `Devices & Services`.
-Just use `Add Integration` button and search for IRTrans. Two parameters are required: `host` & `port` of the IRTRans device. The default port is **21000** and is prefilled.
+After installing IRTrans with HACS (and the required restart of HA), adding IRTrans to HA and configuring is done via
+
+`Settings` --> `Devices & Services`.
+
+Just use `Add Integration` button and search for IRTrans. Fill in `Host address` & `Port` (default 21000) of the IRTRans device.
 
 ![Config](/custom_components/irtrans/images/config_ui.png)
 
 <!---->
 
-## Contributions are welcome!
+### Contributions are welcome!
 
 If you want to contribute to this please read the [Contribution guidelines](CONTRIBUTING.md)
 
 ***
-[license-shield]: https://img.shields.io/github/license/schwarzenbergf/irtrans
+[license-shield]: https://img.shields.io/github/license/schwarzenbergf/irtrans?style=for-the-badge
+[beta-shield]: https://img.shields.io/github/v/release/schwarzenbergf/irtrans?include_prereleases&style=for-the-badge
 [irtrans]: https://github.com/custom-components/irtrans
 [commits]: https://github.com/custom-components/irtrans/commits/master
 [hacs]: https://github.com/custom-components/hacs
