@@ -1,7 +1,6 @@
-[![License][license-shield]](LICENSE)
-
 [![hacs][hacsbadge]][hacs]
 [![Community Forum][forum-shield]][forum]
+[![License][license-shield]](LICENSE)
 
 # irtrans - In development / not ready yet
 
@@ -13,11 +12,11 @@ Platform | Description
 -- | --
 `irtrans` | Sensor - Show content from IRTrans LAN device
 `event`  | Event Triggers from (learned) Remotes
-`service` | Service call for each Remote
+`service` | Service call for each Remote to send IR commands
 
 ![irtrans](/custom_components/irtrans/images/logo.png)
 
-## Intro
+## How it works
 This integration adds support for [IRTrans Ethernet devices](http://www.irtrans.de/de/shop/lan.php) to Home Assistant. For now it has been testet with (and supports) only *IRTrans LAN DB (with database) devices*. The communication with the IRTrans device follows [these API rules](https://www.irtrans.de/download/Docs/IRTrans%20TCP%20ASCII%20Interface_EN.pdf).
 
 The basic procedure works as follows:
@@ -75,9 +74,18 @@ Here is an example for an `Automation` trigger on an IRTRans event:
 ```
 
 ## Installation
+### Install with HACS
+
+[HACS](https://community.home-assistant.io/t/custom-component-hacs) must be used to install this integartion. Just search for IRTrans and install it direct from HACS. HACS will keep track of updates and you can easily upgrade IRTrans to latest version. See Setup for how to add it in HA.
 
 ## Configuration is done in the UI
 
+After installing IRTrans with HACS (and the required reboot of HA), adding to HA and configuring is done via `Settings` --> `Devices & Services`.
+Just use `Add Integration` button and search for IRTrans. Two parameters are required: `host` & `port` of the IRTRans device. The default port is **21000** and is prefilled.
+
+![Config](/custom_components/irtrans/images/config_ui.png)
+
+If the parameters are correct and the device is connected
 <!---->
 
 ## Contributions are welcome!
