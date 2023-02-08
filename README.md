@@ -2,6 +2,7 @@
 [![Community Forum][forum-shield]][forum]
 [![License][license-shield]](LICENSE)
 ![GitHub release (beta)][beta-shield]
+[![Project Maintenance][maintenance-shield]][user_profile]
 
 ![irtrans](/custom_components/irtrans/images/logo.png)
 
@@ -108,3 +109,4 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 [maintenance-shield]: https://img.shields.io/badge/maintainer-%40schwarzenbergf-blue.svg?style=for-the-badge
+[user-profile]: @schwarzenbergf
