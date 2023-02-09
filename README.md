@@ -2,7 +2,6 @@
 [![Community Forum][forum-shield]][forum]
 [![License][license-shield]](LICENSE)
 ![Github release latest](https://img.shields.io/github/v/release/schwarzenbergf/irtrans?style=for-the-badge)
-![GitHub release (beta)][beta-shield]
 ![Project Maintenance][maintenance-shield]
 ![irtrans](/custom_components/irtrans/images/logo.png)
 
