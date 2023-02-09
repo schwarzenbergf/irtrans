@@ -17,6 +17,8 @@ Platform | Description
 `event`  | Event Triggers from (learned) Remotes
 `service` | Service call for each Remote to send IR commands
 
+***
+
 ## Requirements
 iRTrans appliances are devices which are able to send and receive (and to learn) IR (infrared) signals.
 For more details see [here](http://www.irtrans.de/en/shop/lan.php).
@@ -64,7 +66,7 @@ action:
 
 The integration provides event support for IR commands which has been received by the iRTrans device.
 Only IR commands which are known (learned) by the iRTrans device will trigger an event.
-Here is an example for an `Automation Trigger` on an iRTrans event:
+Here is an example off an `Automation Trigger` on an iRTrans event:
 
 ```yaml
 description: "Trigger on button vol+ from Remote lgsmarttv"
@@ -100,6 +102,7 @@ Just use `Add Integration` button and search for iRTrans. Fill in `Host Address`
 ![Config](/custom_components/irtrans/images/config_ui.png)
 
 <!---->
+
 
 ### Contributions are welcome!
 
