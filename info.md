@@ -6,6 +6,10 @@
 
 _Component to integrate with [irtrans][irtrans]._
 
+***
+
+![irtrans](/custom_components/irtrans/images/logo.png)
+
 **This component will set up the following platforms.**
 
 Platform | Description
@@ -13,15 +17,6 @@ Platform | Description
 `binary_sensor` | Show something `True` or `False`.
 `sensor` | Show info from API.
 `switch` | Switch something `True` or `False`.
-
-![iRTrans][/custom_components/irtrans/images/icon.png]
-
-{% if not installed %}
-## Installation
-{% endif %}
-
-
-## Configuration is done in the UI
 
 <!---->
 

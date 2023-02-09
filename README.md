@@ -34,6 +34,7 @@ The basic procedure works as follows:
 After successfully connected to an iRTrans device the configuration is read from the device. In the first step all the IR Remotes are fetched. In the second step for each Remote all available commands are read. Remotes and associated commands (buttons) are then stored as attributes of the Sensor entity, which will be created as representation of the iRTrans device.
 
 ![irtrans_sensor](/custom_components/irtrans/images/irtrans_sensor.png)
+<sub>In this example 6 remotes (denon, dvbt2 ...) with their associated commands have been fetched from the iRTrans device.</sub>
 
 **Sending IR commands**
 
@@ -61,6 +62,22 @@ action:
     target:
       entity_id: sensor.irtrans_sensor
 ```
+There are many UI (lovelace) cards for Remote senders/receivers available. Here is one example, how to assign a `service-call` to a button of such a Remote.
+The [Generic Remote Control Card](https://github.com/dimagoltsman/generic-remote-control-card.git) allows such an individual configuration:
+
+```yaml
+type: custom:generic-remote-control-card
+name: LG TV
+remote_template: simple
+buttons:
+  power:
+    call: irtrans.send_irtrans_ir_command_lgsmarttv
+    data:
+      entity_id: sensor.irtrans_sensor
+      remote: lgsmarttv
+      ir_cmd: onoff
+```
+In this example the name of the card is `LG TV`, the button to use is `power`, the `Remote` name is `lgsmarttv` and the assigned command is `onoff`.
 
 **Listening to IR commands**
 
@@ -80,6 +97,8 @@ trigger:
 condition: []
 action: []
 ```
+
+***
 
 ## Installation
 ### Install with HACS (recommended)
