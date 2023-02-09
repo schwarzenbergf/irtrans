@@ -39,11 +39,15 @@ class IRTransCon(asyncio.Protocol):
     @staticmethod
     async def write_data(transport, data):
         """Write Data to socket"""
-        transport.write(data.encode())
-        while transport.get_write_buffer_size() > 0:
-            continue
-        if DEBUG:
-            _LOGGER.debug("Data sent %s:", data)
+        try:
+            transport.write(data.encode())
+            while transport.get_write_buffer_size() > 0:
+                continue
+            if DEBUG:
+                _LOGGER.debug("Data sent %s:", data)
+        except Exception as exception:  # pylint: disable=broad-except
+            if DEBUG:
+                _LOGGER.error("Write Data exception! - %s", exception)
 
     def data_received(self, data):
         data = data.decode().strip()
@@ -88,6 +92,9 @@ class IRTransCon(asyncio.Protocol):
     def connection_lost(self, exc):
         if DEBUG:
             _LOGGER.debug("The server closed the connection %s", exc)
+        self.mycfg["irtrans"] = "disconnected"
+        self.trans_port.close()
+        self.trans_port = None
         self.on_con_lost.set_result(True)
 
 
