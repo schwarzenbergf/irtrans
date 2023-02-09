@@ -16,13 +16,6 @@ Platform | Description
 
 ![iRTrans][/custom_components/irtrans/images/icon.png]
 
-{% if not installed %}
-## Installation
-{% endif %}
-
-
-## Configuration is done in the UI
-
 <!---->
 
 ***
