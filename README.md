@@ -66,7 +66,7 @@ action:
 
 The integration provides event support for IR commands which has been received by the iRTrans device.
 Only IR commands which are known (learned) by the iRTrans device will trigger an event.
-Here is an example for an `Automation Trigger` on an iRTrans event:
+Here is an example off an `Automation Trigger` on an iRTrans event:
 
 ```yaml
 description: "Trigger on button vol+ from Remote lgsmarttv"
