@@ -14,7 +14,7 @@ Platform | Description
 `sensor` | Show info from API.
 `switch` | Switch something `True` or `False`.
 
-![iRTrans][/custom_components/irtrans/images/icon.png]
+![irtrans][/custom_components/irtrans/images/logo.png]
 
 <!---->
 
