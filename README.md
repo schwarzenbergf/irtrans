@@ -34,6 +34,7 @@ The basic procedure works as follows:
 After successfully connected to an iRTrans device the configuration is read from the device. In the first step all the IR Remotes are fetched. In the second step for each Remote all available commands are read. Remotes and associated commands (buttons) are then stored as attributes of the Sensor entity, which will be created as representation of the iRTrans device.
 
 ![irtrans_sensor](/custom_components/irtrans/images/irtrans_sensor.png)
+<sub>In this example 6 remotes (denon, dvbt2 ...) with their associated commands have been fetched from the iRTrans device.</sub>
 
 **Sending IR commands**
 
