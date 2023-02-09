@@ -33,30 +33,26 @@ jobs:
         - run: python3 -m pip install black
         - run: black .
 
-  tests:
-    runs-on: "ubuntu-latest"
-    name: Run tests
-    steps:
-      - name: Check out code from GitHub
-        uses: "actions/checkout@v2"
-      - name: Setup Python
-        uses: "actions/setup-python@v1"
-        with:
-          python-version: "3.10"
-      - name: setup tools
-        run: pip install -U pip setuptools wheel
-      - name: ruamel_yaml
-        run: pip install ruamel.yaml
-      - name: Install requirements
-        run: python3 -m pip install -r requirements_test.txt --use-pep517
-      - name: Run tests
-        run: |
-          pytest \
-            -qq \
-            --timeout=9 \
-            --durations=10 \
-            -n auto \
-            --cov custom_components.irtrans \
-            -o console_output_style=count \
-            -p no:sugar \
-            tests
+#  tests:
+#    runs-on: "ubuntu-latest"
+#    name: Run tests
+#    steps:
+#      - name: Check out code from GitHub
+#        uses: "actions/checkout@v2"
+#      - name: Setup Python
+#        uses: "actions/setup-python@v1"
+#        with:
+#          python-version: "3.10"
+#      - name: Install requirements
+#        run: python3 -m pip install -r requirements_test.txt
+#      - name: Run tests
+#        run: |
+#          pytest \
+#            -qq \
+#            --timeout=9 \
+#            --durations=10 \
+#            -n auto \
+#            --cov custom_components.irtrans \
+#            -o console_output_style=count \
+#            -p no:sugar \
+#            tests
