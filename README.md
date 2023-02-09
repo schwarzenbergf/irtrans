@@ -77,7 +77,7 @@ buttons:
       remote: lgsmarttv
       ir_cmd: onoff
 ```
-In this example the name of the card is `LG TV` the `Remote` name is `lgsmarttv` and the assigned button is `onoff`
+In this example the name of the card is `LG TV`, the button to use is `power`, the `Remote` name is `lgsmarttv` and the assigned command is `onoff`.
 
 **Listening to IR commands**
 
