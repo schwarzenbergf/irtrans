@@ -6,6 +6,8 @@
 
 _Component to integrate with [irtrans][irtrans]._
 
+***
+
 ![irtrans](/custom_components/irtrans/images/logo.png)
 
 **This component will set up the following platforms.**
