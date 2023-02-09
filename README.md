@@ -62,7 +62,7 @@ action:
       entity_id: sensor.irtrans_sensor
 ```
 There are many UI (lovelace) cards for Remote senders/receivers available. Here is one example, how to assign a `service-call` to a button of such a Remote.
-The [Generic Remote Control Card](https://github.com/dimagoltsman/generic-remote-control-card.git) allows such a individual configuration:
+The [Generic Remote Control Card](https://github.com/dimagoltsman/generic-remote-control-card.git) allows such an individual configuration:
 
 ```yaml
 type: custom:generic-remote-control-card
@@ -96,6 +96,8 @@ trigger:
 condition: []
 action: []
 ```
+
+***
 
 ## Installation
 ### Install with HACS (recommended)
