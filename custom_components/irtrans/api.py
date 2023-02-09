@@ -23,7 +23,7 @@ class IRTransCon(asyncio.Protocol):
         "firmware": "unkwown",
     }
     recv_data = None
-    trans_port = None
+    trans_port: asyncio.Transport = None
 
     def __init__(self, msg, on_con_lost, coordinator, hass):
         self.msg = msg
@@ -31,7 +31,8 @@ class IRTransCon(asyncio.Protocol):
         self.coordinator = coordinator
         self.hass = hass
 
-    def connection_made(self, transport):
+    def connection_made(self, transport: asyncio.Transport):
+        IRTransCon.trans_port = transport
         transport.write(self.msg.encode())
         if DEBUG:
             _LOGGER.debug("Data sent %s:", self.msg)
@@ -94,7 +95,6 @@ class IRTransCon(asyncio.Protocol):
         if DEBUG:
             _LOGGER.debug("The server closed the connection %s", exc)
         self.mycfg["irtrans"] = "disconnected"
-        IRTransCon.trans_port.close()
         IRTransCon.trans_port = None
         self.on_con_lost.set_result(True)
 
