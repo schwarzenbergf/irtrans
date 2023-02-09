@@ -62,8 +62,8 @@ action:
     target:
       entity_id: sensor.irtrans_sensor
 ```
-There are many UI (lovelace) cards for Remote senders/receivers available. Here is one example, how to assign a `service-call` to a button of such a Remote.
-The [Generic Remote Control Card](https://github.com/dimagoltsman/generic-remote-control-card.git) allows such an individual configuration:
+There are many UI (lovelace) cards for Remote senders/receivers available. Here is one example, how to assign a `service-call` to a button of such a Remote card.
+The [Generic Remote Control Card](https://github.com/dimagoltsman/generic-remote-control-card.git) allows individual configuration for each button of a Remote:
 
 ```yaml
 type: custom:generic-remote-control-card
@@ -77,7 +77,7 @@ buttons:
       remote: lgsmarttv
       ir_cmd: onoff
 ```
-In this example the name of the card is `LG TV`, the button to use is `power`, the `Remote` name is `lgsmarttv` and the assigned command is `onoff`.
+In this example the name of the card is `LG TV`, the button to use is `power`, the Remote name is `lgsmarttv` and the assigned command is `onoff`.
 
 **Listening to IR commands**
 
