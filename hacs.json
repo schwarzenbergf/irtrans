@@ -3,5 +3,6 @@
     "hacs": "1.6.0",
     "homeassistant": "0.118.0",
     "hide_default_branch": false,
-    "render_readme": true
+    "render_readme": true,
+    "content_in_root": true
 }
