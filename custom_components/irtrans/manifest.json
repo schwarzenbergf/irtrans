@@ -4,8 +4,7 @@
   "integration_type": "device",
   "documentation": "https://github.com/schwarzenbergf/irtrans",
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/schwarzenbergf/irtrans/issues,
-
+  "issue_tracker": "https://github.com/schwarzenbergf/irtrans/issues",
   "version": "1.0.0",
   "config_flow": true,
   "codeowners": [
