@@ -5,7 +5,7 @@
 ![Project Maintenance][maintenance-shield]
 ![irtrans](/custom_components/irtrans/images/logo.png)
 
-# iRTrans - this is a BETA release
+# iRTrans
 _Component to integrate with [irtrans](http://www.irtrans.de/en/shop/lan.php)._
 
 **This component will set up the following platforms.**
