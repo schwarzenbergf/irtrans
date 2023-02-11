@@ -17,3 +17,15 @@ Platform | Description
 `service` | Service call for each Remote to send IR commands
 
 ***
+
+[license-shield]: https://img.shields.io/github/license/schwarzenbergf/irtrans?style=for-the-badge
+[beta-shield]: https://img.shields.io/github/v/release/schwarzenbergf/irtrans?include_prereleases&style=for-the-badge
+[irtrans]: https://github.com/custom-components/irtrans
+[commits]: https://github.com/custom-components/irtrans/commits/master
+[hacs]: https://github.com/custom-components/hacs
+[hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
+[irtransimg]: ![irtrans](/custom_components/irtrans/irtrans/logo.png)
+[forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
+[forum]: https://community.home-assistant.io/
+[maintenance-shield]: https://img.shields.io/badge/maintainer-%40schwarzenbergf-blue.svg?style=for-the-badge
+[user-profile]: https://github.com/schwarzenbergf
