@@ -94,6 +94,7 @@ async def async_get_triggers(
             }
         )
 
+        # Write important information to log
         if DEBUG:
             _LOGGER.debug(
                 "Triggers(device_trigger): %s, %s", entry.platform, entry.domain
