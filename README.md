@@ -103,7 +103,11 @@ action: []
 ### Install with HACS (recommended)
 
 [HACS](https://community.home-assistant.io/t/custom-component-hacs) can be used to install this integration. Just search for iRTrans and install it directly from HACS. HACS will keep track of updates and you can easily upgrade iRTrans to latest version.
-If iRTrans is not (yet) available when using the `Explore & Download Repositories` in the HACS page use the menu (three dots) in the upper right corner to add a `Custom Repository` : https://github.com/schwarzenbergf/irtrans.git . After adding this [repository](https://github.com/schwarzenbergf/irtrans.git) and adding iRTrans to HACS (`Explore & Download Repositories`) do not forget to restart HA.
+If iRTrans is not (yet) available when using the `Explore & Download Repositories` in the HACS page use the menu (three dots) in the upper right corner to add a `Custom Repository` : https://github.com/schwarzenbergf/irtrans.git .
+
+![Add Custom Repository](/custom_components/irtrans/images/add2hacs.png)
+
+After adding this [repository](https://github.com/schwarzenbergf/irtrans.git) and adding iRTrans to HACS (`Explore & Download Repositories`) do not forget to restart HA.
 
 ### Install manually
 
