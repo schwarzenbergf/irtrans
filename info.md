@@ -22,6 +22,31 @@ This integration supports only so called `LAN` devices (which have an Ethernet o
 It has been tested with a device with IR Database and works probaly just with such a device.
 Learning of IR signals is not (yet) supported.
 
+## Installation
+### Install with HACS (recommended)
+
+[HACS](https://community.home-assistant.io/t/custom-component-hacs) can be used to install this integration. Just search for iRTrans and install it directly from HACS. HACS will keep track of updates and you can easily upgrade iRTrans to latest version.
+If iRTrans is not (yet) available when using the `Explore & Download Repositories` in the HACS page use the menu (three dots) in the upper right corner to add a `Custom Repository` : https://github.com/schwarzenbergf/irtrans.git .
+
+![Add Custom Repository](/custom_components/irtrans/images/add2hacs.png)
+
+After adding this [repository](https://github.com/schwarzenbergf/irtrans.git) and adding iRTrans to HACS (`Explore & Download Repositories`) do not forget to restart HA.
+
+### Install manually
+
+1. Install this integration by creating a `custom_components` folder in the same folder as your configuration.yaml, if it doesn't already exist.
+2. Create another folder `irtrans` in the `custom_components` folder. Copy all files from [irtrans](/custom_components/irtrans) into the `irtrans` folder. Do not copy files from master branch, download latest release (.zip) from [here](https://github.com/schwarzenbergf/irtrans/releases) and copy the content of `custom_components/irtrans/` to the a/m irtrans folder.
+
+### Configuration is done in the UI
+
+After installing iRTrans (and the required restart of HA), add iRTrans to HA via
+
+`Settings` --> `Devices & Services`.
+
+Just use `Add Integration` button and search for iRTrans. Fill in `Host Address` & `Port` (default 21000) of the iRTrans device and you are done.
+
+![Config](/custom_components/irtrans/images/config_ui.png)
+
 ***
 
 [license-shield]: https://img.shields.io/github/license/schwarzenbergf/irtrans?style=for-the-badge
