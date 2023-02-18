@@ -22,6 +22,14 @@ jobs:
             python-version: "3.10"
         - run: python3 -m pip install black
         - run: black .
+  hacs:
+    name: HACS Action
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: HACS Action
+        uses: "hacs/action@main"
+        with:
+          category: "integration"
 
 #  tests:
 #    runs-on: "ubuntu-latest"
