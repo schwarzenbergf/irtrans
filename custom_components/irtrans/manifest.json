@@ -1,6 +1,6 @@
 {
   "domain": "irtrans",
-  "name": "IRTrans",
+  "name": "iRTrans",
   "integration_type": "device",
   "documentation": "https://github.com/schwarzenbergf/irtrans",
   "iot_class": "local_polling",
