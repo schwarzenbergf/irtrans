@@ -1,0 +1,27 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Geräteadresse&Port",
+                "description": "Geräte-IP (e.g. 192.168.178.111) und PORT (Standard ist 21000)",
+                "data": {
+                    "host": "Geräteadresse",
+                    "port": "PORT"
+                }
+            }
+        },
+        "error": {
+            "host": "Gerät nicht gefunden."
+        },
+        "abort": {
+            "single_instance_allowed": "Nur eine Instanz ist möglich."
+        }
+    },
+    "device_automation": {
+        "trigger_type": {
+            "remote_pressed": "Fernbedienung gedrückt",
+            "remote": "Fernbedienung",
+            "button": "Taste auf Fernbedienung"
+        }
+    }
+}
