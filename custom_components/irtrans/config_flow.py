@@ -1,14 +1,14 @@
 """Adds config flow for IRTrans."""
+from __future__ import annotations
+
 import logging
 import asyncio
 from typing import Any, Dict, Optional
 import async_timeout
 from homeassistant import config_entries
 
-# from homeassistant.core import callback
-
-# from homeassistant.helpers.aiohttp_client import async_create_clientsession
 import voluptuous as vol
+
 from homeassistant.helpers.selector import (  # pylint: disable=ungrouped-imports
     TextSelector,
     TextSelectorConfig,
@@ -40,7 +40,6 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         #     return self.async_abort(reason="single_instance_allowed")
 
         if user_input is not None:
-
             # valid = await self._test_host(user_input["host"], user_input["port"])
             valid = await self.check_irtrans(user_input["host"], user_input["port"])
             if valid:

@@ -5,10 +5,7 @@ from typing import Any
 import logging
 import voluptuous as vol
 
-from homeassistant.components.automation import (
-    TriggerActionType,
-    TriggerInfo,
-)
+from homeassistant.components import automation
 from homeassistant.components.device_automation import DEVICE_TRIGGER_BASE_SCHEMA
 from homeassistant.components.homeassistant.triggers import state as state_trigger
 
@@ -106,8 +103,8 @@ async def async_get_triggers(
 async def async_attach_trigger(
     hass: HomeAssistant,
     config: ConfigType,
-    action: TriggerActionType,
-    trigger_info: TriggerInfo,
+    action: automation.AutomationTriggerData,  # TriggerActionType,
+    trigger_info: automation.AutomationTriggerInfo,  # TriggerInfo
 ) -> CALLBACK_TYPE:
     """Attach a trigger."""
     # Use the existing state or event triggers from the automation integration.
