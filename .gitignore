@@ -20,7 +20,6 @@ coverage.xml
 automations.yaml
 blueprints
 configuration.yaml
-custom_components/irtrans/services.yaml
 deps
 home-assistant_v2*
 home-assistant.log*
