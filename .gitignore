@@ -14,11 +14,13 @@ coverage.xml
 
 # Home Assistant configuration
 .cloud
+.devcontainer/devcontainer.json.old
 .HA_VERSION
 .storage
 automations.yaml
 blueprints
 configuration.yaml
+custom_components/irtrans/services.yaml
 deps
 home-assistant_v2*
 home-assistant.log*
@@ -26,3 +28,4 @@ tts
 scenes.yaml
 scripts.yaml
 secrets.yaml
+timeout_error.log

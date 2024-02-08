@@ -55,7 +55,7 @@ class IRTransCon(asyncio.Protocol):
         data = data.decode().strip()
         if DEBUG:
             _LOGGER.debug("Data received %s:", data)
-        data = data.split()
+        data = data.split(' ', 2) # split on ' ', but max. 3 parts
         if data[0].find("**"):
             self.mycfg["irtrans"] = "connected"
         if data[1] == "RCV_COM":  # IR Remote command received
@@ -73,7 +73,7 @@ class IRTransCon(asyncio.Protocol):
 
         if data[1] == "VERSION":  # Response to Aver
             IRTransCon.mycfg["version"] = data
-            IRTransCon.mycfg["firmware"] = data[2] + " " + data[3]
+            IRTransCon.mycfg["firmware"] = data[2] # + " " + data[3]
             if DEBUG:
                 _LOGGER.debug(
                     "Version/Firmware %s/%s:", data, IRTransCon.mycfg["firmware"]

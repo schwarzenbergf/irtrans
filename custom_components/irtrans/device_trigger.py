@@ -36,7 +36,8 @@ TRIGGER_TYPES = {"remote_pressed"}
 INPUTS_EVENTS_SUBTYPES = {"remote", "button"}
 CONF_RMT_BUTTON = "button"
 CONF_IR_REMOTE = "remote"
-IR_REMOTE = ["lgsmarttv", "denon", "htpc"]
+# IR_REMOTE = ["lgsmarttv", "denon", "htpc"]
+IR_REMOTE = ["first", "second", "third"]
 IR_BUTTON = [
     "0",
     "1",
@@ -94,7 +95,7 @@ async def async_get_triggers(
         # Write important information to log
         if DEBUG:
             _LOGGER.debug(
-                "Triggers(device_trigger): %s, %s", entry.platform, entry.domain
+                "Triggers(device_trigger): %s, %s, %s", entry.platform, entry.domain, triggers
             )
 
     return triggers

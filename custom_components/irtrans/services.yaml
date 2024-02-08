@@ -1,6 +1,6 @@
 send_irtrans_ir_command_denon:
   name: Send IRTrans IR Command
-  description: Send for lgsmarttv Remote an IR command
+  description: Send for denon Remote an IR command
   target:
   fields:
     remote:
@@ -33,7 +33,7 @@ send_irtrans_ir_command_denon:
 
 send_irtrans_ir_command_dvbt2:
   name: Send IRTrans IR Command
-  description: Send for lgsmarttv Remote an IR command
+  description: Send for dvbt2 Remote an IR command
   target:
   fields:
     remote:
@@ -78,7 +78,7 @@ send_irtrans_ir_command_dvbt2:
 
 send_irtrans_ir_command_htpc:
   name: Send IRTrans IR Command
-  description: Send for lgsmarttv Remote an IR command
+  description: Send for htpc Remote an IR command
   target:
   fields:
     remote:
@@ -97,14 +97,17 @@ send_irtrans_ir_command_htpc:
       selector:
         select:
           options:
-            - "kerzen"
+            - "selm7"
+            - "seltv"
+            - "kerzen aus"
+            - "kerzen an"
             - "denonoff"
             - "denonon"
             - "power"
 
 send_irtrans_ir_command_lg75uh780v:
   name: Send IRTrans IR Command
-  description: Send for lgsmarttv Remote an IR command
+  description: Send for lg75uh780v Remote an IR command
   target:
   fields:
     remote:
@@ -206,7 +209,7 @@ send_irtrans_ir_command_lgsmarttv:
 
 send_irtrans_ir_command_teufel:
   name: Send IRTrans IR Command
-  description: Send for lgsmarttv Remote an IR command
+  description: Send for teufel Remote an IR command
   target:
   fields:
     remote:

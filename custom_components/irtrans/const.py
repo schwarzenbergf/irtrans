@@ -3,7 +3,7 @@
 NAME = "IRTrans"
 DOMAIN = "irtrans"
 DOMAIN_DATA = f"{DOMAIN}_data"
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 ATTRIBUTION = ""
 ISSUE_URL = "https://github.com/custom-components/irtrans/issues"
 DEBUG = True
@@ -22,7 +22,7 @@ CONF_ENABLED = "enabled"
 CONF_HOST = "nnn.nnn.nnn.nnn"
 CONF_PORT = "21000"  # default IRTrans port
 GETVER = "Aver\n"  # Get firmware version from IRTrans
-TIMEOUT = 10
+TIMEOUT = 30 # 10 is for slower systems too less
 
 # Defaults
 DEFAULT_NAME = DOMAIN
@@ -40,7 +40,7 @@ If you have any issues with this you need to open an issue here:
 
 SERVICES_YAML = """send_irtrans_ir_command_&remote&:
   name: Send IRTrans IR Command
-  description: Send for lgsmarttv Remote an IR command
+  description: Send for &remote& Remote an IR command
   target:
   fields:
     remote:
