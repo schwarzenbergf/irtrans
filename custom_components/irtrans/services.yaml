@@ -31,6 +31,52 @@ send_irtrans_ir_command_denon:
             - "off"
             - "on"
 
+    led:
+      name: LED
+      description: Which LED to use for transmitting IR Command
+      required: false
+      example: "i"
+      selector:
+        select:
+          options:
+            - "i"
+            - "e"
+            - "b"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    bus:
+      name: BUS
+      description: The IRTrans Ethernet module that you want to send the command
+      required: false
+      example: "0"
+      selector:
+        select:
+          options:
+            - "0"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    mask:
+      name: MASK
+      description: This sets the net mask that chooses the modules connected through the IRTrans Serial Bus
+      required: false
+      example: "256"
+      selector:
+        number:
+          min: 0
+          max: 65535
+          mode: box
 send_irtrans_ir_command_dvbt2:
   name: Send IRTrans IR Command
   description: Send for dvbt2 Remote an IR command
@@ -76,6 +122,52 @@ send_irtrans_ir_command_dvbt2:
             - "onofftv"
             - "onoff"
 
+    led:
+      name: LED
+      description: Which LED to use for transmitting IR Command
+      required: false
+      example: "i"
+      selector:
+        select:
+          options:
+            - "i"
+            - "e"
+            - "b"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    bus:
+      name: BUS
+      description: The IRTrans Ethernet module that you want to send the command
+      required: false
+      example: "0"
+      selector:
+        select:
+          options:
+            - "0"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    mask:
+      name: MASK
+      description: This sets the net mask that chooses the modules connected through the IRTrans Serial Bus
+      required: false
+      example: "256"
+      selector:
+        number:
+          min: 0
+          max: 65535
+          mode: box
 send_irtrans_ir_command_htpc:
   name: Send IRTrans IR Command
   description: Send for htpc Remote an IR command
@@ -105,6 +197,52 @@ send_irtrans_ir_command_htpc:
             - "denonon"
             - "power"
 
+    led:
+      name: LED
+      description: Which LED to use for transmitting IR Command
+      required: false
+      example: "i"
+      selector:
+        select:
+          options:
+            - "i"
+            - "e"
+            - "b"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    bus:
+      name: BUS
+      description: The IRTrans Ethernet module that you want to send the command
+      required: false
+      example: "0"
+      selector:
+        select:
+          options:
+            - "0"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    mask:
+      name: MASK
+      description: This sets the net mask that chooses the modules connected through the IRTrans Serial Bus
+      required: false
+      example: "256"
+      selector:
+        number:
+          min: 0
+          max: 65535
+          mode: box
 send_irtrans_ir_command_lg75uh780v:
   name: Send IRTrans IR Command
   description: Send for lg75uh780v Remote an IR command
@@ -146,6 +284,52 @@ send_irtrans_ir_command_lg75uh780v:
             - "home"
             - "onoff"
 
+    led:
+      name: LED
+      description: Which LED to use for transmitting IR Command
+      required: false
+      example: "i"
+      selector:
+        select:
+          options:
+            - "i"
+            - "e"
+            - "b"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    bus:
+      name: BUS
+      description: The IRTrans Ethernet module that you want to send the command
+      required: false
+      example: "0"
+      selector:
+        select:
+          options:
+            - "0"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    mask:
+      name: MASK
+      description: This sets the net mask that chooses the modules connected through the IRTrans Serial Bus
+      required: false
+      example: "256"
+      selector:
+        number:
+          min: 0
+          max: 65535
+          mode: box
 send_irtrans_ir_command_lgsmarttv:
   name: Send IRTrans IR Command
   description: Send for lgsmarttv Remote an IR command
@@ -167,18 +351,9 @@ send_irtrans_ir_command_lgsmarttv:
       selector:
         select:
           options:
-            - "mute"
-            - "ch-"
-            - "ch+"
-            - "vol-"
-            - "vol+"
-            - "0"
-            - "9"
-            - "8"
-            - "7"
-            - "6"
-            - "5"
-            - "4"
+            - "onoff"
+            - "settings"
+            - "input"
             - "mute"
             - "ch-"
             - "ch+"
@@ -216,6 +391,52 @@ send_irtrans_ir_command_lgsmarttv:
             - "off"
             - "on"
 
+    led:
+      name: LED
+      description: Which LED to use for transmitting IR Command
+      required: false
+      example: "i"
+      selector:
+        select:
+          options:
+            - "i"
+            - "e"
+            - "b"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    bus:
+      name: BUS
+      description: The IRTrans Ethernet module that you want to send the command
+      required: false
+      example: "0"
+      selector:
+        select:
+          options:
+            - "0"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    mask:
+      name: MASK
+      description: This sets the net mask that chooses the modules connected through the IRTrans Serial Bus
+      required: false
+      example: "256"
+      selector:
+        number:
+          min: 0
+          max: 65535
+          mode: box
 send_irtrans_ir_command_teufel:
   name: Send IRTrans IR Command
   description: Send for teufel Remote an IR command
@@ -244,3 +465,49 @@ send_irtrans_ir_command_teufel:
             - "140hz"
             - "50hz"
 
+    led:
+      name: LED
+      description: Which LED to use for transmitting IR Command
+      required: false
+      example: "i"
+      selector:
+        select:
+          options:
+            - "i"
+            - "e"
+            - "b"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    bus:
+      name: BUS
+      description: The IRTrans Ethernet module that you want to send the command
+      required: false
+      example: "0"
+      selector:
+        select:
+          options:
+            - "0"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    mask:
+      name: MASK
+      description: This sets the net mask that chooses the modules connected through the IRTrans Serial Bus
+      required: false
+      example: "256"
+      selector:
+        number:
+          min: 0
+          max: 65535
+          mode: box

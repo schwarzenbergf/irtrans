@@ -46,7 +46,7 @@ class IRTransCon(asyncio.Protocol):
             while transport.get_write_buffer_size() > 0:
                 continue
             if DEBUG:
-                _LOGGER.debug("Data sent %s:", data)
+                _LOGGER.debug("Data sent %s: ", data)
         except Exception as exception:  # pylint: disable=broad-except
             if DEBUG:
                 _LOGGER.error("Write Data exception! - %s", exception)
@@ -155,11 +155,24 @@ class IRTransAPI:
         return []
 
     # @staticmethod
-    async def send_ir_remote_cmd(self, remote: str, command: str) -> dict:
+    async def send_ir_remote_cmd(self, remote: str, command: str, led:str=None, bus:str=None, mask:int=None) -> dict:
         """Send IR command for specified remote to IRTrans"""
 
         rsp = {"ircmd": "success"}
-        msg = "Asnd " + remote + "," + command + "\n"
+        msg = "Asnd " + remote + "," + command
+        if led is None and bus is None and mask is None:
+            msg = msg + "\n"
+        else:
+            if led is not None:
+                msg = msg + "," + led + ("," if (bus is not None or mask is not None) else "")
+            else:
+                msg = msg + ("," if (bus is not None or mask is not None) else "")
+            if bus is not None:
+                msg = msg + bus + ("," if (mask is not None) else "")
+            else:
+                msg = msg + ("," if (mask is not None) else "")
+            msg = msg + (str(mask) if mask is not None else "")
+        msg = msg + "\n"
         if DEBUG:
             _LOGGER.debug("Command to send to IRTrans: %s", msg)
         await IRTransCon.write_data(IRTransCon.trans_port, msg)

@@ -60,4 +60,50 @@ SERVICES_YAML = """send_irtrans_ir_command_&remote&:
         select:
           options:
 &commands&
+    led:
+      name: LED
+      description: Which LED to use for transmitting IR Command
+      required: false
+      example: "i"
+      selector:
+        select:
+          options:
+            - "i"
+            - "e"
+            - "b"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    bus:
+      name: BUS
+      description: The IRTrans Ethernet module that you want to send the command
+      required: false
+      example: "0"
+      selector:
+        select:
+          options:
+            - "0"
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "6"
+            - "7"
+            - "8"
+    mask:
+      name: MASK
+      description: This sets the net mask that chooses the modules connected through the IRTrans Serial Bus
+      required: false
+      example: "256"
+      selector:
+        number:
+          min: 0
+          max: 65535
+          mode: box
 """

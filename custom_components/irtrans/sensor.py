@@ -64,7 +64,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
         platform.async_register_entity_service(
             name="send_irtrans_ir_command_" + remote,
             func="send_irtrans_ir_cmd",
-            schema={"remote": str, "ir_cmd": str},
+            schema={"remote": str, "ir_cmd": str, "led": str, "bus": str, "mask": int},
         )
     yaml_file.close()
     if DEBUG:
@@ -83,14 +83,17 @@ class IRTransSensor(IRTransEntity, SensorEntity):
         self.api = IRTransAPI(hass, entry, coordinator)
 
     # @classmethod
-    async def send_irtrans_ir_cmd(self, remote: str, ir_cmd: str) -> None:
+    async def send_irtrans_ir_cmd(self, remote: str, ir_cmd: str, led:str=None, bus:str=None, mask:int=None) -> None:
         """Send IR Command to IRTrans (Service Call)"""
-        result = await self.api.send_ir_remote_cmd(remote, ir_cmd)
+        result = await self.api.send_ir_remote_cmd(remote, ir_cmd, led, bus, mask)
         if DEBUG:
             _LOGGER.debug(
-                "IRTRANS IR COMMAND: %s -> %s : %s",
+                "IRTRANS IR COMMAND: %s -> %s , %s, %s, %s: %s",
                 remote,
                 ir_cmd,
+                led,
+                bus,
+                mask,
                 result,
             )
         return
