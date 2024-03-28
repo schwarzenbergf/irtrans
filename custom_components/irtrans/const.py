@@ -107,3 +107,6 @@ SERVICES_YAML = """send_irtrans_ir_command_&remote&:
           max: 65535
           mode: box
 """
+
+ICONS_JSON = """    "send_irtrans_ir_command_&remote&": "mdi:remote",
+  """

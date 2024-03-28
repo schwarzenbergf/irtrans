@@ -8,7 +8,7 @@ from homeassistant.helpers import entity_platform
 
 # from homeassistant.helpers import device_registry as dr
 
-from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR, SERVICES_YAML, DEBUG
+from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR, SERVICES_YAML, ICONS_JSON, DEBUG
 from .entity import IRTransEntity
 from .api import IRTransAPI, IRTransCon
 
@@ -34,11 +34,18 @@ async def async_setup_entry(hass, entry, async_add_devices):
             " ".join(IRTransCon.mycfg["devices"]),
         )
 
-        _LOGGER.debug("Creating services.yaml ...")
+        _LOGGER.debug("Creating services.yaml & icons.json...")
 
     yaml_file = open(
         "custom_components/" + DEFAULT_NAME + "/services.yaml", "wt", encoding="utf-8"
     )
+    icons_file = open(
+        "custom_components/" + DEFAULT_NAME + "/icons.json", "wt", encoding="utf-8"
+    )
+    s_icons = """{
+    "services": {
+  """
+    icons_file.write(s_icons)
 
     # my_device_id = device_id(hass, NAME)
     # entities = device_entities(hass, my_device_id)
@@ -59,6 +66,9 @@ async def async_setup_entry(hass, entry, async_add_devices):
         # if DEBUG:
         #     _LOGGER.debug("services.yaml: %s", s_yaml)
         yaml_file.write(s_yaml)
+        # create icons.json file for this service
+        s_icons = ICONS_JSON.replace("&remote&", remote)
+        icons_file.write(s_icons)
 
         # This will call Entity.send_irtrans_ir_cmd(remote:ir_cmd)
         platform.async_register_entity_service(
@@ -67,8 +77,15 @@ async def async_setup_entry(hass, entry, async_add_devices):
             schema={"remote": str, "ir_cmd": str, "led": str, "bus": str, "mask": int},
         )
     yaml_file.close()
+    s_icons = """   }
+}
+    """
+
+    icons_file.write(s_icons)
+    icons_file.close()
+
     if DEBUG:
-        _LOGGER.debug("Finished writing services.yaml")
+        _LOGGER.debug("Finished writing services.yaml & icons.json")
 
 
 class IRTransSensor(IRTransEntity, SensorEntity):
