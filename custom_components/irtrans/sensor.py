@@ -1,5 +1,6 @@
 """Sensor platform for irtrans."""
 import logging
+import voluptuous as vol
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers import entity_platform
@@ -13,6 +14,16 @@ from .entity import IRTransEntity
 from .api import IRTransAPI, IRTransCon
 
 # from .device_trigger import async_get_triggers, async_attach_trigger
+
+PLATFORM_SCHEMA = vol.All(
+    # PLATFORM_SCHEMA.extend(
+    #     {
+    #         vol.Optional(CONF_TRIGGER): cv.match_all,  # to raise custom warning
+    #         vol.Required(CONF_SENSORS): cv.schema_with_slug_keys(LEGACY_SENSOR_SCHEMA),
+    #     }
+    # ),
+    # extra_validation_checks,
+)
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
