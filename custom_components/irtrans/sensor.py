@@ -50,10 +50,14 @@ async def async_setup_entry(hass, entry, async_add_devices):
     # my_device_id = device_id(hass, NAME)
     # entities = device_entities(hass, my_device_id)
 
+    if DEBUG:
+        _LOGGER.debug("Number of Remotes: %i", len(IRTransCon.mycfg["devices"]))
+
+    cnt = len(IRTransCon.mycfg["devices"])    
     for remote in IRTransCon.mycfg["devices"]:
         if remote == "firmware":
             break
-
+        cnt -=1
         # create services.yaml for this service
         s_yaml = SERVICES_YAML.replace("&remote&", remote)
         # s_yaml = s_yaml.replace("&device_id", my_device_id)
@@ -68,6 +72,8 @@ async def async_setup_entry(hass, entry, async_add_devices):
         yaml_file.write(s_yaml)
         # create icons.json file for this service
         s_icons = ICONS_JSON.replace("&remote&", remote)
+        if cnt > 0:
+            s_icons = s_icons + ",\n\t"
         icons_file.write(s_icons)
 
         # This will call Entity.send_irtrans_ir_cmd(remote:ir_cmd)
@@ -77,7 +83,8 @@ async def async_setup_entry(hass, entry, async_add_devices):
             schema={"remote": str, "ir_cmd": str, "led": str, "bus": str, "mask": int},
         )
     yaml_file.close()
-    s_icons = """   }
+    s_icons = """
+    }
 }
     """
 
