@@ -42,9 +42,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     icons_file = open(
         "custom_components/" + DEFAULT_NAME + "/icons.json", "wt", encoding="utf-8"
     )
-    s_icons = """{
-    "services": {
-  """
+    s_icons = "{\n\t\"services\": {\n"
     icons_file.write(s_icons)
 
     # my_device_id = device_id(hass, NAME)
@@ -73,7 +71,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
         # create icons.json file for this service
         s_icons = ICONS_JSON.replace("&remote&", remote)
         if cnt > 0:
-            s_icons = s_icons + ",\n\t"
+            s_icons = s_icons + ",\n"
         icons_file.write(s_icons)
 
         # This will call Entity.send_irtrans_ir_cmd(remote:ir_cmd)
@@ -83,10 +81,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
             schema={"remote": str, "ir_cmd": str, "led": str, "bus": str, "mask": int},
         )
     yaml_file.close()
-    s_icons = """
-    }
-}
-    """
+    s_icons = "\n\t}\n}"
 
     icons_file.write(s_icons)
     icons_file.close()
