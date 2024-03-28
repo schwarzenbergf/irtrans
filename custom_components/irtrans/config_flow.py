@@ -14,11 +14,31 @@ from homeassistant.helpers.selector import (  # pylint: disable=ungrouped-import
     TextSelectorConfig,
     TextSelectorType,
 )
+from homeassistant.components.sensor import (
+     PLATFORM_SCHEMA,
+)
 
 from .const import CONF_HOST, CONF_PORT, NAME, DOMAIN, DEBUG, GETVER, TIMEOUT
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
+PLATFORM_SCHEMA = vol.All(
+    PLATFORM_SCHEMA.extend(
+        {
+            # vol.Optional(CONF_TRIGGER): cv.match_all,  # to raise custom warning
+            # vol.Required(CONF_SENSORS): cv.schema_with_slug_keys(LEGACY_SENSOR_SCHEMA),
+            vol.Required("host", default=CONF_HOST): TextSelector(
+                TextSelectorConfig(
+                    type=TextSelectorType.TEXT,
+                ),
+            ),
+            vol.Required("port", default=CONF_PORT): TextSelector(
+                TextSelectorConfig(type=TextSelectorType.NUMBER)
+            )
+        }
+    )
+    # extra_validation_checks,
+)
 
 class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for IRTrans."""
