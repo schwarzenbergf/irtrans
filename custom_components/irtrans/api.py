@@ -164,14 +164,11 @@ class IRTransAPI:
             msg = msg + "\n"
         else:
             if led is not None:
-                msg = msg + "," + led + ("," if (bus is not None or mask is not None) else "")
-            else:
-                msg = msg + ("," if (bus is not None or mask is not None) else "")
+                msg = msg + ",l" + led
             if bus is not None:
-                msg = msg + bus + ("," if (mask is not None) else "")
-            else:
-                msg = msg + ("," if (mask is not None) else "")
-            msg = msg + (str(mask) if mask is not None else "")
+                msg = msg + ",b" + bus
+            if mask is not None:
+                msg = msg + "," + str(mask)
         msg = msg + "\n"
         if DEBUG:
             _LOGGER.debug("Command to send to IRTrans: %s", msg)
