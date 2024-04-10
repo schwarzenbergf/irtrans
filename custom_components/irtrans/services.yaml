@@ -1,19 +1,19 @@
 send_irtrans_ir_command_denon:
   name: Send IRTrans IR Command
-  description: Send for denon Remote an IR command
+  description: Send for "denon" Remote an IR command
   target:
   fields:
     remote:
       name: Remote
-      description: denon
+      description: "denon"
       required: true
       selector:
         select:
           options:
-            - denon
+            - "denon"
     ir_cmd:
       name: IR Command
-      description: IR Command to send to denon
+      description: IR Command to send to "denon"
       required: true
       example: "vol+"
       selector:
@@ -79,20 +79,20 @@ send_irtrans_ir_command_denon:
           mode: box
 send_irtrans_ir_command_dvbt2:
   name: Send IRTrans IR Command
-  description: Send for dvbt2 Remote an IR command
+  description: Send for "dvbt2" Remote an IR command
   target:
   fields:
     remote:
       name: Remote
-      description: dvbt2
+      description: "dvbt2"
       required: true
       selector:
         select:
           options:
-            - dvbt2
+            - "dvbt2"
     ir_cmd:
       name: IR Command
-      description: IR Command to send to dvbt2
+      description: IR Command to send to "dvbt2"
       required: true
       example: "vol+"
       selector:
@@ -170,20 +170,20 @@ send_irtrans_ir_command_dvbt2:
           mode: box
 send_irtrans_ir_command_htpc:
   name: Send IRTrans IR Command
-  description: Send for htpc Remote an IR command
+  description: Send for "htpc" Remote an IR command
   target:
   fields:
     remote:
       name: Remote
-      description: htpc
+      description: "htpc"
       required: true
       selector:
         select:
           options:
-            - htpc
+            - "htpc"
     ir_cmd:
       name: IR Command
-      description: IR Command to send to htpc
+      description: IR Command to send to "htpc"
       required: true
       example: "vol+"
       selector:
@@ -245,20 +245,20 @@ send_irtrans_ir_command_htpc:
           mode: box
 send_irtrans_ir_command_lg75uh780v:
   name: Send IRTrans IR Command
-  description: Send for lg75uh780v Remote an IR command
+  description: Send for "lg75uh780v" Remote an IR command
   target:
   fields:
     remote:
       name: Remote
-      description: lg75uh780v
+      description: "lg75uh780v"
       required: true
       selector:
         select:
           options:
-            - lg75uh780v
+            - "lg75uh780v"
     ir_cmd:
       name: IR Command
-      description: IR Command to send to lg75uh780v
+      description: IR Command to send to "lg75uh780v"
       required: true
       example: "vol+"
       selector:
@@ -332,20 +332,20 @@ send_irtrans_ir_command_lg75uh780v:
           mode: box
 send_irtrans_ir_command_lgsmarttv:
   name: Send IRTrans IR Command
-  description: Send for lgsmarttv Remote an IR command
+  description: Send for "lgsmarttv" Remote an IR command
   target:
   fields:
     remote:
       name: Remote
-      description: lgsmarttv
+      description: "lgsmarttv"
       required: true
       selector:
         select:
           options:
-            - lgsmarttv
+            - "lgsmarttv"
     ir_cmd:
       name: IR Command
-      description: IR Command to send to lgsmarttv
+      description: IR Command to send to "lgsmarttv"
       required: true
       example: "vol+"
       selector:
@@ -439,20 +439,20 @@ send_irtrans_ir_command_lgsmarttv:
           mode: box
 send_irtrans_ir_command_teufel:
   name: Send IRTrans IR Command
-  description: Send for teufel Remote an IR command
+  description: Send for "teufel" Remote an IR command
   target:
   fields:
     remote:
       name: Remote
-      description: teufel
+      description: "teufel"
       required: true
       selector:
         select:
           options:
-            - teufel
+            - "teufel"
     ir_cmd:
       name: IR Command
-      description: IR Command to send to teufel
+      description: IR Command to send to "teufel"
       required: true
       example: "vol+"
       selector:

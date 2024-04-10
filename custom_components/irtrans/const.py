@@ -40,20 +40,20 @@ If you have any issues with this you need to open an issue here:
 
 SERVICES_YAML = """send_irtrans_ir_command_&remote&:
   name: Send IRTrans IR Command
-  description: Send for &remote& Remote an IR command
+  description: Send for "&remote&" Remote an IR command
   target:
   fields:
     remote:
       name: Remote
-      description: &remote&
+      description: "&remote&"
       required: true
       selector:
         select:
           options:
-            - &remote&
+            - "&remote&"
     ir_cmd:
       name: IR Command
-      description: IR Command to send to &remote&
+      description: IR Command to send to "&remote&"
       required: true
       example: "vol+"
       selector:

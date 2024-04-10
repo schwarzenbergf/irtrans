@@ -1,6 +1,8 @@
 """Sample API Client."""
+
 import logging
 import asyncio
+import re
 
 # from homeassistant.helpers import device_registry as dr
 # from homeassistant.helpers import entity_registry as er
@@ -55,7 +57,7 @@ class IRTransCon(asyncio.Protocol):
         data = data.decode().strip()
         if DEBUG:
             _LOGGER.debug("Data received %s:", data)
-        data = data.split(' ', 2) # split on ' ', but max. 3 parts
+        data = data.split(" ", 2)  # split on ' ', but max. 3 parts
         if data[0].find("**"):
             self.mycfg["irtrans"] = "connected"
         if data[1] == "RCV_COM":  # IR Remote command received
@@ -73,7 +75,7 @@ class IRTransCon(asyncio.Protocol):
 
         if data[1] == "VERSION":  # Response to Aver
             IRTransCon.mycfg["version"] = data
-            IRTransCon.mycfg["firmware"] = data[2] # + " " + data[3]
+            IRTransCon.mycfg["firmware"] = data[2]  # + " " + data[3]
             if DEBUG:
                 _LOGGER.debug(
                     "Version/Firmware %s/%s:", data, IRTransCon.mycfg["firmware"]
@@ -115,7 +117,10 @@ class IRTransAPI:
         on_con_lost = loop.create_future()
         _LOGGER.debug("Conneting to %s:%s", host, port)
         # pylint: disable = unused-variable
-        (IRTransCon.trans_port, protocol,) = await loop.create_connection(
+        (
+            IRTransCon.trans_port,
+            protocol,
+        ) = await loop.create_connection(
             lambda: IRTransCon(GETVER, on_con_lost, self.coordinator, self.hass),
             host,
             int(port),
@@ -155,7 +160,14 @@ class IRTransAPI:
         return []
 
     # @staticmethod
-    async def send_ir_remote_cmd(self, remote: str, command: str, led:str=None, bus:str=None, mask:int=None) -> dict:
+    async def send_ir_remote_cmd(
+        self,
+        remote: str,
+        command: str,
+        led: str = None,
+        bus: str = None,
+        mask: int = None,
+    ) -> dict:
         """Send IR command for specified remote to IRTrans"""
 
         rsp = {"ircmd": "success"}
@@ -215,12 +227,18 @@ class IRTransAPI:
             if len(remotes) == 0:
                 return {}
             last = int(remotes[1]) - 1
+            re.sub(
+                r"\s", "_", remotes[3]
+            )  # Fix: Add 'r' prefix to treat the string as a raw string
             devices[remotes[3]] = []  # first Remote
 
             i = 0
             while i < last:  # get all Remotes from irTrans
                 i = i + 1
                 remotes = await self.get_irtrans_info("Agetremotes ", "REMOTELIST", i)
+                re.sub(
+                    r"\s", "_", remotes[3]
+                )  # Fix: Add 'r' prefix to treat the string as a raw string
                 devices[remotes[3]] = []
             # get all IR commands for every Remote (will be sensor attributes)
             for device in devices:

@@ -1,4 +1,5 @@
 """Sensor platform for irtrans."""
+
 import logging
 
 from homeassistant.components.sensor import SensorEntity
@@ -43,7 +44,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
     icons_file = open(
         "custom_components/" + DEFAULT_NAME + "/icons.json", "wt", encoding="utf-8"
     )
-    s_icons = "{\n\t\"services\": {\n"
+    s_icons = '{\n\t"services": {\n'
     icons_file.write(s_icons)
 
     # my_device_id = device_id(hass, NAME)
@@ -52,11 +53,11 @@ async def async_setup_entry(hass, entry, async_add_devices):
     if DEBUG:
         _LOGGER.debug("Number of Remotes: %i", len(IRTransCon.mycfg["devices"]))
 
-    cnt = len(IRTransCon.mycfg["devices"])    
+    cnt = len(IRTransCon.mycfg["devices"])
     for remote in IRTransCon.mycfg["devices"]:
         if remote == "firmware":
             break
-        cnt -=1
+        cnt -= 1
         # create services.yaml for this service
         s_yaml = SERVICES_YAML.replace("&remote&", remote)
         # s_yaml = s_yaml.replace("&device_id", my_device_id)
@@ -103,7 +104,14 @@ class IRTransSensor(IRTransEntity, SensorEntity):
         self.api = IRTransAPI(hass, entry, coordinator)
 
     # @classmethod
-    async def send_irtrans_ir_cmd(self, remote: str, ir_cmd: str, led:str=None, bus:str=None, mask:int=None) -> None:
+    async def send_irtrans_ir_cmd(
+        self,
+        remote: str,
+        ir_cmd: str,
+        led: str = None,
+        bus: str = None,
+        mask: int = None,
+    ) -> None:
         """Send IR Command to IRTrans (Service Call)"""
         result = await self.api.send_ir_remote_cmd(remote, ir_cmd, led, bus, mask)
         if DEBUG:
