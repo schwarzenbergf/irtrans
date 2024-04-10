@@ -14,9 +14,9 @@ from homeassistant.helpers.selector import (  # pylint: disable=ungrouped-import
     TextSelectorConfig,
     TextSelectorType,
 )
-from homeassistant.components.sensor import (
-     PLATFORM_SCHEMA,
-)
+# from homeassistant.components.sensor import (
+#      PLATFORM_SCHEMA,
+# )
 
 from .const import CONF_HOST, CONF_PORT, NAME, DOMAIN, DEBUG, GETVER, TIMEOUT
 
