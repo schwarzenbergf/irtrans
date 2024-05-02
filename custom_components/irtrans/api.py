@@ -227,9 +227,9 @@ class IRTransAPI:
             if len(remotes) == 0:
                 return {}
             last = int(remotes[1]) - 1
-            re.sub(
-                r"\s", "_", remotes[3]
-            )  # Fix: Add 'r' prefix to treat the string as a raw string
+            # re.sub(
+            #     r"\s", "_", remotes[3]
+            # )  # Fix: Add 'r' prefix to treat the string as a raw string
             devices[remotes[3]] = []  # first Remote
 
             i = 0
