@@ -1,6 +1,7 @@
 """Sensor platform for irtrans."""
 
 import logging
+import aiofiles
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers import entity_platform
@@ -38,20 +39,23 @@ async def async_setup_entry(hass, entry, async_add_devices):
 
         _LOGGER.debug("Creating services.yaml & icons.json...")
 
-    yaml_file = open(
-        "custom_components/" + DEFAULT_NAME + "/services.yaml", "wt", encoding="utf-8"
+    yaml_file = await aiofiles.open(
+        "custom_components/" + DEFAULT_NAME + "/services.yaml",
+        "wt",
+        encoding="utf-8"
     )
-    icons_file = open(
+    icons_file = await aiofiles.open(
         "custom_components/" + DEFAULT_NAME + "/icons.json", "wt", encoding="utf-8"
     )
     s_icons = '{\n\t"services": {\n'
-    icons_file.write(s_icons)
+    await icons_file.write(s_icons)
 
     # my_device_id = device_id(hass, NAME)
     # entities = device_entities(hass, my_device_id)
 
     if DEBUG:
-        _LOGGER.debug("Number of Remotes: %i", len(IRTransCon.mycfg["devices"]))
+        _LOGGER.debug("Number of Remotes: %i",
+                      len(IRTransCon.mycfg["devices"]))
 
     cnt = len(IRTransCon.mycfg["devices"])
     for remote in IRTransCon.mycfg["devices"]:
@@ -69,24 +73,25 @@ async def async_setup_entry(hass, entry, async_add_devices):
         s_yaml = s_yaml.replace("&commands&", cmd_yaml)
         # if DEBUG:
         #     _LOGGER.debug("services.yaml: %s", s_yaml)
-        yaml_file.write(s_yaml)
+        await yaml_file.write(s_yaml)
         # create icons.json file for this service
         s_icons = ICONS_JSON.replace("&remote&", remote)
         if cnt > 0:
             s_icons = s_icons + ",\n"
-        icons_file.write(s_icons)
+        await icons_file.write(s_icons)
 
         # This will call Entity.send_irtrans_ir_cmd(remote:ir_cmd)
         platform.async_register_entity_service(
             name="send_irtrans_ir_command_" + remote,
             func="send_irtrans_ir_cmd",
-            schema={"remote": str, "ir_cmd": str, "led": str, "bus": str, "mask": int},
+            schema={"remote": str, "ir_cmd": str,
+                    "led": str, "bus": str, "mask": int},
         )
-    yaml_file.close()
+    await yaml_file.close()
     s_icons = "\n\t}\n}"
 
-    icons_file.write(s_icons)
-    icons_file.close()
+    await icons_file.write(s_icons)
+    await icons_file.close()
 
     if DEBUG:
         _LOGGER.debug("Finished writing services.yaml & icons.json")

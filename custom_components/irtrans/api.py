@@ -1,4 +1,4 @@
-"""Sample API Client."""
+"""IRTrans API Client."""
 
 import logging
 import asyncio
@@ -121,7 +121,8 @@ class IRTransAPI:
             IRTransCon.trans_port,
             protocol,
         ) = await loop.create_connection(
-            lambda: IRTransCon(GETVER, on_con_lost, self.coordinator, self.hass),
+            lambda: IRTransCon(GETVER, on_con_lost,
+                               self.coordinator, self.hass),
             host,
             int(port),
         )
@@ -156,7 +157,8 @@ class IRTransAPI:
                 )
         else:
             if DEBUG:
-                _LOGGER.error("No answer from IRTrans (irtrans_snd_rcv) %s", data)
+                _LOGGER.error(
+                    "No answer from IRTrans (irtrans_snd_rcv) %s", data)
         return []
 
     # @staticmethod
@@ -189,7 +191,8 @@ class IRTransAPI:
         data = IRTransCon.recv_data
         if len(data) > 0:
             if data[2] == "OK":  # pylint: disable=unsubscriptable-object
-                rsp["ircmd"] = "Success sending IR command: " + remote + "->" + command
+                rsp["ircmd"] = "Success sending IR command: " + \
+                    remote + "->" + command
             else:
                 rsp["ircmd"] = (
                     "Error sending IR command: "

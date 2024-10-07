@@ -23,6 +23,7 @@ class IRTransEntity(CoordinatorEntity):
 
     @property
     def should_poll(self) -> bool:
+        """Polling?"""
         return False
 
     @property
@@ -32,6 +33,7 @@ class IRTransEntity(CoordinatorEntity):
 
     @property
     def device_info(self):
+        """Special Device Attributes"""
         return {
             "identifiers": {(DOMAIN, self.unique_id)},
             "name": NAME,

@@ -72,12 +72,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     # if entry.data.get("port"):
     #     MyVars.port = entry.data["port"]
 
-    for platform in PLATFORMS:
-        if entry.options.get(platform, True):
-            coordinator.platforms.append(platform)
-            hass.async_add_job(
-                hass.config_entries.async_forward_entry_setup(entry, platform)
-            )
+    # for platform in PLATFORMS:
+    #     if entry.options.get(platform, True):
+    #         coordinator.platforms.append(platform)
+    #         # entry.async_create_task(
+    #         hass.async_add_job(
+    #         # hass,
+    #           await hass.config_entries.async_forward_entry_setup(entry, platform),
+    #        )
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
 
@@ -91,7 +94,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
             "async_setup_entry--> %s / %s / %s",
             my_device_id,
             triggers,
-            entities[0],
+            entities,
         )
     # Tr_Info: TriggerInfo = (DOMAIN, "irtrans_event", True, None, None)
 
@@ -145,7 +148,8 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
                         _LOGGER.debug("async_update_data before irtrans")
                     resp = await self.api.api_irtrans()
                     if DEBUG:
-                        _LOGGER.debug("async_update_data after irtrans: %s", resp)
+                        _LOGGER.debug(
+                            "async_update_data after irtrans: %s", resp)
                     if len(resp) == 0:
                         raise UpdateFailed() from Exception("Connection Timeout")
 
@@ -157,7 +161,8 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
                 await asyncio.sleep(1)
                 return self.api_conn.mycfg
         except asyncio.TimeoutError as tout:
-            _LOGGER.error("Timeout while refresh IRTrans connection (%s)", tout)
+            _LOGGER.error(
+                "Timeout while refresh IRTrans connection (%s)", tout)
             raise UpdateFailed() from tout
         except Exception as exception:
             _LOGGER.error(

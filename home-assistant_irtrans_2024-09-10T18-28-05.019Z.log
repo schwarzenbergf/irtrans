@@ -1,0 +1,655 @@
+2024-09-06 22:15:54.160 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration irtrans which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2024-09-06 22:15:54.160 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration mass which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2024-09-06 22:15:54.161 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2024-09-06 22:15:54.162 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration ledfxrm which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2024-09-06 22:15:54.162 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration browser_mod which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2024-09-06 22:15:54.163 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration hikvision_next which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2024-09-06 22:15:55.941 WARNING (MainThread) [homeassistant.util.loop] Detected blocking call to load_verify_locations with args (<ssl.SSLContext object at 0x7f90e32c65d0>,) inside the event loop by custom integration 'hikvision_next' at custom_components/hikvision_next/isapi.py, line 784: response = await self.isapi.common_request(method, full_url, present, self.isapi.timeout, **data) (offender: /usr/local/lib/python3.12/site-packages/httpx/_config.py, line 147: context.load_verify_locations(cafile=cafile)), please create a bug report at https://github.com/maciej-or/hikvision_next/issues
+For developers, please see https://developers.home-assistant.io/docs/asyncio_blocking_operations/#load_verify_locations
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 223, in <module>
+    sys.exit(main())
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 209, in main
+    exit_code = runner.run(runtime_conf)
+  File "/usr/src/homeassistant/homeassistant/runner.py", line 189, in run
+    return loop.run_until_complete(setup_and_run_hass(runtime_config))
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 1990, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/src/homeassistant/homeassistant/setup.py", line 165, in async_setup_component
+    result = await _async_setup_component(hass, domain, config)
+  File "/usr/src/homeassistant/homeassistant/setup.py", line 461, in _async_setup_component
+    await asyncio.gather(
+  File "/usr/src/homeassistant/homeassistant/setup.py", line 463, in <genexpr>
+    create_eager_task(
+  File "/usr/src/homeassistant/homeassistant/util/async_.py", line 45, in create_eager_task
+    return Task(coro, loop=loop, name=name, eager_start=True)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 752, in async_setup_locked
+    await self.async_setup(hass, integration=integration)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 604, in async_setup
+    result = await component.async_setup_entry(hass, self)
+  File "/config/custom_components/hikvision_next/__init__.py", line 55, in async_setup_entry
+    await isapi.get_hardware_info()
+  File "/config/custom_components/hikvision_next/isapi.py", line 208, in get_hardware_info
+    await self.get_device_info()
+  File "/config/custom_components/hikvision_next/isapi.py", line 193, in get_device_info
+    hw_info = (await self.request(GET, "System/deviceInfo")).get("DeviceInfo", {})
+  File "/config/custom_components/hikvision_next/isapi.py", line 784, in request
+    response = await self.isapi.common_request(method, full_url, present, self.isapi.timeout, **data)
+
+2024-09-06 22:15:56.356 WARNING (MainThread) [reolink_aio.api] Reolink password contains incompatible special character, please change the password to only contain characters: a-z, A-Z, 0-9 or @$*~_-+=!?.,:;'()[]
+2024-09-06 22:15:56.361 WARNING (MainThread) [homeassistant.config_entries] Config entry 'Reolink' for reolink integration could not authenticate: Reolink password contains incompatible special character, please change the password to only contain characters: a-z, A-Z, 0-9 or @$*~_-+=!?.,:;'()[]
+2024-09-06 22:16:13.302 ERROR (stream_worker) [root] Uncaught thread exception
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+  File "/usr/local/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/stream/__init__.py", line 438, in _run_worker
+    stream_worker(
+  File "/usr/src/homeassistant/homeassistant/components/stream/worker.py", line 616, in stream_worker
+    muxer.mux_packet(first_keyframe)
+  File "/usr/src/homeassistant/homeassistant/components/stream/worker.py", line 271, in mux_packet
+    self._av_output.mux(packet)
+  File "av/container/output.pyx", line 218, in av.container.output.OutputContainer.mux
+  File "av/container/output.pyx", line 224, in av.container.output.OutputContainer.mux_one
+  File "av/container/output.pyx", line 190, in av.container.output.OutputContainer.start_encoding
+  File "av/container/core.pyx", line 290, in av.container.core.Container.err_check
+  File "av/error.pyx", line 336, in av.error.err_check
+av.error.ValueError: [Errno 22] Invalid argument: '<none>'; last error log: [mp4] dimensions not set
+2024-09-06 22:16:52.210 WARNING (MainThread) [homeassistant.helpers.frame] Detected that custom integration 'irtrans' calls `async_add_job`, which is deprecated and will be removed in Home Assistant 2025.4; Please review https://developers.home-assistant.io/blog/2024/03/13/deprecate_add_run_job for replacement options at custom_components/irtrans/__init__.py, line 78: hass.async_add_job(, please create a bug report at https://github.com/schwarzenbergf/irtrans/issues
+2024-09-06 22:16:52.210 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry IRTrans for irtrans
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 604, in async_setup
+    result = await component.async_setup_entry(hass, self)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/config/custom_components/irtrans/__init__.py", line 94, in async_setup_entry
+    entities[0],
+    ~~~~~~~~^^^
+IndexError: list index out of range
+2024-09-06 22:16:52.213 WARNING (MainThread) [homeassistant.helpers.frame] Detected code that calls async_forward_entry_setup for integration, irtrans with title: IRTrans and entry_id: 01J74C920R95YPFVKKNZR4TC15, which is deprecated and will stop working in Home Assistant 2025.6, await async_forward_entry_setups instead. Please report this issue.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 223, in <module>
+    sys.exit(main())
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 209, in main
+    exit_code = runner.run(runtime_conf)
+  File "/usr/src/homeassistant/homeassistant/runner.py", line 189, in run
+    return loop.run_until_complete(setup_and_run_hass(runtime_config))
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 1990, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2161, in async_forward_entry_setup
+    report(
+  File "/usr/src/homeassistant/homeassistant/helpers/frame.py", line 151, in report
+    _LOGGER.warning(msg, stack_info=True)
+2024-09-06 22:16:52.213 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2173, in async_forward_entry_setup
+    raise OperationNotAllowed(
+homeassistant.config_entries.OperationNotAllowed: The config entry 'IRTrans' (irtrans) with entry_id '01J74C920R95YPFVKKNZR4TC15' cannot forward setup for sensor because it is in state ConfigEntryState.SETUP_ERROR, but needs to be in the ConfigEntryState.LOADED state
+2024-09-06 22:17:07.470 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry IRTrans for irtrans
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 604, in async_setup
+    result = await component.async_setup_entry(hass, self)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/config/custom_components/irtrans/__init__.py", line 94, in async_setup_entry
+    entities[0],
+    ~~~~~~~~^^^
+IndexError: list index out of range
+2024-09-06 22:17:07.472 WARNING (MainThread) [homeassistant.helpers.frame] Detected code that calls async_forward_entry_setup for integration, irtrans with title: IRTrans and entry_id: 01J74C920R95YPFVKKNZR4TC15, which is deprecated and will stop working in Home Assistant 2025.6, await async_forward_entry_setups instead. Please report this issue.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 223, in <module>
+    sys.exit(main())
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 209, in main
+    exit_code = runner.run(runtime_conf)
+  File "/usr/src/homeassistant/homeassistant/runner.py", line 189, in run
+    return loop.run_until_complete(setup_and_run_hass(runtime_config))
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 1990, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2161, in async_forward_entry_setup
+    report(
+  File "/usr/src/homeassistant/homeassistant/helpers/frame.py", line 151, in report
+    _LOGGER.warning(msg, stack_info=True)
+2024-09-06 22:17:07.472 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2173, in async_forward_entry_setup
+    raise OperationNotAllowed(
+homeassistant.config_entries.OperationNotAllowed: The config entry 'IRTrans' (irtrans) with entry_id '01J74C920R95YPFVKKNZR4TC15' cannot forward setup for sensor because it is in state ConfigEntryState.SETUP_ERROR, but needs to be in the ConfigEntryState.LOADED state
+2024-09-06 22:17:23.558 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry IRTrans for irtrans
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 604, in async_setup
+    result = await component.async_setup_entry(hass, self)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/config/custom_components/irtrans/__init__.py", line 94, in async_setup_entry
+    entities[0],
+    ~~~~~~~~^^^
+IndexError: list index out of range
+2024-09-06 22:17:23.560 WARNING (MainThread) [homeassistant.helpers.frame] Detected code that calls async_forward_entry_setup for integration, irtrans with title: IRTrans and entry_id: 01J74CA2ZS2HZXAKPDYG1J31WK, which is deprecated and will stop working in Home Assistant 2025.6, await async_forward_entry_setups instead. Please report this issue.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 223, in <module>
+    sys.exit(main())
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 209, in main
+    exit_code = runner.run(runtime_conf)
+  File "/usr/src/homeassistant/homeassistant/runner.py", line 189, in run
+    return loop.run_until_complete(setup_and_run_hass(runtime_config))
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 1990, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2161, in async_forward_entry_setup
+    report(
+  File "/usr/src/homeassistant/homeassistant/helpers/frame.py", line 151, in report
+    _LOGGER.warning(msg, stack_info=True)
+2024-09-06 22:17:23.560 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2173, in async_forward_entry_setup
+    raise OperationNotAllowed(
+homeassistant.config_entries.OperationNotAllowed: The config entry 'IRTrans' (irtrans) with entry_id '01J74CA2ZS2HZXAKPDYG1J31WK' cannot forward setup for sensor because it is in state ConfigEntryState.SETUP_ERROR, but needs to be in the ConfigEntryState.LOADED state
+2024-09-06 22:17:43.677 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry IRTrans for irtrans
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 604, in async_setup
+    result = await component.async_setup_entry(hass, self)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/config/custom_components/irtrans/__init__.py", line 94, in async_setup_entry
+    entities[0],
+    ~~~~~~~~^^^
+IndexError: list index out of range
+2024-09-06 22:17:43.679 WARNING (MainThread) [homeassistant.helpers.frame] Detected code that calls async_forward_entry_setup for integration, irtrans with title: IRTrans and entry_id: 01J74CAPME1TV9PM266465R1T7, which is deprecated and will stop working in Home Assistant 2025.6, await async_forward_entry_setups instead. Please report this issue.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 223, in <module>
+    sys.exit(main())
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 209, in main
+    exit_code = runner.run(runtime_conf)
+  File "/usr/src/homeassistant/homeassistant/runner.py", line 189, in run
+    return loop.run_until_complete(setup_and_run_hass(runtime_config))
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 1990, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2161, in async_forward_entry_setup
+    report(
+  File "/usr/src/homeassistant/homeassistant/helpers/frame.py", line 151, in report
+    _LOGGER.warning(msg, stack_info=True)
+2024-09-06 22:17:43.679 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2173, in async_forward_entry_setup
+    raise OperationNotAllowed(
+homeassistant.config_entries.OperationNotAllowed: The config entry 'IRTrans' (irtrans) with entry_id '01J74CAPME1TV9PM266465R1T7' cannot forward setup for sensor because it is in state ConfigEntryState.SETUP_ERROR, but needs to be in the ConfigEntryState.LOADED state
+2024-09-06 22:27:22.669 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry IRTrans for irtrans
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 604, in async_setup
+    result = await component.async_setup_entry(hass, self)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/config/custom_components/irtrans/__init__.py", line 94, in async_setup_entry
+    entities[0],
+    ~~~~~~~~^^^
+IndexError: list index out of range
+2024-09-06 22:27:22.671 WARNING (MainThread) [homeassistant.helpers.frame] Detected code that calls async_forward_entry_setup for integration, irtrans with title: IRTrans and entry_id: 01J74CAPME1TV9PM266465R1T7, which is deprecated and will stop working in Home Assistant 2025.6, await async_forward_entry_setups instead. Please report this issue.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 223, in <module>
+    sys.exit(main())
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 209, in main
+    exit_code = runner.run(runtime_conf)
+  File "/usr/src/homeassistant/homeassistant/runner.py", line 189, in run
+    return loop.run_until_complete(setup_and_run_hass(runtime_config))
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 1990, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2161, in async_forward_entry_setup
+    report(
+  File "/usr/src/homeassistant/homeassistant/helpers/frame.py", line 151, in report
+    _LOGGER.warning(msg, stack_info=True)
+2024-09-06 22:27:22.671 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2173, in async_forward_entry_setup
+    raise OperationNotAllowed(
+homeassistant.config_entries.OperationNotAllowed: The config entry 'IRTrans' (irtrans) with entry_id '01J74CAPME1TV9PM266465R1T7' cannot forward setup for sensor because it is in state ConfigEntryState.SETUP_ERROR, but needs to be in the ConfigEntryState.LOADED state
+2024-09-06 22:27:42.157 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry IRTrans for irtrans
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 604, in async_setup
+    result = await component.async_setup_entry(hass, self)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/config/custom_components/irtrans/__init__.py", line 94, in async_setup_entry
+    entities[0],
+    ~~~~~~~~^^^
+IndexError: list index out of range
+2024-09-06 22:27:42.159 WARNING (MainThread) [homeassistant.helpers.frame] Detected code that calls async_forward_entry_setup for integration, irtrans with title: IRTrans and entry_id: 01J74CWZ2ZRGTNKRWQRFHWNZ16, which is deprecated and will stop working in Home Assistant 2025.6, await async_forward_entry_setups instead. Please report this issue.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 223, in <module>
+    sys.exit(main())
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 209, in main
+    exit_code = runner.run(runtime_conf)
+  File "/usr/src/homeassistant/homeassistant/runner.py", line 189, in run
+    return loop.run_until_complete(setup_and_run_hass(runtime_config))
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 1990, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2161, in async_forward_entry_setup
+    report(
+  File "/usr/src/homeassistant/homeassistant/helpers/frame.py", line 151, in report
+    _LOGGER.warning(msg, stack_info=True)
+2024-09-06 22:27:42.159 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2173, in async_forward_entry_setup
+    raise OperationNotAllowed(
+homeassistant.config_entries.OperationNotAllowed: The config entry 'IRTrans' (irtrans) with entry_id '01J74CWZ2ZRGTNKRWQRFHWNZ16' cannot forward setup for sensor because it is in state ConfigEntryState.SETUP_ERROR, but needs to be in the ConfigEntryState.LOADED state
+2024-09-06 22:33:52.126 ERROR (MainThread) [custom_components.irtrans] Cannot connect to - 192.168.1.50:21001 : [Errno 111] Connect call failed ('192.168.1.50', 21001)
+2024-09-06 22:34:02.965 ERROR (MainThread) [custom_components.irtrans] Cannot connect to - 192.168.1.50:55 : [Errno 111] Connect call failed ('192.168.1.50', 55)
+2024-09-06 22:34:09.395 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry IRTrans for irtrans
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 604, in async_setup
+    result = await component.async_setup_entry(hass, self)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/config/custom_components/irtrans/__init__.py", line 94, in async_setup_entry
+    entities[0],
+    ~~~~~~~~^^^
+IndexError: list index out of range
+2024-09-06 22:34:09.397 WARNING (MainThread) [homeassistant.helpers.frame] Detected code that calls async_forward_entry_setup for integration, irtrans with title: IRTrans and entry_id: 01J74D8S86Z7C4TG97BDNJG187, which is deprecated and will stop working in Home Assistant 2025.6, await async_forward_entry_setups instead. Please report this issue.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 223, in <module>
+    sys.exit(main())
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 209, in main
+    exit_code = runner.run(runtime_conf)
+  File "/usr/src/homeassistant/homeassistant/runner.py", line 189, in run
+    return loop.run_until_complete(setup_and_run_hass(runtime_config))
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 1990, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2161, in async_forward_entry_setup
+    report(
+  File "/usr/src/homeassistant/homeassistant/helpers/frame.py", line 151, in report
+    _LOGGER.warning(msg, stack_info=True)
+2024-09-06 22:34:09.397 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2173, in async_forward_entry_setup
+    raise OperationNotAllowed(
+homeassistant.config_entries.OperationNotAllowed: The config entry 'IRTrans' (irtrans) with entry_id '01J74D8S86Z7C4TG97BDNJG187' cannot forward setup for sensor because it is in state ConfigEntryState.SETUP_ERROR, but needs to be in the ConfigEntryState.LOADED state
+2024-09-06 22:34:19.175 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry IRTrans for irtrans
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 604, in async_setup
+    result = await component.async_setup_entry(hass, self)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/config/custom_components/irtrans/__init__.py", line 94, in async_setup_entry
+    entities[0],
+    ~~~~~~~~^^^
+IndexError: list index out of range
+2024-09-06 22:34:19.177 WARNING (MainThread) [homeassistant.helpers.frame] Detected code that calls async_forward_entry_setup for integration, irtrans with title: IRTrans and entry_id: 01J74D8S86Z7C4TG97BDNJG187, which is deprecated and will stop working in Home Assistant 2025.6, await async_forward_entry_setups instead. Please report this issue.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 223, in <module>
+    sys.exit(main())
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 209, in main
+    exit_code = runner.run(runtime_conf)
+  File "/usr/src/homeassistant/homeassistant/runner.py", line 189, in run
+    return loop.run_until_complete(setup_and_run_hass(runtime_config))
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 1990, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2161, in async_forward_entry_setup
+    report(
+  File "/usr/src/homeassistant/homeassistant/helpers/frame.py", line 151, in report
+    _LOGGER.warning(msg, stack_info=True)
+2024-09-06 22:34:19.177 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2173, in async_forward_entry_setup
+    raise OperationNotAllowed(
+homeassistant.config_entries.OperationNotAllowed: The config entry 'IRTrans' (irtrans) with entry_id '01J74D8S86Z7C4TG97BDNJG187' cannot forward setup for sensor because it is in state ConfigEntryState.SETUP_ERROR, but needs to be in the ConfigEntryState.LOADED state
+2024-09-06 23:41:37.814 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'MGLNDD_78.96.192.134_8123\n'
+       ^
+2024-09-07 06:59:49.638 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x03'
+      ^
+2024-09-07 10:39:08.182 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-07 19:06:00.036 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b''
+      ^
+2024-09-07 19:06:56.809 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-07 19:09:00.123 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-07 19:11:41.206 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-07 19:14:25.247 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-07 19:17:08.070 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-07 19:19:51.039 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-07 19:22:33.709 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-07 19:25:17.648 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-07 19:28:00.996 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-07 19:30:45.219 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-07 19:33:30.777 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-08 08:14:51.582 ERROR (MainThread) [homeassistant.components.wled] Error fetching wled data: Invalid response from API: Timeout occurred while connecting to WLED device at 192.168.1.120
+2024-09-08 08:14:58.424 ERROR (MainThread) [homeassistant.components.wled] 
+2024-09-08 10:17:29.326 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'MGLNDD_78.96.192.134_8123\n'
+       ^
+2024-09-08 13:29:59.955 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-08 18:38:24.980 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x03'
+      ^
+2024-09-09 10:37:58.576 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x03'
+      ^
+2024-09-09 12:13:31.845 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-09 19:30:38.351 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'MGLNDD_78.96.192.134_8123\n'
+       ^
+2024-09-10 04:25:52.877 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x03'
+      ^
+2024-09-10 09:21:49.990 ERROR (MainThread) [aiohttp.server] Error handling request
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 362, in data_received
+    messages, upgraded, tail = self._request_parser.feed_data(data)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "aiohttp/_http_parser.pyx", line 563, in aiohttp._http_parser.HttpParser.feed_data
+aiohttp.http_exceptions.BadStatusLine: 400, message:
+  Invalid method encountered:
+
+    b'\x16\x03\x01'
+      ^
+2024-09-10 21:27:56.030 DEBUG (MainThread) [custom_components.irtrans] ->async_setup_entry:Config Entry data (async_setup_entry) {'host': '192.168.1.50', 'port': '21000'} :
+2024-09-10 21:27:56.030 DEBUG (MainThread) [custom_components.irtrans] IRTransDataUpdateCoordinator
+2024-09-10 21:27:56.030 DEBUG (MainThread) [custom_components.irtrans] hass cfg entry(IRTransDataUpdateCoordinator): 192.168.1.50:21000
+2024-09-10 21:27:56.032 DEBUG (MainThread) [custom_components.irtrans] Get Version msg sent (_async_update_data)
+2024-09-10 21:27:56.077 DEBUG (MainThread) [custom_components.irtrans] Data received **00034 VERSION E6.06.30 L1.10.12:
+2024-09-10 21:27:56.077 DEBUG (MainThread) [custom_components.irtrans] Version/Firmware ['**00034', 'VERSION', 'E6.06.30 L1.10.12']/E6.06.30 L1.10.12:
+2024-09-10 21:27:57.032 DEBUG (MainThread) [custom_components.irtrans] Finished fetching irtrans data in 1.002 seconds (success: True)
+2024-09-10 21:27:57.036 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry IRTrans for irtrans
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 604, in async_setup
+    result = await component.async_setup_entry(hass, self)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/config/custom_components/irtrans/__init__.py", line 94, in async_setup_entry
+    entities[0],
+    ~~~~~~~~^^^
+IndexError: list index out of range
+2024-09-10 21:27:57.038 WARNING (MainThread) [homeassistant.helpers.frame] Detected code that calls async_forward_entry_setup for integration, irtrans with title: IRTrans and entry_id: 01J74D8S86Z7C4TG97BDNJG187, which is deprecated and will stop working in Home Assistant 2025.6, await async_forward_entry_setups instead. Please report this issue.
+Stack (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 223, in <module>
+    sys.exit(main())
+  File "/usr/src/homeassistant/homeassistant/__main__.py", line 209, in main
+    exit_code = runner.run(runtime_conf)
+  File "/usr/src/homeassistant/homeassistant/runner.py", line 189, in run
+    return loop.run_until_complete(setup_and_run_hass(runtime_config))
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 1990, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2161, in async_forward_entry_setup
+    report(
+  File "/usr/src/homeassistant/homeassistant/helpers/frame.py", line 151, in report
+    _LOGGER.warning(msg, stack_info=True)
+2024-09-10 21:27:57.038 ERROR (MainThread) [homeassistant] Error doing job: Task exception was never retrieved (None)
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 2173, in async_forward_entry_setup
+    raise OperationNotAllowed(
+homeassistant.config_entries.OperationNotAllowed: The config entry 'IRTrans' (irtrans) with entry_id '01J74D8S86Z7C4TG97BDNJG187' cannot forward setup for sensor because it is in state ConfigEntryState.SETUP_ERROR, but needs to be in the ConfigEntryState.LOADED state
