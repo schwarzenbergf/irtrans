@@ -1,10 +1,3 @@
-<<<<<<< Updated upstream
-colorlog==6.8.2
-homeassistant==2024.3.3
-pip>=24.1.2,<24.3
-ruff==0.6.9
-=======
 aiofiles
 colorlog
 homeassistant==2024.9.3
->>>>>>> Stashed changes
