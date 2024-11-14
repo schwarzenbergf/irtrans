@@ -102,9 +102,16 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 reader, writer = await asyncio.open_connection(host, port)
                 msg = "ASCI"
                 writer.write(msg.encode())
+                await asyncio.sleep(1)
+                if DEBUG:
+                    _LOGGER.debug("IRTRansFlowHandler->ASCI has been sent")
                 msg = GETVER + "\n"
                 writer.write(msg.encode())
+                if DEBUG:
+                    _LOGGER.debug("IRTRansFlowHandler->GETVER has been sent")
                 await writer.drain()
+                if DEBUG:
+                    _LOGGER.debug("IRTRansFlowHandler->Waiting vor answer on GETVER")
                 data = await reader.read(100)
                 writer.close()
                 data = data.decode()

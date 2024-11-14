@@ -10,7 +10,7 @@ import logging
 import async_timeout
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import Config, HomeAssistant
+from homeassistant.core_config import Config, HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
@@ -72,6 +72,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     # if entry.data.get("port"):
     #     MyVars.port = entry.data["port"]
 
+    # for platform in PLATFORMS:
+    #     if entry.options.get(platform, True):
+    #         coordinator.platforms.append(platform)
+    #         # entry.async_create_task(
+    #         hass.async_add_job(
+    #         # hass,
+    #           await hass.config_entries.async_forward_entry_setup(entry, platform),
+    #        )
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
