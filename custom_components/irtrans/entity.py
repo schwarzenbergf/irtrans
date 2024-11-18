@@ -1,17 +1,20 @@
-"""IRTransEntity class"""
+"""IRTransEntity class."""
+
 import logging
+
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN, NAME, ATTRIBUTION
 from .api import IRTransCon
+from .const import ATTRIBUTION, DOMAIN, NAME
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 class IRTransEntity(CoordinatorEntity):
-    """IRTrans Entity"""
+    """IRTrans Entity."""
 
-    def __init__(self, coordinator, config_entry):
+    def __init__(self, coordinator, config_entry) -> None:
+        """Init entity."""
         super().__init__(coordinator)
         self.config_entry = config_entry
         self._state = None
@@ -23,7 +26,7 @@ class IRTransEntity(CoordinatorEntity):
 
     @property
     def should_poll(self) -> bool:
-        """Polling?"""
+        """Do Polling."""
         return False
 
     @property
@@ -33,7 +36,7 @@ class IRTransEntity(CoordinatorEntity):
 
     @property
     def device_info(self):
-        """Special Device Attributes"""
+        """Special Device Attributes."""
         return {
             "identifiers": {(DOMAIN, self.unique_id)},
             "name": NAME,

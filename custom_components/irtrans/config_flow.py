@@ -1,24 +1,25 @@
 """Adds config flow for IRTrans."""
+
 from __future__ import annotations
 
-import logging
 import asyncio
-from typing import Any, Dict, Optional
-import async_timeout
-from homeassistant import config_entries
+import logging
+from typing import Any
 
+# import async_timeout
 import voluptuous as vol
 
+from homeassistant import config_entries
 from homeassistant.helpers.selector import (  # pylint: disable=ungrouped-imports
     TextSelector,
     TextSelectorConfig,
     TextSelectorType,
 )
+
 # from homeassistant.components.sensor import (
 #      PLATFORM_SCHEMA,
 # )
-
-from .const import CONF_HOST, CONF_PORT, NAME, DOMAIN, DEBUG, GETVER, TIMEOUT
+from .const import CONF_HOST, CONF_PORT, DEBUG, DOMAIN, GETVER, NAME, TIMEOUT
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -38,17 +39,18 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 #     # extra_validation_checks,
 # )
 
+
 class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for IRTrans."""
 
     CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize."""
         self._errors = {}
         self.entry = None
 
-    async def async_step_user(self, user_input: Optional[Dict[str, Any]] = None):
+    async def async_step_user(self, user_input: dict[str, Any] | None = None):
         """Handle a flow initialized by the user."""
         self._errors = {}
         if DEBUG:
@@ -93,9 +95,9 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         )
 
     async def check_irtrans(self, host, port):
-        """Check availability of IRTrans device"""
+        """Check availability of IRTrans device."""
         try:
-            async with async_timeout.timeout(TIMEOUT):
+            async with asyncio.timeout(TIMEOUT):
                 if DEBUG:
                     _LOGGER.debug("User Input: %s : %s", host, port)
 
@@ -126,7 +128,7 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 if data[1] == "VERSION":
                     return True
                 return False
-        except asyncio.TimeoutError as tout:
+        except TimeoutError as tout:
             _LOGGER.error(
                 "Timeout while waiting for IRTrans connection - %s : %s (%s)",
                 host,
@@ -134,7 +136,7 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 tout,
             )
             return False
-        except Exception as exception:  # pylint: disable=broad-except
+        except Exception as exception:  # pylint: disable=broad-except  # noqa: BLE001
             _LOGGER.error("Cannot connect to - %s : %s", host + ":" + port, exception)
             return False
 

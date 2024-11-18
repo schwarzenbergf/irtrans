@@ -1,8 +1,10 @@
 """Provides device triggers for IRtrans."""
+
 from __future__ import annotations
 
-from typing import Any
 import logging
+from typing import Any
+
 import voluptuous as vol
 
 from homeassistant.components import automation
@@ -16,19 +18,17 @@ from homeassistant.const import (
     CONF_DEVICE_ID,
     CONF_DOMAIN,
     CONF_ENTITY_ID,
+    CONF_EVENT_DATA,
     CONF_PLATFORM,
     CONF_TYPE,
-    CONF_EVENT_DATA,
 )
 from homeassistant.core import CALLBACK_TYPE, HomeAssistant
-
-from homeassistant.helpers import entity_registry, config_validation as cv
+from homeassistant.helpers import config_validation as cv, entity_registry as er
 
 # from homeassistant.helpers import trigger
-
 from homeassistant.helpers.typing import ConfigType
 
-from .const import DOMAIN, DEBUG
+from .const import DEBUG, DOMAIN
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -69,7 +69,7 @@ async def async_get_triggers(
 ) -> list[dict[str, Any]]:
     """List device triggers for IRtrans devices."""
 
-    registry = entity_registry.async_get(hass)
+    registry = er.async_get(hass)
     triggers = []
 
     base_trigger = {
@@ -79,7 +79,7 @@ async def async_get_triggers(
     }
 
     # Get all the integrations entities for this device
-    for entry in entity_registry.async_entries_for_device(registry, device_id):
+    for entry in er.async_entries_for_device(registry, device_id):
         if entry.platform != DOMAIN:
             continue
         # Add triggers for each entity that belongs to this integration
@@ -95,7 +95,10 @@ async def async_get_triggers(
         # Write important information to log
         if DEBUG:
             _LOGGER.debug(
-                "Triggers(device_trigger): %s, %s, %s", entry.platform, entry.domain, triggers
+                "Triggers(device_trigger): %s, %s, %s",
+                entry.platform,
+                entry.domain,
+                triggers,
             )
 
     return triggers

@@ -1,22 +1,21 @@
 """IRTrans API Client."""
 
-import logging
 import asyncio
+import logging
 import re
 
 # from homeassistant.helpers import device_registry as dr
 # from homeassistant.helpers import entity_registry as er
-from homeassistant.helpers.template import device_id, device_entities
+from homeassistant.helpers.template import device_entities, device_id
 
 # from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
-
 from .const import DEBUG, GETVER, NAME
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 class IRTransCon(asyncio.Protocol):
-    """Handle connection to IRTrans"""
+    """Handle connection to IRTrans."""
 
     mycfg = {
         "irtrans": "not connected",
@@ -27,13 +26,15 @@ class IRTransCon(asyncio.Protocol):
     recv_data = None
     trans_port: asyncio.Transport = None
 
-    def __init__(self, msg, on_con_lost, coordinator, hass):
+    def __init__(self, msg, on_con_lost, coordinator, HomeAssistant) -> None:
+        """Init IRTRansCon."""
         self.msg = msg
         self.on_con_lost = on_con_lost
         self.coordinator = coordinator
-        self.hass = hass
+        self.hass = HomeAssistant
 
     def connection_made(self, transport: asyncio.Transport):
+        """Write to transport."""
         IRTransCon.trans_port = transport
         transport.write(self.msg.encode())
         if DEBUG:
@@ -41,7 +42,7 @@ class IRTransCon(asyncio.Protocol):
 
     @staticmethod
     async def write_data(transport, data):
-        """Write Data to socket"""
+        """Write Data to socket."""
 
         try:
             transport.write(data.encode())
@@ -49,11 +50,12 @@ class IRTransCon(asyncio.Protocol):
                 continue
             if DEBUG:
                 _LOGGER.debug("Data sent %s: ", data)
-        except Exception as exception:  # pylint: disable=broad-except
+        except Exception as exception:  # pylint: disable=broad-except  # noqa: BLE001
             if DEBUG:
                 _LOGGER.error("Write Data exception! - %s", exception)
 
     def data_received(self, data):
+        """Receive data."""
         data = data.decode().strip()
         if DEBUG:
             _LOGGER.debug("Data received %s:", data)
@@ -94,6 +96,7 @@ class IRTransCon(asyncio.Protocol):
             IRTransCon.recv_data = data
 
     def connection_lost(self, exc):
+        """Tell Connection lost."""
         if DEBUG:
             _LOGGER.debug("The server closed the connection %s", exc)
         self.mycfg["irtrans"] = "disconnected"
@@ -102,15 +105,16 @@ class IRTransCon(asyncio.Protocol):
 
 
 class IRTransAPI:
-    """IRTrans API to send commands"""
+    """IRTrans API to send commands."""
 
-    def __init__(self, hass, entry, coordinator):
-        self.hass = hass
+    def __init__(self, HomeAssistant, entry, coordinator) -> None:
+        """Init IRTrans API."""
+        self.hass = HomeAssistant
         self.data = entry.data
         self.coordinator = coordinator
 
     async def init_and_listen(self, host, port) -> any:
-        """Initialize connection to IRTrans and start listening"""
+        """Initialize connection to IRTrans and start listening."""
         # Get a reference to the event loop as we plan to use
         # low-level APIs.
         loop = asyncio.get_running_loop()
@@ -121,8 +125,7 @@ class IRTransAPI:
             IRTransCon.trans_port,
             protocol,
         ) = await loop.create_connection(
-            lambda: IRTransCon(GETVER, on_con_lost,
-                               self.coordinator, self.hass),
+            lambda: IRTransCon(GETVER, on_con_lost, self.coordinator, self.hass),
             host,
             int(port),
         )
@@ -132,7 +135,7 @@ class IRTransAPI:
 
     # @classmethod
     async def get_irtrans_info(self, cmd, res, offset) -> list:
-        """Send irTrans command and get result"""
+        """Send irTrans command and get result."""
 
         if DEBUG:
             _LOGGER.debug(
@@ -155,10 +158,8 @@ class IRTransAPI:
                     "Unknown answer from IRTrans (irtrans_snd_rcv): %s",
                     data,
                 )
-        else:
-            if DEBUG:
-                _LOGGER.error(
-                    "No answer from IRTrans (irtrans_snd_rcv) %s", data)
+        elif DEBUG:
+            _LOGGER.error("No answer from IRTrans (irtrans_snd_rcv) %s", data)
         return []
 
     # @staticmethod
@@ -166,11 +167,11 @@ class IRTransAPI:
         self,
         remote: str,
         command: str,
-        led: str = None,
-        bus: str = None,
-        mask: int = None,
+        led: str | None = None,
+        bus: str | None = None,
+        mask: int | None = None,
     ) -> dict:
-        """Send IR command for specified remote to IRTrans"""
+        """Send IR command for specified remote to IRTrans."""
 
         rsp = {"ircmd": "success"}
         msg = "Asnd " + remote + "," + command
@@ -191,8 +192,7 @@ class IRTransAPI:
         data = IRTransCon.recv_data
         if len(data) > 0:
             if data[2] == "OK":  # pylint: disable=unsubscriptable-object
-                rsp["ircmd"] = "Success sending IR command: " + \
-                    remote + "->" + command
+                rsp["ircmd"] = "Success sending IR command: " + remote + "->" + command
             else:
                 rsp["ircmd"] = (
                     "Error sending IR command: "
@@ -221,7 +221,7 @@ class IRTransAPI:
 
     # @classmethod
     async def api_irtrans(self) -> dict:
-        """IRTrans API handler"""
+        """IRTrans API handler."""
         try:
             # # get first (max.) 3 REMOTES (offset = 0) from irTrans
             devices = {}
@@ -250,7 +250,7 @@ class IRTransAPI:
                     "Agetcommands " + device + ",", "COMMANDLIST", offset
                 )
                 if len(resp) == 0:
-                    return
+                    return None
                 commands = resp[3:]
                 offset = offset + int(resp[2])
                 while offset < int(resp[1]):
@@ -263,9 +263,9 @@ class IRTransAPI:
 
             IRTransCon.mycfg["devices"] = devices
 
-            return IRTransCon.mycfg
+            return IRTransCon.mycfg  # noqa: TRY300
 
-        except Exception as exception:  # pylint: disable=broad-except
+        except Exception as exception:  # pylint: disable=broad-except  # noqa: BLE001
             if DEBUG:
                 _LOGGER.error(
                     "Something really wrong happened (api module)! - %s", exception
