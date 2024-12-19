@@ -1,6 +1,7 @@
 """Sensor platform for irtrans."""
 
 import logging
+from pathlib import Path
 
 import aiofiles
 
@@ -37,13 +38,21 @@ async def async_setup_entry(HomeAssistant, entry, async_add_devices):
             " ".join(IRTransCon.mycfg["devices"]),
         )
 
-        _LOGGER.debug("Creating services.yaml & icons.json ... ")
+    custom_components_path = HomeAssistant.config.path("custom_components")
+    yaml_file_path = Path(custom_components_path) / DEFAULT_NAME / "services.yaml"
+    icons_file_path = Path(custom_components_path) / DEFAULT_NAME / "icons.json"
+
+    _LOGGER.debug("Creating services.yaml & icons.json")
 
     yaml_file = await aiofiles.open(
-        "custom_components/" + DEFAULT_NAME + "/services.yaml", "w", encoding="utf-8"
+        yaml_file_path,
+        "w",
+        encoding="utf-8",
     )
     icons_file = await aiofiles.open(
-        "custom_components/" + DEFAULT_NAME + "/icons.json", "w", encoding="utf-8"
+        icons_file_path,
+        "w",
+        encoding="utf-8",
     )
     s_icons = '{\n\t"services": {\n'
     await icons_file.write(s_icons)
