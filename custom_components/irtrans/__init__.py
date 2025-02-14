@@ -115,6 +115,8 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self):
         """Update data via library."""
+        if DEBUG:
+            _LOGGER.debug("--- _async_update_data called --- ")
         try:
             async with asyncio.timeout(TIMEOUT):
                 # Start listening to IR Remote commands
@@ -134,49 +136,49 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
                     resp = await self.api.api_irtrans()
                     if DEBUG:
                         _LOGGER.debug("async_update_data after irtrans: %s", resp)
-                    if len(resp) == 0:
-                        raise UpdateFailed from Exception("Connection Timeout")  # noqa: TRY301
 
-                    return resp
                 # Listener is already running, just get Version to see if still connected
                 self.api_conn.trans_port.write(GETVER.encode())
                 if DEBUG:
                     _LOGGER.debug("Get Version msg sent (_async_update_data)")
                 await asyncio.sleep(1)
-                return self.api_conn.mycfg
+
         except TimeoutError as tout:
             _LOGGER.error("Timeout while refresh IRTrans connection (%s)", tout)
             raise UpdateFailed from tout
+
         except Exception as exception:
             _LOGGER.error(
                 "Something really wrong happened (_async_update_data)! - %s", exception
             )
             raise UpdateFailed from exception
+        else:
+            return self.api_conn.mycfg
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Handle removal of an entry."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
+    """Unload a config entry."""
+
     if DEBUG:
-        _LOGGER.debug("async_unload_entry")
+        _LOGGER.debug("--- async_unload_entry called ---")
     IRTransCon.trans_port.close()
     IRTransCon.trans_port = None
-    unloaded = all(
-        await asyncio.gather(
-            *[
-                hass.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-                if platform in coordinator.platforms
-            ]
-        )
-    )
-    if unloaded:
-        hass.data[DOMAIN].pop(entry.entry_id)
+
+    unloaded = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+
+    hass.data[DOMAIN].pop(entry.entry_id)
+
+    if DEBUG:
+        _LOGGER.debug("async_unload_entry->unloaded: %s ", unloaded)
+        _LOGGER.debug("async_unload_entry->hass.data: %s ", hass.data[DOMAIN])
+    if DEBUG:
+        _LOGGER.debug("async_unload_entry->hass.data: %s ", hass.data[DOMAIN])
 
     return unloaded
 
 
 async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload config entry."""
-    await async_unload_entry(hass, entry)
+    if DEBUG:
+        _LOGGER.debug("--- async_reload_entry called ---")
     await async_setup_entry(hass, entry)

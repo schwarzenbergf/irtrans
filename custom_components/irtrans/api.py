@@ -50,7 +50,7 @@ class IRTransCon(asyncio.Protocol):
                 continue
             if DEBUG:
                 _LOGGER.debug("Data sent %s: ", data)
-        except Exception as exception:  # pylint: disable=broad-except  # noqa: BLE001
+        except Exception as exception:  # noqa: BLE001
             if DEBUG:
                 _LOGGER.error("Write Data exception! - %s", exception)
 
@@ -149,13 +149,13 @@ class IRTransAPI:
         await asyncio.sleep(0.3)
         data = IRTransCon.recv_data
         if len(data) > 0:
-            if data[1] == res:  # pylint: disable=unsubscriptable-object
+            if data[1] == res:
                 IRTransCon.mycfg["irtrans"] = "connected"
-                return data[2].split(",")  # pylint: disable=unsubscriptable-object
-            IRTransCon.mycfg["irtrans"] = "Unknown answer from IRTrans: " + data
+                return data[2].split(",")
+            IRTransCon.mycfg["irtrans"] = "Unexpected answer from IRTrans: " + data
             if DEBUG:
                 _LOGGER.debug(
-                    "Unknown answer from IRTrans (irtrans_snd_rcv): %s",
+                    "Unexpected answer from IRTrans (irtrans_snd_rcv): %s",
                     data,
                 )
         elif DEBUG:
@@ -227,7 +227,11 @@ class IRTransAPI:
             devices = {}
             remotes = []
             remotes = await self.get_irtrans_info("Agetremotes ", "REMOTELIST", 0)
-            if len(remotes) == 0:
+            if not isinstance(remotes, list) or len(remotes) == 0:
+                _LOGGER.error("Failed to get REMOTELIST from IRTrans")
+                return {}
+            if len(remotes) < 2:
+                _LOGGER.error("Unexpected response format: %s", remotes)
                 return {}
             last = int(remotes[1]) - 1
             # re.sub(
@@ -249,8 +253,8 @@ class IRTransAPI:
                 resp = await self.get_irtrans_info(
                     "Agetcommands " + device + ",", "COMMANDLIST", offset
                 )
-                if len(resp) == 0:
-                    return None
+                if not isinstance(resp, list) or len(resp) == 0:
+                    return {}
                 commands = resp[3:]
                 offset = offset + int(resp[2])
                 while offset < int(resp[1]):
@@ -263,10 +267,11 @@ class IRTransAPI:
 
             IRTransCon.mycfg["devices"] = devices
 
-            return IRTransCon.mycfg  # noqa: TRY300
-
-        except Exception as exception:  # pylint: disable=broad-except  # noqa: BLE001
+        except Exception as exception:  # noqa: BLE001
             if DEBUG:
                 _LOGGER.error(
                     "Something really wrong happened (api module)! - %s", exception
                 )
+                return {}
+        else:
+            return IRTransCon.mycfg

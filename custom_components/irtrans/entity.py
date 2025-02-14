@@ -5,7 +5,7 @@ import logging
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .api import IRTransCon
-from .const import ATTRIBUTION, DOMAIN, NAME
+from .const import ATTRIBUTION, DEBUG, DOMAIN, NAME
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -22,6 +22,8 @@ class IRTransEntity(CoordinatorEntity):
 
     async def async_update(self):
         """Retrieve latest state."""
+        if DEBUG:
+            _LOGGER.debug("Entity: retrieve latest state %s:", IRTransCon.mycfg)
         self._state = IRTransCon.mycfg["irtrans"]  # await async_fetch_state()
 
     @property
