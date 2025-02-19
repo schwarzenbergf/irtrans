@@ -33,7 +33,7 @@ async def async_setup(hass: HomeAssistant, config: Config):  # pylint: disable=u
     return True
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up this integration using UI."""
 
     if hass.data.get(DOMAIN) is None:
@@ -57,14 +57,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     # if entry.data.get("port"):
     #     MyVars.port = entry.data["port"]
 
-    # for platform in PLATFORMS:
-    #     if entry.options.get(platform, True):
-    #         coordinator.platforms.append(platform)
-    #         # entry.async_create_task(
-    #         hass.async_add_job(
-    #         # hass,
-    #           await hass.config_entries.async_forward_entry_setup(entry, platform),
-    #        )
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
@@ -101,10 +93,18 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
         if DEBUG:
             _LOGGER.debug("IRTransDataUpdateCoordinator")
         self.platforms = []
-        super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
+        super().__init__(
+            hass,
+            _LOGGER,
+            name=DOMAIN,
+            config_entry=entry,
+            update_interval=SCAN_INTERVAL,
+            always_update=False,
+        )
         self.api = IRTransAPI(hass, entry, self)
         self.api_conn = IRTransCon
         self.entry = entry
+        self._device = None
 
         if DEBUG:
             _LOGGER.debug(
@@ -112,6 +112,10 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
                 self.api.data["host"],
                 self.api.data["port"],
             )
+
+    async def _async_setup(self):
+        """Set up the coordinator."""
+        self._device = await self.api.get_device()
 
     async def _async_update_data(self):
         """Update data via library."""
@@ -142,18 +146,15 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
                 if DEBUG:
                     _LOGGER.debug("Get Version msg sent (_async_update_data)")
                 await asyncio.sleep(1)
+                return self.api_conn.mycfg
 
-        except TimeoutError as tout:
-            _LOGGER.error("Timeout while refresh IRTrans connection (%s)", tout)
-            raise UpdateFailed from tout
-
+            # Note: asyncio.TimeoutError and aiohttp.ClientError are already
+            # handled by the data update coordinator.
         except Exception as exception:
             _LOGGER.error(
                 "Something really wrong happened (_async_update_data)! - %s", exception
             )
             raise UpdateFailed from exception
-        else:
-            return self.api_conn.mycfg
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -182,3 +183,13 @@ async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     if DEBUG:
         _LOGGER.debug("--- async_reload_entry called ---")
     await async_setup_entry(hass, entry)
+
+
+async def async_get_config_entry_diagnostics(
+    hass: HomeAssistant, entry: ConfigEntry
+) -> dict[str, any]:
+    """Return diagnostics for a config entry."""
+    return {
+        "entry_data": entry.data,
+        "data": entry.runtime_data.data,
+    }

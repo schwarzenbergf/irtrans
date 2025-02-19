@@ -29,7 +29,7 @@ class IRTransEntity(CoordinatorEntity):
     @property
     def should_poll(self) -> bool:
         """Do Polling."""
-        return False
+        return True
 
     @property
     def unique_id(self):

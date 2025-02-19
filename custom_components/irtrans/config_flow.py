@@ -139,38 +139,3 @@ class IRTransFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         except Exception as exception:  # pylint: disable=broad-except  # noqa: BLE001
             _LOGGER.error("Cannot connect to - %s : %s", host + ":" + port, exception)
             return False
-
-
-# class IRTransOptionsFlowHandler(config_entries.OptionsFlow):
-#     """IRTrans config flow options handler."""
-
-#     def __init__(self, config_entry):
-#         """Initialize HACS options flow."""
-#         self.config_entry = config_entry
-#         self.options = dict(config_entry.options)
-
-#     async def async_step_init(self, user_input=None):
-#         """Manage the options."""
-#         return await self.async_step_user(user_input)
-
-#     async def async_step_user(self, user_input=None):
-#         """Handle a flow initialized by the user."""
-#         if user_input is not None:
-#             self.options.update(user_input)
-#             return await self._update_options()
-
-#         return self.async_show_form(
-#             step_id="user",
-#             data_schema=vol.Schema(
-#                 {
-#                     vol.Required(x, default=self.options.get(x, True)): bool
-#                     for x in sorted(PLATFORMS)
-#                 }
-#             ),
-#         )
-
-#     async def _update_options(self):
-#         """Update config entry options."""
-#         return self.async_create_entry(
-#             title=self.config_entry.data.get(CONF_HOST), data=self.options
-#         )
