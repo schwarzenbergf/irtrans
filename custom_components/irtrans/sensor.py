@@ -135,10 +135,22 @@ class IRTransSensor(IRTransEntity, SensorEntity):
                 result,
             )
 
+    async def async_update(self):
+        """Retrieve latest state."""
+        if DEBUG:
+            _LOGGER.debug("Sensor: retrieve latest state %s:", IRTransCon.mycfg)
+        self._state = IRTransCon.mycfg["irtrans"]
+        return self._state
+
     @property
     def should_poll(self):
         """Should poll."""
-        return False
+        return True
+
+    @property
+    def state(self):
+        """Return the state of the sensor."""
+        return self._state
 
     @property
     def name(self):

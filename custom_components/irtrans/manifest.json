@@ -10,5 +10,5 @@
   "issue_tracker": "https://github.com/schwarzenbergf/irtrans/issues",
   "loggers": ["irtrans"],
   "requirements": ["aiofiles"],
-  "version": "v1.20"
+  "version": "v1.30"
 }

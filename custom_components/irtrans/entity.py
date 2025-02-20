@@ -24,12 +24,18 @@ class IRTransEntity(CoordinatorEntity):
         """Retrieve latest state."""
         if DEBUG:
             _LOGGER.debug("Entity: retrieve latest state %s:", IRTransCon.mycfg)
-        self._state = IRTransCon.mycfg["irtrans"]  # await async_fetch_state()
+        self._state = IRTransCon.mycfg["irtrans"]
+        return self._state
 
     @property
     def should_poll(self) -> bool:
         """Do Polling."""
         return True
+
+    @property
+    def state(self):
+        """Return the state of the sensor."""
+        return self._state
 
     @property
     def unique_id(self):

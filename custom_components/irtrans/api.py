@@ -22,6 +22,7 @@ class IRTransCon(asyncio.Protocol):
         "devices": {},
         "version": "????",
         "firmware": "unkwown",
+        "ircmd": "no command sent yet",
     }
     recv_data = None
     trans_port: asyncio.Transport = None
@@ -216,7 +217,7 @@ class IRTransAPI:
                 )
             rsp["ircmd"] = "No answer from IRTrans"
 
-        IRTransCon.mycfg = rsp
+        IRTransCon.mycfg["ircmd"] = rsp
         return rsp
 
     # @classmethod

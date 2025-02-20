@@ -46,6 +46,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         )
 
     coordinator = IRTransDataUpdateCoordinator(hass, entry)
+    # await coordinator.async_config_entry_first_refresh()
     await coordinator.async_refresh()
 
     if not coordinator.last_update_success:
@@ -62,6 +63,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
 
     # config_entry = hass.config_entries.async_entries(DOMAIN)[0]
+
     my_device_id = device_id(hass, NAME)
     entities = device_entities(hass, my_device_id)
     triggers = await async_get_triggers(hass, my_device_id)
@@ -99,7 +101,7 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
             name=DOMAIN,
             config_entry=entry,
             update_interval=SCAN_INTERVAL,
-            always_update=False,
+            always_update=True,
         )
         self.api = IRTransAPI(hass, entry, self)
         self.api_conn = IRTransCon
@@ -112,10 +114,6 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
                 self.api.data["host"],
                 self.api.data["port"],
             )
-
-    async def _async_setup(self):
-        """Set up the coordinator."""
-        self._device = await self.api.get_device()
 
     async def _async_update_data(self):
         """Update data via library."""
