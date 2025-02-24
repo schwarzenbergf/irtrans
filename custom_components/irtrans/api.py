@@ -192,7 +192,7 @@ class IRTransAPI:
         await asyncio.sleep(0.3)
         data = IRTransCon.recv_data
         if len(data) > 0:
-            if data[2] == "OK":  # pylint: disable=unsubscriptable-object
+            if data[2] == "OK":
                 rsp["ircmd"] = "Success sending IR command: " + remote + "->" + command
             else:
                 rsp["ircmd"] = (

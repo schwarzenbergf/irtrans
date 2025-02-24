@@ -63,9 +63,9 @@ async def async_setup_entry(HomeAssistant, entry, async_add_devices):
     if DEBUG:
         _LOGGER.debug("Number of Remotes: %i", len(IRTransCon.mycfg["devices"]))
 
-    cnt = len(IRTransCon.mycfg["devices"])
+    cnt = len(IRTransCon.mycfg["devices"]) - 1
     for remote in IRTransCon.mycfg["devices"]:
-        if remote == "firmware":
+        if remote == "last_response":
             break
         cnt -= 1
         # create services.yaml for this service
@@ -165,7 +165,11 @@ class IRTransSensor(IRTransEntity, SensorEntity):
     @property
     def extra_state_attributes(self):
         """Return entity specific state attributes."""
-        return self.coordinator.data.get("devices")
+        # Add last response to mycfg["devices"], it will be show up in the attributes of the sensor entity
+        attr = self.coordinator.data.get("devices")
+        attr.update({"last_response": IRTransCon.mycfg["ircmd"]})
+        return attr
+        # return self.coordinator.data.get("devices")
 
     @property
     def icon(self):
