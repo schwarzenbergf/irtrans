@@ -7,13 +7,13 @@ jobs:
   validate:
     runs-on: "ubuntu-latest"
     steps:
-        - uses: "actions/checkout@v4"
+        - uses: "actions/checkout@v5"
         - uses: "home-assistant/actions/hassfest@master"
   style:
     runs-on: "ubuntu-latest"
     name: Check style formatting
     steps:
-        - uses: "actions/checkout@v4"
+        - uses: "actions/checkout@v5"
         - uses: "actions/setup-python@v5.6.0"
           with:
             python-version: "3.x"
