@@ -16,7 +16,9 @@ from homeassistant.config_entries import ConfigEntry
 # from homeassistant.helpers.trigger import TriggerInfo, TriggerData
 from homeassistant.core_config import Config, HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
-from homeassistant.helpers.template import device_entities, device_id
+
+# from homeassistant.helpers.template import device_entities, device_id
+from homeassistant.helpers.entity_registry import async_get as async_get_entity_registry
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .api import IRTransAPI, IRTransCon
@@ -64,8 +66,36 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # config_entry = hass.config_entries.async_entries(DOMAIN)[0]
 
-    my_device_id = device_id(hass, NAME)
-    entities = device_entities(hass, my_device_id)
+    # my_device_id = device_id(hass, NAME)
+    #  entities = device_entities(hass, my_device_id)
+
+    # _LOGGER.debug(
+    #     "entry --> %s ",
+    #     entry,
+    # )
+
+    entity_registry = async_get_entity_registry(hass)
+    my_device_id = None
+    for entity in entity_registry.entities.values():
+        # _LOGGER.debug(
+        #     "entity --> %s ",
+        #     entity,
+        # )
+        if (
+            entity.unique_id == entry.entry_id
+        ):  # Replace with appropriate matching logic
+            my_device_id = entity.device_id
+            break
+
+    if not my_device_id:
+        _LOGGER.error("Device ID could not be determined for the integration")
+        return False
+
+    entities = [
+        entity.entity_id
+        for entity in entity_registry.entities.values()
+        if entity.device_id == my_device_id
+    ]
     triggers = await async_get_triggers(hass, my_device_id)
 
     if DEBUG:
