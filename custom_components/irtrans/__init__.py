@@ -5,25 +5,24 @@ https://github.com/custom-components/irtrans
 """
 
 import asyncio
-
-# from asyncio import timeout
 from datetime import timedelta
 import logging
+from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
-
-# from homeassistant.helpers import entity_registry
-# from homeassistant.helpers.trigger import TriggerInfo, TriggerData
 from homeassistant.core_config import Config, HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
-
-# from homeassistant.helpers.template import device_entities, device_id
-from homeassistant.helpers.entity_registry import async_get as async_get_entity_registry
+import homeassistant.helpers.entity_registry as er
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .api import IRTransAPI, IRTransCon
-from .const import DEBUG, DOMAIN, GETVER, NAME, PLATFORMS, STARTUP_MESSAGE, TIMEOUT
+from .const import DEBUG, DOMAIN, GETVER, PLATFORMS, STARTUP_MESSAGE, TIMEOUT
 from .device_trigger import async_get_triggers
+
+# from asyncio import timeout
+# from homeassistant.helpers import entity_registry
+# from homeassistant.helpers.trigger import TriggerInfo, TriggerData
+# from homeassistant.helpers.template import device_entities, device_id
 
 SCAN_INTERVAL = timedelta(seconds=300)
 
@@ -74,7 +73,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     #     entry,
     # )
 
-    entity_registry = async_get_entity_registry(hass)
+    entity_registry = er.async_get(hass)
     my_device_id = None
     for entity in entity_registry.entities.values():
         # _LOGGER.debug(
@@ -170,10 +169,11 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
                         _LOGGER.debug("async_update_data after irtrans: %s", resp)
 
                 # Listener is already running, just get Version to see if still connected
-                self.api_conn.trans_port.write(GETVER.encode())
-                if DEBUG:
-                    _LOGGER.debug("Get Version msg sent (_async_update_data)")
-                await asyncio.sleep(1)
+                if self.api_conn.trans_port is not None:
+                    self.api_conn.trans_port.write(GETVER.encode())
+                    if DEBUG:
+                        _LOGGER.debug("Get Version msg sent (_async_update_data)")
+                    await asyncio.sleep(1)
                 return self.api_conn.mycfg
 
             # Note: asyncio.TimeoutError and aiohttp.ClientError are already
@@ -190,7 +190,8 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     if DEBUG:
         _LOGGER.debug("--- async_unload_entry called ---")
-    IRTransCon.trans_port.close()
+    if IRTransCon.trans_port is not None:
+        IRTransCon.trans_port.close()
     IRTransCon.trans_port = None
 
     unloaded = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
@@ -215,7 +216,7 @@ async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
 
 async def async_get_config_entry_diagnostics(
     hass: HomeAssistant, entry: ConfigEntry
-) -> dict[str, any]:
+) -> dict[str, Any]:
     """Return diagnostics for a config entry."""
     return {
         "entry_data": entry.data,

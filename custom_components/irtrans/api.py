@@ -3,13 +3,16 @@
 import asyncio
 import logging
 import re
+from typing import Any
 
+# from homeassistant.config_entries import ConfigEntry
 # from homeassistant.helpers import device_registry as dr
 # from homeassistant.helpers import entity_registry as er
-from homeassistant.helpers.template import device_entities, device_id
+# from homeassistant.helpers.template import device_entities, device_id
+import homeassistant.helpers.entity_registry as er
 
 # from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
-from .const import DEBUG, GETVER, NAME
+from .const import DEBUG, GETVER
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -25,7 +28,10 @@ class IRTransCon(asyncio.Protocol):
         "ircmd": "no command sent yet",
     }
     recv_data = None
-    trans_port: asyncio.Transport = None
+    trans_port: asyncio.Transport | None = None
+    # `entry_id` is specific to a config entry instance. Capture it from
+    # the coordinator instance in `__init__` instead of using the
+    # `ConfigEntry` class directly.
 
     def __init__(self, msg, on_con_lost, coordinator, HomeAssistant) -> None:
         """Init IRTRansCon."""
@@ -33,6 +39,16 @@ class IRTransCon(asyncio.Protocol):
         self.on_con_lost = on_con_lost
         self.coordinator = coordinator
         self.hass = HomeAssistant
+        # coordinator should be the DataUpdateCoordinator instance which
+        # holds a reference to the config entry as `entry`.
+        self.entry_id = None
+        try:
+            self.entry_id = getattr(
+                getattr(coordinator, "entry", None), "entry_id", None
+            )
+        except AttributeError:
+            # Defensive: if anything goes wrong, leave entry_id as None.
+            self.entry_id = None
 
     def connection_made(self, transport: asyncio.Transport):
         """Write to transport."""
@@ -66,15 +82,44 @@ class IRTransCon(asyncio.Protocol):
         if data[1] == "RCV_COM":  # IR Remote command received
             _LOGGER.debug("IR Remote command received %s:", data)
             data = data[2].split(",")
-            entities = device_entities(self.hass, device_id(self.hass, NAME))
-            event_data = {
-                "entity_id": entities[0],
-                "type": "remote_pressed",
-                "remote": data[0],
-                "button": data[1],
-            }
-            self.hass.bus.async_fire("irtrans_event", event_data)
-            self.coordinator.async_set_updated_data(self.mycfg)
+
+        # _LOGGER.debug("entry --> %s", self.entry_id)
+
+        entity_registry = er.async_get(self.hass)
+        my_device_id = None
+
+        # Prefer matching entities by their `config_entry_id` which links
+        # entities to the config entry. This is more reliable than trying
+        # to match on `unique_id`.
+        for entity in entity_registry.entities.values():
+            # _LOGGER.debug("entity --> %s", entity)
+            if getattr(entity, "config_entry_id", None) == self.entry_id:
+                my_device_id = entity.device_id
+                break
+
+        if not my_device_id:
+            _LOGGER.error("Device ID could not be determined for the integration")
+            return
+
+        entities = [
+            e.entity_id
+            for e in entity_registry.entities.values()
+            if e.device_id == my_device_id
+        ]
+
+        if not entities:
+            _LOGGER.error("No entities found for device %s", my_device_id)
+            return
+
+        # Fire an event for the first matching entity on the device.
+        event_data = {
+            "entity_id": entities[0],
+            "type": "remote_pressed",
+            "remote": data[0],
+            "button": data[1],
+        }
+        self.hass.bus.async_fire("irtrans_event", event_data)
+        self.coordinator.async_set_updated_data(self.mycfg)
 
         if data[1] == "VERSION":  # Response to Aver
             IRTransCon.mycfg["version"] = data
@@ -113,18 +158,17 @@ class IRTransAPI:
         self.hass = HomeAssistant
         self.data = entry.data
         self.coordinator = coordinator
-
-    async def init_and_listen(self, host, port) -> any:
+    async def init_and_listen(self, host, port) -> Any:
         """Initialize connection to IRTrans and start listening."""
         # Get a reference to the event loop as we plan to use
+        # low-level APIs.
         # low-level APIs.
         loop = asyncio.get_running_loop()
         on_con_lost = loop.create_future()
         _LOGGER.debug("Conneting to %s:%s", host, port)
-        # pylint: disable = unused-variable
         (
             IRTransCon.trans_port,
-            protocol,
+            _,
         ) = await loop.create_connection(
             lambda: IRTransCon(GETVER, on_con_lost, self.coordinator, self.hass),
             host,
@@ -132,7 +176,6 @@ class IRTransAPI:
         )
         _LOGGER.debug("Listening on %s:%s", host, port)
         return IRTransCon.trans_port
-        # pylint: enable = unused-variable
 
     # @classmethod
     async def get_irtrans_info(self, cmd, res, offset) -> list:
@@ -149,11 +192,11 @@ class IRTransAPI:
         await IRTransCon.write_data(IRTransCon.trans_port, msg)
         await asyncio.sleep(0.3)
         data = IRTransCon.recv_data
-        if len(data) > 0:
+        if data is not None and len(data) > 0:
             if data[1] == res:
                 IRTransCon.mycfg["irtrans"] = "connected"
                 return data[2].split(",")
-            IRTransCon.mycfg["irtrans"] = "Unexpected answer from IRTrans: " + data
+            IRTransCon.mycfg["irtrans"] = "Unexpected answer from IRTrans: " + str(data)
             if DEBUG:
                 _LOGGER.debug(
                     "Unexpected answer from IRTrans (irtrans_snd_rcv): %s",
@@ -191,7 +234,7 @@ class IRTransAPI:
         await IRTransCon.write_data(IRTransCon.trans_port, msg)
         await asyncio.sleep(0.3)
         data = IRTransCon.recv_data
-        if len(data) > 0:
+        if data is not None and len(data) > 0:
             if data[2] == "OK":
                 rsp["ircmd"] = "Success sending IR command: " + remote + "->" + command
             else:
@@ -273,6 +316,5 @@ class IRTransAPI:
                 _LOGGER.error(
                     "Something really wrong happened (api module)! - %s", exception
                 )
-                return {}
-        else:
-            return IRTransCon.mycfg
+            return {}
+        return IRTransCon.mycfg
