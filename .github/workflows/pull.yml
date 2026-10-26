@@ -13,8 +13,8 @@ jobs:
     runs-on: "ubuntu-latest"
     name: Check style formatting
     steps:
-        - uses: "actions/checkout@v7"
-        - uses: "actions/setup-python@v7.0.0"
+        - uses: "actions/checkout@v6"
+        - uses: "actions/setup-python@v7.1.0"
           with:
             python-version: "3.x"
         - run: python3 -m pip install black
@@ -35,7 +35,7 @@ jobs:
 #      - name: Check out code from GitHub
 #        uses: "actions/checkout@v2"
 #      - name: Setup Python
-#        uses: "actions/setup-python@v7.0.0"
+#        uses: "actions/setup-python@v7.1.0"
 #        with:
 #          python-version: "3.8"
 #      - name: Install requirements
