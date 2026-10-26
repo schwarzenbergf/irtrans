@@ -3,12 +3,12 @@
   "name": "iRTrans",
   "codeowners": ["@schwarzenbergf"],
   "config_flow": true,
-  "dependencies": [],
+  "dependencies": ["infrared"],
   "documentation": "https://github.com/schwarzenbergf/irtrans",
   "integration_type": "device",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/schwarzenbergf/irtrans/issues",
   "loggers": ["irtrans"],
   "requirements": ["aiofiles"],
-  "version": "v1.30"
+  "version": "v1.41"
 }

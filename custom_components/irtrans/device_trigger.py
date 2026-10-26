@@ -28,7 +28,7 @@ from homeassistant.helpers import config_validation as cv, entity_registry as er
 # from homeassistant.helpers import trigger
 from homeassistant.helpers.typing import ConfigType
 
-from .const import DEBUG, DOMAIN
+from .const import DEBUG, DOMAIN, SENSOR
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -78,9 +78,11 @@ async def async_get_triggers(
         CONF_DOMAIN: DOMAIN,
     }
 
-    # Get all the integrations entities for this device
+    # Get this device's sensor entity - it's the one whose state reflects
+    # received IR remote button presses. Other platforms (e.g. infrared
+    # emitter) share this device but don't fire "remote_pressed".
     for entry in er.async_entries_for_device(registry, device_id):
-        if entry.platform != DOMAIN:
+        if entry.platform != DOMAIN or entry.domain != SENSOR:
             continue
         # Add triggers for each entity that belongs to this integration
         triggers.append(

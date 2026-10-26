@@ -5,10 +5,12 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/python",
 	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
 	"features": {
-	  "ghcr.io/devcontainers-contrib/features/pylint:2": {},
-	  "ghcr.io/devcontainers/features/github-cli:1": {}
+		"ghcr.io/devcontainers-extra/features/pylint:2": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/node:2.1.0": {
+			"version": "lts"
+		}
 	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [8123],
@@ -19,7 +21,12 @@
 	  }
 	},
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && pip3 install --user -r requirements.txt", // && scripts/setup,
+	"postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && pip3 install --user -r requirements.txt && npm config set allow-scripts=@anthropic-ai/claude-code --location=user && npm install -g @anthropic-ai/claude-code && sudo chown -R vscode:vscode /home/vscode/.claude", // && scripts/setup,
+	// Persist Claude Code's session history, memory and credentials (~/.claude) across rebuilds,
+	// since the rest of the container filesystem is recreated from scratch each time.
+	"mounts": [
+		"source=irtrans-claude-config,target=/home/vscode/.claude,type=volume"
+	],
 	// Configure tool-specific properties.
 	// "customizations": {},
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.

@@ -1,6 +1,7 @@
 """IRTransEntity class."""
 
 import logging
+from typing import Any
 
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
@@ -10,7 +11,31 @@ from .const import ATTRIBUTION, DEBUG, DOMAIN, NAME
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
-class IRTransEntity(CoordinatorEntity):
+class IRTransDeviceInfoMixin:
+    """Shared device_info for all entities backed by an IRTrans device.
+
+    Keyed on the config entry id (not on each entity's own unique_id) so that
+    entities across platforms (sensor, infrared, ...) attach to the same
+    device instead of each spawning its own.
+    """
+
+    config_entry: Any
+    coordinator: Any
+
+    @property
+    def device_info(self):
+        """Special Device Attributes."""
+        return {
+            "identifiers": {(DOMAIN, self.config_entry.entry_id)},
+            "name": NAME,
+            "model": "IRTrans Ethernet IRDB (LAN firmware)",
+            "manufacturer": "IRTrans GmbH",
+            "sw_version": IRTransCon.mycfg["firmware"],
+            "configuration_url": "http://" + self.coordinator.api.data["host"],
+        }
+
+
+class IRTransEntity(IRTransDeviceInfoMixin, CoordinatorEntity):
     """IRTrans Entity."""
 
     def __init__(self, coordinator, config_entry) -> None:
@@ -41,18 +66,6 @@ class IRTransEntity(CoordinatorEntity):
     def unique_id(self):
         """Return a unique ID to use for this entity."""
         return self.config_entry.entry_id
-
-    @property
-    def device_info(self):
-        """Special Device Attributes."""
-        return {
-            "identifiers": {(DOMAIN, self.unique_id)},
-            "name": NAME,
-            "model": "IRTrans Ethernet IRDB (LAN firmware)",
-            "manufacturer": "IRTrans GmbH",
-            "sw_version": IRTransCon.mycfg["firmware"],
-            "configuration_url": "http://" + self.host,
-        }
 
     @property
     def extra_state_attributes(self):

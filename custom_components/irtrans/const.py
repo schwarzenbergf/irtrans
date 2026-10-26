@@ -16,7 +16,8 @@ ICON = "mdi:remote"
 
 # Platforms
 SENSOR = "sensor"
-PLATFORMS = [SENSOR]
+INFRARED = "infrared"
+PLATFORMS = [SENSOR, INFRARED]
 
 # Configuration and options
 CONF_ENABLED = "enabled"
@@ -24,6 +25,7 @@ CONF_HOST = "nnn.nnn.nnn.nnn"
 CONF_PORT = "21000"  # default IRTrans port
 GETVER = "Aver\n"  # Get firmware version from IRTrans
 TIMEOUT = 40  # 10 is for slower systems too less
+REPLY_TIMEOUT = 5  # seconds to wait for IRTrans to answer a single request
 
 # Defaults
 DEFAULT_NAME = DOMAIN

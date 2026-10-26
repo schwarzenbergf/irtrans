@@ -167,6 +167,14 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
                     resp = await self.api.api_irtrans()
                     if DEBUG:
                         _LOGGER.debug("async_update_data after irtrans: %s", resp)
+                    if not resp:
+                        # Drop the connection so the next refresh retries discovery
+                        if self.api_conn.trans_port is not None:
+                            self.api_conn.trans_port.close()
+                        self.api_conn.trans_port = None
+                        raise UpdateFailed(
+                            "Could not read remotes/commands from IRTrans"
+                        )
 
                 # Listener is already running, just get Version to see if still connected
                 if self.api_conn.trans_port is not None:
@@ -178,6 +186,8 @@ class IRTransDataUpdateCoordinator(DataUpdateCoordinator):
 
             # Note: asyncio.TimeoutError and aiohttp.ClientError are already
             # handled by the data update coordinator.
+        except UpdateFailed:
+            raise
         except Exception as exception:
             _LOGGER.error(
                 "Something really wrong happened (_async_update_data)! - %s", exception
